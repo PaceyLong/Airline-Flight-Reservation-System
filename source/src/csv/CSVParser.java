@@ -1,60 +1,48 @@
 package csv;
 
+import csv.parseTypes.*;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class CSVParser {
+    private CSVParse nameParse;
+    private CSVParse delayParse;
+    private CSVParse timeParse;
+    private CSVParse weatherParse;
+    private CSVParse flightParse;
+    private JSONArray airports;
+    private JSONArray flights;
 
 
     public CSVParser(){
-
+        this.nameParse = new AirportNameParse();
+        this.delayParse = new AirportDelayParse();
+        this.timeParse = new AirportTimeParse();
+        this.weatherParse = new AirportWeatherParse();
+        this.flightParse = new FlightParse();
+        this.airports = new JSONArray();
+        this.flights = new JSONArray();
     }
-
-    public void parseCSV(String csvPath, JSONArray arr){
-        String line;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(csvPath));
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] strArray = line.split(",");
-                JSONObject obj = new JSONObject();
-                obj.put("code", strArray[0]);
-                obj.put("name", strArray[1]);
-                arr.add(obj);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
 
     public void createJSON(){
+        String csvPath = "./src/csv/";
 
-        createAirportsJSON();
-        createFlightsJSON();
-    }
+        //read in all the airport data and write to json file
+        this.airports = this.nameParse.parseCSV(csvPath+"airports.csv", this.airports);
+        this.airports = this.delayParse.parseCSV(csvPath+"delay.csv", this.airports);
+        this.airports = this.timeParse.parseCSV(csvPath+"min_connection_time.csv", this.airports);
+        this.airports = this.weatherParse.parseCSV(csvPath+"weather.csv", this.airports);
+        writeJSONToFile("./src/Airports/airports.json", this.airports);
 
+        //read in all the flight data and write to json file
+        this.flights = this.flightParse.parseCSV(csvPath+"route_network.csv", this.flights);
+        writeJSONToFile("./src/TTARouteNetwork/flights.json", this.flights);
 
-    public void createAirportsJSON(){
-        JSONArray airportsArr = new JSONArray();
-        parseCSV("./src/csv/airports.csv", airportsArr);
-        writeJSONToFile("./src/Airports/airports.json", airportsArr);
-    }
-
-    public void createFlightsJSON(){
-        JSONObject flightsObj = new JSONObject();
     }
 
     public void writeJSONToFile(String path, JSONArray obj){
-
 
         try (FileWriter file = new FileWriter(path)) {
             file.write(obj.toJSONString());
