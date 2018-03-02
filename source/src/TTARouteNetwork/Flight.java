@@ -1,4 +1,4 @@
-package source.src.TTARouteNetwork;
+package TTARouteNetwork;
 
 public class Flight {
     private String originAirport;
