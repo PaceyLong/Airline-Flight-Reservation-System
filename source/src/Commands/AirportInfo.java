@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Command block that handles logic required for Airport Info Request
  *
- * Legend: {keyword}, data
+ * Legend: {keyword literal}, [optional input], data
  * Airport information request: {airport},airport;
  *     airport is the three-letter code for the airport whose information is requested
  */

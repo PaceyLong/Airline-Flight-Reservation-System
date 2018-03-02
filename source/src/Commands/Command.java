@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Top level abstract Command class for Command Pattern
+ * Legend: {keyword literal}, [optional input], data
  * Receives parsed command string.
  * ASSUMPTION: valid input
  */

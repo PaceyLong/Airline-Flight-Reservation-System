@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Command block that handles Delete Reservation Requests
  *
- * Legend: {keyword}, data
- * Delete reservation request: delete,passenger,origin,destination;
+ * Legend: {keyword literal}, [optional input], data
+ * Delete reservation request: {delete},passenger,origin,destination;
  *      passenger: name of the passenger who holds the reservation being deleted
  *      origin: three-letter code for the reservation's origin airport
  *      destination: three-letter code for the reservation's destination airport
