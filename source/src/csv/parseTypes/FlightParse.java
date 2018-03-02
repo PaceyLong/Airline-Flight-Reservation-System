@@ -3,6 +3,12 @@ package csv.parseTypes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+
+/*
+    This parse type parses the lines from 'route_network.csv' (which contains origin airport code, destination airport code,
+    departure time, arrival time, flight number, and airfare for each flight) and adds them to slots in the
+    corresponding flights json array
+ */
 public class FlightParse extends CSVParse {
 
     @Override

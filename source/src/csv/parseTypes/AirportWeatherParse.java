@@ -3,6 +3,10 @@ package csv.parseTypes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/*
+    This parse type parses the lines from 'weather.csv' (which contains the code and a variable number of weather
+    fields for each airport) and adds them to slots in the corresponding airports json array
+ */
 public class AirportWeatherParse extends CSVParse {
 
     @Override

@@ -6,6 +6,11 @@ import org.json.simple.JSONArray;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
+/*
+this class is the "context" of the strategy pattern i have implemented here. This class is created in the Main
+and writes json objects to both flights.json and airports.json.
+*/
 public class CSVParser {
     private CSVParse nameParse;
     private CSVParse delayParse;
@@ -17,11 +22,13 @@ public class CSVParser {
 
 
     public CSVParser(){
+        // all the parse types the parser will use to generate the json objects
         this.nameParse = new AirportNameParse();
         this.delayParse = new AirportDelayParse();
         this.timeParse = new AirportTimeParse();
         this.weatherParse = new AirportWeatherParse();
         this.flightParse = new FlightParse();
+        //airports and flights json arrays will be filled with their data in the createJSON function call
         this.airports = new JSONArray();
         this.flights = new JSONArray();
     }

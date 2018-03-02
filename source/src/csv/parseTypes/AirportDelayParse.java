@@ -3,6 +3,11 @@ package csv.parseTypes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+
+/*
+    This parse type parses the lines from 'delay.csv' (which contains the code and the delay of each airport)
+    and adds them to slots in the corresponding airports json array
+ */
 public class AirportDelayParse extends CSVParse {
 
     @Override
