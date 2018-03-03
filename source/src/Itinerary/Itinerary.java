@@ -31,7 +31,8 @@ public class Itinerary{
     public int getNumberFlightIn(){
         return numberFlightIn;
     }
-
+    
+    @Override
     public String toString(){
         return getTotalPrice() + "," + getNumberFlightIn() + "[,"
                 + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
