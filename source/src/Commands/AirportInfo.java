@@ -1,6 +1,7 @@
 package Commands;
 
 import Airports.Airport;
+
 import java.util.ArrayList;
 
 /**
@@ -27,7 +28,7 @@ public class AirportInfo implements Command{
     @Override
     public void execute(ArrayList<String> input) {
         /* Grab Airport from AirportsDB*/
-        Airport airport = AirportsDB.get(input.get(AIRPORT_CODE));
+        Airport airport =
         System.out.println(input.get(AIRPORT_KEYWORD) + "," + airport.toString());
     }
 }

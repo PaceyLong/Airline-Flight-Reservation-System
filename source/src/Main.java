@@ -1,3 +1,4 @@
+import Airports.AirportsDB;
 import csv.CSVParser;
 
 import java.io.File;
@@ -14,6 +15,9 @@ public class Main {
             CSVParser csvp = new CSVParser();
             csvp.createJSON();
         }
+
+        // Create databases for session
+        AirportsDB airportsDB = new AirportsDB(); // TODO implement generation
     }
 
 }

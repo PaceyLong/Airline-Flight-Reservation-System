@@ -39,4 +39,13 @@ public class AirportsDB {
     public void removeAirport(String airportCode){
         airportsDB.remove(airportCode);
     }
+
+    /**
+     * Retrieve an airport from the database using it's airport code
+     * @param airportCode
+     * @return airport object
+     */
+    public Airport getAirport(String airportCode){
+        return airportsDB.get(airportCode);
+    }
 }
