@@ -1,4 +1,4 @@
-package source.src.Itinerary;
+package Itinerary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
