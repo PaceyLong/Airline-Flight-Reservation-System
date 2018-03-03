@@ -1,20 +1,41 @@
-package source.src.Itinerary;
+package src.Itinerary;
 
-import source.src.TTARouteNetwork.Flight;
+import src.TTARouteNetwork.Flight;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Itinerary{
-    private List<Flight> flightlist = new ArrayList<>();
-    private int airfairCostSum = 0;
 
-    public Itinerary() {
+    private List<src.TTARouteNetwork.Flight> flightList = new ArrayList<>();
+    private int totalPrice = 0;
+    private int numberFlightIn = 0;
+    private Flight flight;
+
+    public Itinerary(int totalPrice, int numberFlightIn, Flight fl) {
+        this.totalPrice = totalPrice;
+        this.numberFlightIn = numberFlightIn;
+        this.flight = fl;
     }
 
-    public void addFlight(Flight flight){
-        flightlist.add(flight);
-        airfairCostSum += flight.getAirfare();
+    public void addFlight(src.TTARouteNetwork.Flight fl){
+        flightList.add(fl);
+        totalPrice += fl.getAirfare();
+        numberFlightIn += 1;
     }
 
+    public int getTotalPrice(){
+        return totalPrice;
+    }
+
+    public int getNumberFlightIn(){
+        return numberFlightIn;
+    }
+
+    public String toString(){
+        return getTotalPrice() + "," + getNumberFlightIn() + "[,"
+                + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
+                + flight.getDepatureTime() + "," + flight.getDestinationAirport()
+                + "," + flight.getArrivalTime();
+    }
 }
