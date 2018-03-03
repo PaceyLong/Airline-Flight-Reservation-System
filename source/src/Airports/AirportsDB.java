@@ -33,7 +33,7 @@ public class AirportsDB {
      * Accessor for HashMap
      * @return HashMap
      */
-    public HashMap<String, Airport> getAirportsDB() {
+    public HashMap<String, Airport> getAirportsDBHashMap() {
         return airportsHashMap;
     }
 

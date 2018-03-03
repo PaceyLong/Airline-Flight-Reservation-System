@@ -17,7 +17,7 @@ public class Main {
         }
 
         // Create databases for session
-        AirportsDB airportsDB = new AirportsDB(); // TODO implement generation
+        AirportsDB airportsDB = AirportsDB.getInstance(); // TODO implement generation
     }
 
 }
