@@ -4,15 +4,29 @@ import java.util.HashMap;
 
 /**
  * @author Joshua Ehling
+ * Enforces Singleton Pattern
+ *
  * Hashmap database to store Airport objects
  * Key: airport code --> Val: Airport object
  */
 public class AirportsDB {
     /* attributes */
-    private HashMap<String, Airport> airportsDB;
+    private HashMap<String, Airport> airportsHashMap;
 
-    public AirportsDB(){
-        airportsDB = new HashMap<>();
+    /* Enforce Singleton Pattern */
+    private static AirportsDB instance;
+
+    /* Singleton Pattern accessor */
+    public static AirportsDB getInstance() {
+        if(instance == null) instance = new AirportsDB();
+        return instance;
+    }
+
+    /**
+     * Constructor
+     */
+    private AirportsDB(){
+        airportsHashMap = new HashMap<>();
     }
 
     /**
@@ -20,7 +34,7 @@ public class AirportsDB {
      * @return HashMap
      */
     public HashMap<String, Airport> getAirportsDB() {
-        return airportsDB;
+        return airportsHashMap;
     }
 
     /**
@@ -29,7 +43,7 @@ public class AirportsDB {
      * @param airport - airport object
      */
     public void addAirport(String airportCode, Airport airport) {
-        airportsDB.put(airportCode, airport);
+        airportsHashMap.put(airportCode, airport);
     }
 
     /**
@@ -37,7 +51,7 @@ public class AirportsDB {
      * @param airportCode
      */
     public void removeAirport(String airportCode){
-        airportsDB.remove(airportCode);
+        airportsHashMap.remove(airportCode);
     }
 
     /**
@@ -46,6 +60,6 @@ public class AirportsDB {
      * @return airport object
      */
     public Airport getAirport(String airportCode){
-        return airportsDB.get(airportCode);
+        return airportsHashMap.get(airportCode);
     }
 }
