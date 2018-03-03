@@ -3,6 +3,8 @@ package Airports;
 import java.util.ArrayList;
 
 /**
+ * @author Joshua Ehling
+ *
  * Airport Object class.
  * Weather: Each time a client requests the current airport information, the system will report the next field pair.
  *      When airport information requests have reported all field pairs for an airport, the system will reset
@@ -23,6 +25,14 @@ public class Airport {
     private String temperature;
     private int delayTime;
 
+    /**
+     * Constructor
+     * @param name - name of airport
+     * @param code - unique airport code
+     * @param weather - weather array
+     * @param temperature - temperature
+     * @param delayTime - delay time (integer value)
+     */
     public Airport(String name, String code, ArrayList<String> weather, String temperature, int delayTime){
         this.name = name;
         this.code = code;
