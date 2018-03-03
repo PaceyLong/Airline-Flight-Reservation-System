@@ -1,4 +1,4 @@
-package Airports;
+package src.Airports;
 
 import java.util.ArrayList;
 
