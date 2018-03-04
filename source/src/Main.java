@@ -1,23 +1,21 @@
 import Airports.AirportsDB;
 import csv.CSVParser;
 
-import java.io.File;
 import java.io.IOException;
 
 
 public class Main {
     public static void main(String[] args) throws IOException{
 
-        //if files exist do nothing, else create the json files
-        File fileAirports = new File("./src/Airports/airports.json");
-        File fileFlights = new File("./src/TTARouteNetwork/flights.json");
-        if(!fileAirports.exists() && !fileFlights.exists()){
-            CSVParser csvp = new CSVParser();
-            csvp.createJSON();
-        }
+        CSVParser csvp = new CSVParser();
+        csvp.createHashes();
+        AirportsDB airports = csvp.getAirports();
+        //HashMap airports = csvp.getAirports();
+
 
         // Create databases for session
-        AirportsDB airportsDB = AirportsDB.getInstance(); // TODO implement generation
+        //AirportsDB airportsDB = AirportsDB.getInstance(); // TODO implement generation
+
     }
 
 }
