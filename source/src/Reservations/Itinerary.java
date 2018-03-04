@@ -1,6 +1,6 @@
 package Reservations;
 
-import src.TTARouteNetwork.Flight;
+import TTARouteNetwork.Flight;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class Itinerary{
      * increase number of flight in itinerary.
      * @param fl
      */
-    public void addFlight(src.TTARouteNetwork.Flight fl){
+    public void addFlight(TTARouteNetwork.Flight fl){
         flightList.add(fl);
         totalPrice += fl.getAirfare();
     }

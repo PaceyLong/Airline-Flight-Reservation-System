@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3cac058a-e1f0-4a33-9fa3-9500a7ef5cb4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" afterPath="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" />
+      <change beforePath="$PROJECT_DIR$/source/src/Reservations/Itinerary.java" afterPath="$PROJECT_DIR$/source/src/Reservations/Itinerary.java" />
+      <change beforePath="$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java" afterPath="$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -56,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Itinerary.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Itinerary.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/src/Reservations/Itinerary.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="77" column="24" lean-forward="true" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
+            <state relative-caret-position="-460">
+              <caret line="28" column="16" lean-forward="true" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -71,18 +72,18 @@
       <file leaf-file-name="Flight.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="80" column="68" lean-forward="false" selection-start-line="80" selection-start-column="68" selection-end-line="80" selection-end-column="68" />
+            <state relative-caret-position="0">
+              <caret line="0" column="8" lean-forward="true" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReservationsDB.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ReservationsDB.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1373">
-              <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
+            <state relative-caret-position="-1838">
+              <caret line="19" column="70" lean-forward="true" selection-start-line="19" selection-start-column="70" selection-end-line="19" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#997#998#0" expanded="true" />
@@ -156,7 +157,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java" />
         <option value="$PROJECT_DIR$/source/src/Itinerary/Itinerary.java" />
         <option value="$PROJECT_DIR$/source/src/Airports/AirportsDB.java" />
         <option value="$PROJECT_DIR$/source/src/Airports/Airport.java" />
@@ -168,10 +168,11 @@
         <option value="$PROJECT_DIR$/source/src/Commands/AirportInfo.java" />
         <option value="$PROJECT_DIR$/source/src/Errors/DuplicateReservationException.java" />
         <option value="$PROJECT_DIR$/source/src/Errors/ReservationNotFoundException.java" />
-        <option value="$PROJECT_DIR$/source/src/Reservations/Itinerary.java" />
         <option value="$PROJECT_DIR$/source/src/Reservations/Reservation.java" />
         <option value="$PROJECT_DIR$/source/src/Errors/PassengerNotFoundException.java" />
         <option value="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" />
+        <option value="$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java" />
+        <option value="$PROJECT_DIR$/source/src/Reservations/Itinerary.java" />
       </list>
     </option>
   </component>
@@ -586,7 +587,14 @@
       <option name="project" value="LOCAL" />
       <updated>1520147628033</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added success messages for Reserve and Delete">
+      <created>1520148069294</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1520148069294</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -663,7 +671,8 @@
     <MESSAGE value="Implemented retrieveReservations() functionality" />
     <MESSAGE value="Removed getNumReservations()" />
     <MESSAGE value="Removed Reservation.java as it is no longer necessary." />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed Reservation.java as it is no longer necessary." />
+    <MESSAGE value="Added success messages for Reserve and Delete" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added success messages for Reserve and Delete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -846,14 +855,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="80" column="68" lean-forward="false" selection-start-line="80" selection-start-column="68" selection-end-line="80" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/src/Airports/Airport.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -905,24 +906,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/src/Reservations/Itinerary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="77" column="24" lean-forward="true" selection-start-line="77" selection-start-column="24" selection-end-line="77" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1373">
-          <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
+        <state relative-caret-position="-1838">
+          <caret line="19" column="70" lean-forward="true" selection-start-line="19" selection-start-column="70" selection-end-line="19" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#997#998#0" expanded="true" />
             <element signature="e#1050#1051#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/src/TTARouteNetwork/Flight.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8" lean-forward="true" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/src/Reservations/Itinerary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-460">
+          <caret line="28" column="16" lean-forward="true" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
