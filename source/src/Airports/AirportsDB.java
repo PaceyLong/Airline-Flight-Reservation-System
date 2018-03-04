@@ -1,4 +1,4 @@
-package src.Airports;
+package Airports;
 
 import java.util.HashMap;
 
