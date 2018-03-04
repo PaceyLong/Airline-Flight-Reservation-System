@@ -1,6 +1,7 @@
 package Reservations;
 
 import Errors.DuplicateReservationException;
+import Errors.ReservationNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,10 +51,6 @@ public class ReservationsDB {
         }
     }
 
-    public void deleteReservation(){
-        // TODO
-    }
-
     /**
      * Helper method. Checks if a passenger exists. If the don't, creates entry within database.
      * If they do, does nothing.
@@ -78,5 +75,30 @@ public class ReservationsDB {
         // verify unique itinerary. If not, throw an error
         if(currReservations.contains(itinerary)) throw new DuplicateReservationException();
         currReservations.add(itinerary);
+    }
+
+    public void deleteReservation(String passengerName, String origin, String destination){
+        try{
+            // verify the Passenger & their requested reservation exist
+            verifyReservation(passengerName, origin, destination);
+            // delete reservation
+            // todo
+        } catch (ReservationNotFoundException error){
+            System.out.println(error.getMessage());
+        }
+    }
+
+    /**
+     * Verifies that the Passenger, as well as their requested reservation, exist.
+     * Throws error if either of the two exist
+     * @param passengerName - name of passenger
+     * @param origin - 3 letter code for origin airport
+     * @param destination - 3 letter code for destination airport
+     * @throws ReservationNotFoundException - reservation doesn't exist
+     */
+    private void verifyReservation(String passengerName, String origin, String destination) throws ReservationNotFoundException{
+        // verify Passenger exists within the database
+        if(!reservationsHashMap.containsKey(passengerName)) throw new ReservationNotFoundException();
+        // todo
     }
 }

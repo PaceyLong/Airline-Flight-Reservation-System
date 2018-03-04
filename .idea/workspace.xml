@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3cac058a-e1f0-4a33-9fa3-9500a7ef5cb4" name="Default" comment="Implemented makeReservation() method within ReservationsDB">
-      <change beforePath="" afterPath="$PROJECT_DIR$/source/src/Errors/ReservationNotFoundException.java" />
+    <list default="true" id="3cac058a-e1f0-4a33-9fa3-9500a7ef5cb4" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" afterPath="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" />
     </list>
@@ -92,21 +91,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReservationsDB.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ReservationsDB.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="53" column="15" lean-forward="false" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
+            <state relative-caret-position="500">
+              <caret line="101" column="15" lean-forward="false" selection-start-line="101" selection-start-column="15" selection-end-line="101" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#823#824#0" expanded="true" />
-                <element signature="e#876#877#0" expanded="true" />
+                <element signature="e#867#868#0" expanded="true" />
+                <element signature="e#920#921#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReservationNotFoundException.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ReservationNotFoundException.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/src/Errors/ReservationNotFoundException.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
@@ -170,8 +169,8 @@
         <option value="$PROJECT_DIR$/source/src/Commands/RetrieveReservation.java" />
         <option value="$PROJECT_DIR$/source/src/Commands/AirportInfo.java" />
         <option value="$PROJECT_DIR$/source/src/Errors/DuplicateReservationException.java" />
-        <option value="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" />
         <option value="$PROJECT_DIR$/source/src/Errors/ReservationNotFoundException.java" />
+        <option value="$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java" />
       </list>
     </option>
   </component>
@@ -530,7 +529,14 @@
       <option name="project" value="LOCAL" />
       <updated>1520142356099</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Reservation Not Found Exception implemented">
+      <created>1520142619995</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1520142619995</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -600,7 +606,8 @@
     <MESSAGE value="Fixed package statements. Implemented singleton pattern in ReservationsDB" />
     <MESSAGE value="Implemented Duplicate Reservation Error. Adding functionality to ReservationsDB" />
     <MESSAGE value="Implemented makeReservation() method within ReservationsDB" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented makeReservation() method within ReservationsDB" />
+    <MESSAGE value="Reservation Not Found Exception implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reservation Not Found Exception implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -794,16 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/src/Reservations/Itinerary.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-700">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/src/Reservations/Reservation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-30">
@@ -833,18 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="53" column="15" lean-forward="false" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#823#824#0" expanded="true" />
-            <element signature="e#876#877#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/src/Errors/DuplicateReservationException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -863,6 +848,28 @@
           <folding>
             <element signature="e#275#276#0" expanded="true" />
             <element signature="e#328#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/src/Reservations/Itinerary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-700">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/src/Reservations/ReservationsDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="101" column="15" lean-forward="false" selection-start-line="101" selection-start-column="15" selection-end-line="101" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#867#868#0" expanded="true" />
+            <element signature="e#920#921#0" expanded="true" />
           </folding>
         </state>
       </provider>
