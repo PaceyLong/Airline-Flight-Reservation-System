@@ -1,16 +1,15 @@
 package TTARouteNetwork;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * @author Joshua Ehling
  * Enforces Singleton Pattern
- * Database used to map Origin Airport --> ArrayList <Flights>
+ * Database used to map flight number --> ArrayList <Flights>
  */
 public class FlightsDB {
     /* attributes */
-    private HashMap<String, ArrayList<Flight>> flightsHashMap;
+    private HashMap<Integer, Flight> flightsHashMap;
 
     /* Enforce Singleton Pattern */
     private static FlightsDB instance;
@@ -26,5 +25,31 @@ public class FlightsDB {
      */
     private FlightsDB(){
         flightsHashMap = new HashMap<>();
+    }
+
+    /**
+     * Accessor for total set of Flight objects. Maps Flight # --> Flight Object
+     * @param flightNumber - unique flight number identifier
+     * @return ArrayList of Flight objects that share the origin airport
+     */
+    public Flight getFlight(int flightNumber){
+        return flightsHashMap.get(flightNumber);
+    }
+
+    /**
+     * Mutator method. Adds Flight objects to general HashMap based on Flight Number
+     * @param flightNumber - unique flight ID
+     * @param flight - Flight object
+     */
+    public void addFlight(int flightNumber, Flight flight){
+        flightsHashMap.put(flightNumber, flight);
+    }
+
+    /**
+     * Mutator method. Removes flight objects from general HashMap
+     * @param flightNumber  unique flight ID
+     */
+    public void removeFlight(int flightNumber){
+        flightsHashMap.remove(flightNumber);
     }
 }
