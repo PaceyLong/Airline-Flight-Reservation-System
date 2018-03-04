@@ -13,6 +13,8 @@ import java.util.HashMap;
  */
 public class ReservationsDB {
     /* attributes */
+    private String successfulDeleteMsg = "delete,successful";
+    private String successfulReservationMsg = "reserve,successful";
 
     /* HashMap to store Passenger Names --> ArrayList of Itineraries */
     private HashMap<String, ArrayList<Itinerary>> reservationsHashMap;
@@ -46,6 +48,7 @@ public class ReservationsDB {
         // append itinerary to Passenger's reservations list. ERROR if not unique
         try{
             appendItinerary(passengerName, itinerary);
+            System.out.println(successfulReservationMsg);
         } catch (DuplicateReservationException error){
             System.out.println(error.getMessage());
         }
@@ -88,6 +91,7 @@ public class ReservationsDB {
             verifyReservation(passengerName, itinerary);
             // delete reservation
             reservationsHashMap.get(passengerName).remove(itinerary);
+            System.out.println(successfulDeleteMsg);
         } catch (ReservationNotFoundException error){
             System.out.println(error.getMessage());
         }
