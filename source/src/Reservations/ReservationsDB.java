@@ -1,5 +1,7 @@
 package Reservations;
 
+import Errors.DuplicateReservationException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,11 +43,15 @@ public class ReservationsDB {
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // append itinerary to Passenger's reservations list. ERROR if not unique
-        appendItinerary(reservationsHashMap.get(passengerName), itinerary);
+        try{
+            appendItinerary(passengerName, itinerary);
+        } catch (DuplicateReservationException error){
+            System.out.println(error.getMessage());
+        }
     }
 
     /**
-     * Checks if a passenger exists. If the don't, creates entry within database.
+     * Helper method. Checks if a passenger exists. If the don't, creates entry within database.
      * If they do, does nothing.
      */
     private void recordPassenger(String passengerName){
@@ -55,11 +61,18 @@ public class ReservationsDB {
         }
     }
 
-    private void appendItinerary(ArrayList<Itinerary> reservations, Itinerary itinerary) throws Error{
+    /**
+     * Helper method. Attempts to append provided itinerary to the reservationsDB Hashmap.
+     * Checks if reservation is unique. Throws Duplicate Reservation Error when not.
+     * @param passengerName - name of passenger to check
+     * @param itinerary - itinerary trying to be appended to the reservations list
+     * @throws DuplicateReservationException - thrown on non-unique itinerary reservation
+     */
+    private void appendItinerary(String passengerName, Itinerary itinerary) throws DuplicateReservationException{
+        // retrieve ArrayList tied to passenger
+        ArrayList<Itinerary> currReservations = reservationsHashMap.get(passengerName);
         // verify unique itinerary. If not, throw an error
-        if(reservations.contains(itinerary)) {
-            throw Error;
-        }
-
+        if(currReservations.contains(itinerary)) throw new DuplicateReservationException();
+        currReservations.add(itinerary);
     }
 }
