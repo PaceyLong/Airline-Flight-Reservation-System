@@ -10,12 +10,10 @@ public class Itinerary{
     private List<src.TTARouteNetwork.Flight> flightList = new ArrayList<>();
     private int totalPrice = 0;
     private int numberFlightIn = 0;
-    private Flight flight;
 
     public Itinerary(int totalPrice, int numberFlightIn, Flight fl) {
         this.totalPrice = totalPrice;
         this.numberFlightIn = numberFlightIn;
-        this.flight = fl;
     }
 
     /**
@@ -63,15 +61,18 @@ public class Itinerary{
     }
 
     /**
+     * @author Joshua Ehling
      * toString(): total price, number of flight in itinerary, flight number, origin, departure time,
      * destination, arrival time.
      * @return
      */
     @Override
     public String toString(){
-        return getTotalPrice() + "," + getNumberFlightIn() + ","
-                + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
-                + flight.getDepatureTime() + "," + flight.getDestinationAirport()
-                + "," + flight.getArrivalTime();
+        String printout = getTotalPrice() + "," + getNumberFlightIn() + ",";
+        for(int idx = 0; idx < flightList.size(); idx++){
+            printout += flightList.get(idx).toString();
+            if (idx + 1 != flightList.size()) printout += ",";
+        }
+        return printout;
     }
 }
