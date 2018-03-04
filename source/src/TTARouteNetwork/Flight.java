@@ -1,4 +1,4 @@
-package TTARouteNetwork;
+package src.TTARouteNetwork;
 
 public class Flight {
     private String originAirport;
@@ -41,6 +41,13 @@ public class Flight {
 
     public int getAirfare() {
         return airfare;
+    }
+
+    @Override
+    public String toString() {
+        return  getOriginAirport() + "," + getDepatureTime() + ","
+                + getArrivalTime() + "," + getAirfare() + ","
+                + getDestinationAirport() + "," + getFlightNumber();
     }
 }
 
