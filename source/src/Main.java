@@ -1,4 +1,5 @@
 import Airports.AirportsDB;
+import TTARouteNetwork.FlightsDB;
 import csv.CSVParser;
 
 import java.io.IOException;
@@ -10,11 +11,9 @@ public class Main {
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
         AirportsDB airports = csvp.getAirports();
-        //HashMap airports = csvp.getAirports();
+        FlightsDB flights = csvp.getFlights();
 
 
-        // Create databases for session
-        //AirportsDB airportsDB = AirportsDB.getInstance(); // TODO implement generation
 
     }
 

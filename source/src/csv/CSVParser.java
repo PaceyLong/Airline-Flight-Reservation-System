@@ -1,11 +1,8 @@
 package csv;
 
 import Airports.AirportsDB;
-import TTARouteNetwork.Flight;
+import TTARouteNetwork.FlightsDB;
 import csv.parseTypes.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /*
@@ -19,7 +16,7 @@ public class CSVParser {
     private CSVParse weatherParse;
     private CSVParse flightParse;
     private AirportsDB airports;
-    private HashMap<String, ArrayList<Flight>> flights;
+    private FlightsDB flights;
 
 
     public CSVParser(){
@@ -32,7 +29,7 @@ public class CSVParser {
 
         //airports and flights HashMaps will be filled with their data in the createHashes function call
         this.airports = AirportsDB.getInstance();
-        this.flights = new HashMap<>();
+        this.flights = FlightsDB.getInstance();
     }
 
     public void createHashes(){
@@ -46,7 +43,7 @@ public class CSVParser {
 
 
         //read in all the flight data and adds to flights HashMap
-        //this.flights = this.flightParse.parseCSV(csvPath+"route_network.csv", this.flights);
+        this.flights.setFlightsHashMap(this.flightParse.parseCSV(csvPath+"route_network.csv", this.flights.getFlightsHashMap()));
 
     }
 
@@ -54,7 +51,8 @@ public class CSVParser {
         return airports;
     }
 
-    public HashMap<String, ArrayList<Flight>> getFlights() {
+    //should be a FlightsDB object returned eventually
+    public FlightsDB getFlights() {
         return flights;
     }
 }

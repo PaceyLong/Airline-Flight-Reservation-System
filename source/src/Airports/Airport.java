@@ -48,7 +48,7 @@ public class Airport {
         Weather currWeather = null;
         if (weather.size() > 0){ // as long as weather isn't empty
             currWeather = weather.get(weatherIndex);
-            weatherIndex = (weatherIndex < weather.size())? weatherIndex + 1 : 0;
+            weatherIndex = (weatherIndex < weather.size() -1)? weatherIndex + 1 : 0;
         }
         return currWeather;
     }
@@ -80,7 +80,10 @@ public class Airport {
      */
     @Override
     public String toString(){
-        return name + "," + getWeather().getCondition() + "," + Integer.toString(getWeather().getTemp()) + "," + Integer.toString(delayTime);
+        String condition = getWeather().getCondition();
+        String temperature = Integer.toString(getWeather().getTemp());
+        String delayTime = Integer.toString(this.delayTime);
+        return name + "," + condition + "," + temperature + "," + delayTime;
 
     }
 }

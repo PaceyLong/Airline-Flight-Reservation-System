@@ -1,5 +1,6 @@
 package TTARouteNetwork;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -9,7 +10,7 @@ import java.util.HashMap;
  */
 public class FlightsDB {
     /* attributes */
-    private HashMap<Integer, Flight> flightsHashMap;
+    private HashMap<String, ArrayList<Flight>> flightsHashMap;
 
     /* Enforce Singleton Pattern */
     private static FlightsDB instance;
@@ -29,27 +30,39 @@ public class FlightsDB {
 
     /**
      * Accessor for total set of Flight objects. Maps Flight # --> Flight Object
-     * @param flightNumber - unique flight number identifier
+     * @param flightsKey - origin destination flights key
      * @return ArrayList of Flight objects that share the origin airport
      */
-    public Flight getFlight(int flightNumber){
-        return flightsHashMap.get(flightNumber);
+    public ArrayList getFlight(String flightsKey){
+        return flightsHashMap.get(flightsKey);
+    }
+
+    public void setFlightsHashMap(HashMap hash){
+        this.flightsHashMap = hash;
+    }
+
+    public HashMap<String, ArrayList<Flight>> getFlightsHashMap(){
+        return this.flightsHashMap;
     }
 
     /**
      * Mutator method. Adds Flight objects to general HashMap based on Flight Number
-     * @param flightNumber - unique flight ID
+     * @param flightsKey - origin detsination flights key
      * @param flight - Flight object
      */
-    public void addFlight(int flightNumber, Flight flight){
-        flightsHashMap.put(flightNumber, flight);
-    }
+      public void addFlight(String flightsKey, Flight flight){
+         ArrayList<Flight> flights = flightsHashMap.get(flightsKey);
+         flights.add(flight);
+         flightsHashMap.put(flightsKey, flights);
+      }
 
     /**
      * Mutator method. Removes flight objects from general HashMap
-     * @param flightNumber  unique flight ID
+     * @param flightsKey  origin detsination flights key
      */
-    public void removeFlight(int flightNumber){
-        flightsHashMap.remove(flightNumber);
-    }
+     public void removeFlight(String flightsKey, Flight flight){
+         ArrayList<Flight> flights = flightsHashMap.get(flightsKey);
+         flights.remove(flight);
+         flightsHashMap.put(flightsKey, flights);
+      }
 }
