@@ -1,4 +1,4 @@
-package src.Itinerary;
+package Reservations;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -9,7 +9,7 @@ public class Reservation {
     private String origin;
     private String destination;
     private int numberOfItinerary = 0;
-    HashMap<String, src.Itinerary.Itinerary> reservationList = new HashMap<String, src.Itinerary.Itinerary>();
+    HashMap<String, Itinerary> reservationList = new HashMap<String, Itinerary>();
 
     /**
      * reservation constructor

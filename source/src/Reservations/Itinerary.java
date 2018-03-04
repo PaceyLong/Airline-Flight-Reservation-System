@@ -1,4 +1,4 @@
-package src.Itinerary;
+package Reservations;
 
 import src.TTARouteNetwork.Flight;
 
@@ -17,7 +17,7 @@ public class Itinerary{
     }
 
     /**
-     * Calculates total airfare for the Itinerary.
+     * Calculates total airfare for the Reservations.
      * create a flight list.
      * increase number of flight in itinerary.
      * @param fl
@@ -74,5 +74,22 @@ public class Itinerary{
             if (idx + 1 != flightList.size()) printout += ",";
         }
         return printout;
+    }
+
+    /**
+     * @author Joshua Ehling
+     * Enforce unique Itineraries for reservations: Origin, Destination must be unique!
+     * @param object - object to be checked for equality
+     * @return true if objects are the same, false otherwise
+     */
+    @Override
+    public boolean equals(Object object){
+        // test for object type. Fail if not Itinerary
+        if (object instanceof Itinerary){
+            Itinerary itinerary = (Itinerary) object;
+            // verify if origin and destination are unique between itineraries
+            return (this.getOrigin().equals(itinerary.getOrigin())) && (this.getDestination().equals(itinerary.getDestination()));
+        }
+        return false;
     }
 }
