@@ -32,11 +32,27 @@ public class Itinerary{
         return numberFlightIn;
     }
 
+    /**
+     * Returns the 3-letter code representing the origin airport of the first flight in the itinerary.
+     * @return
+     */
+    public String getOrigin(){
+        return flightList.get(0).getOriginAirport();
+    }
+
+    /**
+     * Returns the 3-letter code representing the destination airport of the last flight in the itinerary.
+     * @return
+     */
+    public String getDestination(){
+        return flightList.get(flightList.size()-1).getDestinationAirport();
+    }
+
     @Override
     public String toString(){
         return getTotalPrice() + "," + getNumberFlightIn() + "[,"
-                + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
-                + flight.getDepatureTime() + "," + flight.getDestinationAirport()
+                + flight.getFlightNumber() + "," + getOrigin() + ","
+                + flight.getDepatureTime() + "," + getDestination()
                 + "," + flight.getArrivalTime();
     }
 }
