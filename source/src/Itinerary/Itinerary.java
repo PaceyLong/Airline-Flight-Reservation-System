@@ -18,16 +18,30 @@ public class Itinerary{
         this.flight = fl;
     }
 
+    /**
+     * Calculates total airfare for the Itinerary.
+     * create a flight list.
+     * increase number of flight in itinerary.
+     * @param fl
+     */
     public void addFlight(src.TTARouteNetwork.Flight fl){
         flightList.add(fl);
         totalPrice += fl.getAirfare();
         numberFlightIn += 1;
     }
 
+    /**
+     * totalPrice getter
+     * @return
+     */
     public int getTotalPrice(){
         return totalPrice;
     }
 
+    /**
+     * number of flight in itinerary getter
+     * @return
+     */
     public int getNumberFlightIn(){
         return numberFlightIn;
     }
@@ -48,11 +62,16 @@ public class Itinerary{
         return flightList.get(flightList.size()-1).getDestinationAirport();
     }
 
+    /**
+     * toString(): total price, number of flight in itinerary, flight number, origin, departure time,
+     * destination, arrival time.
+     * @return
+     */
     @Override
     public String toString(){
         return getTotalPrice() + "," + getNumberFlightIn() + "[,"
-                + flight.getFlightNumber() + "," + getOrigin() + ","
-                + flight.getDepatureTime() + "," + getDestination()
+                + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
+                + flight.getDepatureTime() + "," + flight.getDestinationAirport()
                 + "," + flight.getArrivalTime();
     }
 }
