@@ -1,6 +1,7 @@
 package Commands;
 
 import Airports.AirportsDB;
+import Errors.*;
 import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 
@@ -17,7 +18,7 @@ public class InputParser {
     private ArrayList<String> parsedInput;
     private Command command;
 
-    public InputParser(String input){
+    public InputParser(String input) throws Exception{
         parseInput(input);
     }
 
@@ -26,7 +27,7 @@ public class InputParser {
      * a command is chosen and errors are accounted for.
      * @param input: the String request from the user
      */
-    public void parseInput(String input){
+    public void parseInput(String input) throws Exception{
         input = input.replaceAll("\\s","");
         String[] split = input.split(",");
         for(String i : split){
@@ -35,23 +36,37 @@ public class InputParser {
 
         switch(parsedInput.get(0)){
             case "info":
-                this.setCommand(new FlightInfo());
+                try{
+                    infoErrors();
+                    this.setCommand(new FlightInfo());
+                }catch(UnknownOriginException|UnknownDestinationException|InvalidConnectionLimitException|InvalidSortOrderException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "reserve":
                 this.setCommand(new ReserveFlight());
                 break;
             case "retrieve":
-                this.setCommand(new RetrieveReservation());
+                try{
+                    retrieveErrors();
+                    this.setCommand(new RetrieveReservation());
+                }catch(UnknownOriginException|UnknownDestinationException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "delete":
                 this.setCommand(new DeleteReservation());
                 break;
             case "airport":
-                this.setCommand(new AirportInfo());
+                try{
+                    airportErrors();
+                    this.setCommand(new AirportInfo());
+                }catch(UnknownAirportException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             default:
-                System.out.println("error,unknown request");
-                break;
+                throw new UnknownRequestException();
         }
     }
 
@@ -71,79 +86,76 @@ public class InputParser {
     }
 
     /**
-     * Error checking if the request is looking for Flight Information
-     * @return true if errors are found, false if no errors
+      * Error checking if the request is looking for Flight Information
+      * @throws Exception
      */
-    public boolean infoErrors(){
-        Boolean errors = true;
+    public void infoErrors() throws Exception{
         String origin = parsedInput.get(1);
         String destination = parsedInput.get(2);
-        String connections = parsedInput.get(3);
-        String sortOrder = parsedInput.get(4);
-
-        if(airportsDB.getAirport(origin) == null){
-            System.out.println("error,unknown origin");
-        }else if(airportsDB.getAirport(destination) == null){
-            System.out.println("error,unknown destination");
-        }else if(connections != null && !(connections.equals("0") || connections.equals("1") || connections.equals("2"))){
-            System.out.println("error,invalid connection limit");
-        }else if(sortOrder != null && !(sortOrder.equals("departure") || sortOrder.equals("arrival") || sortOrder.equals("airfare"))){
-            System.out.println("error,invalid sort order");
-        }else{
-            errors = false;
+        String connections = null;
+        String sortOrder = null;
+        if(parsedInput.size() >= 4) {
+            connections = parsedInput.get(3);
+        }
+        if(parsedInput.size() >= 5) {
+            sortOrder = parsedInput.get(4);
         }
 
-        return errors;
+        if(airportsDB.getAirport(origin) == null){
+            throw new UnknownOriginException();
+        }else if(airportsDB.getAirport(destination) == null){
+            throw new UnknownDestinationException();
+        }else if(connections != null && !(connections.equals("0") || connections.equals("1") || connections.equals("2") || connections.equals(""))){
+            throw new InvalidConnectionLimitException();
+        }else if(sortOrder != null && !(sortOrder.equals("departure") || sortOrder.equals("arrival") || sortOrder.equals("airfare") || sortOrder.equals(""))){
+            throw new InvalidSortOrderException();
+        }
+    }
+
+    /**
+     * Error checking if the request is looking to reserve a reservation
+     * @throws Exception
+     */
+    public void reserveErrors(){
+        String id = parsedInput.get(1);
+        String passenger = parsedInput.get(2);
     }
 
     /**
      * Error checking if the request is looking for retrieving a reservation
-     * @return true if errors are found, false if no errors
+     * @throws Exception
      */
-    public boolean retrieveErrors(){
-        Boolean errors = true;
+    public void retrieveErrors() throws Exception{
         String passenger = parsedInput.get(1);
         String origin = parsedInput.get(2);
         String destination = parsedInput.get(3);
 
         if(airportsDB.getAirport(origin) == null){
-            System.out.println("error,unknown origin");
+            throw new UnknownOriginException();
         }else if(airportsDB.getAirport(destination) == null){
-            System.out.println("error,unknown destination");
-        }else{
-            errors = false;
+            throw new UnknownDestinationException();
         }
-
-        return errors;
     }
 
     /**
      * Error checking if the request is looking to delete a reservation
-     * @return true if errors are found, false if no errors
+     * @throws Exception
      */
-    public boolean deleteErrors(){
-        Boolean errors = true;
+    public void deleteErrors(){
         String passenger = parsedInput.get(1);
         String origin = parsedInput.get(2);
         String destination = parsedInput.get(3);
-
-        return true;
     }
 
     /**
      * Error checking if the request is looking for Airport Information
-     * @return true if errors are found, false if no errors
+     ** @throws Exception
      */
-    public boolean airportErrors(){
-        Boolean errors = true;
+    public void airportErrors() throws Exception{
         String airport = parsedInput.get(1);
 
         if(airportsDB.getAirport(airport) == null){
-            System.out.println("error,unknown airport");
-        }else{
-            errors = false;
+            throw new UnknownAirportException();
         }
-
-        return errors;
     }
 }
