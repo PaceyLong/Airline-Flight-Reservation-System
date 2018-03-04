@@ -76,5 +76,12 @@ public class Flight {
     public int getAirfare() {
         return airfare;
     }
+
+    @Override
+    public String toString() {
+        return  getOriginAirport() + "," + getDepatureTime() + ","
+                + getArrivalTime() + "," + getAirfare() + ","
+                + getDestinationAirport() + "," + getFlightNumber();
+    }
 }
 

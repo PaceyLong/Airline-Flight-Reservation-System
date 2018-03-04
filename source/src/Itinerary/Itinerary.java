@@ -12,13 +12,6 @@ public class Itinerary{
     private int numberFlightIn = 0;
     private Flight flight;
 
-    /**
-     * itinerary constructor
-     *
-     * @param totalPrice total price of the airfare
-     * @param numberFlightIn number of flight in itinerary
-     * @param fl flight
-     */
     public Itinerary(int totalPrice, int numberFlightIn, Flight fl) {
         this.totalPrice = totalPrice;
         this.numberFlightIn = numberFlightIn;
@@ -77,8 +70,8 @@ public class Itinerary{
     @Override
     public String toString(){
         return getTotalPrice() + "," + getNumberFlightIn() + "[,"
-                + flight.getFlightNumber() + "," + getOrigin() + ","
-                + flight.getDepatureTime() + "," + getDestination()
+                + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
+                + flight.getDepatureTime() + "," + flight.getDestinationAirport()
                 + "," + flight.getArrivalTime();
     }
 }
