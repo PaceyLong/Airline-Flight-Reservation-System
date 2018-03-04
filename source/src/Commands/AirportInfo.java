@@ -1,7 +1,7 @@
-package Commands;
+package src.Commands;
 
-import Airports.Airport;
-import Airports.AirportsDB;
+import src.Airports.Airport;
+import src.Airports.AirportsDB;
 
 import java.util.ArrayList;
 

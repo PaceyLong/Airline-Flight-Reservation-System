@@ -1,11 +1,13 @@
-package source.src.Itinerary;
+package src.Itinerary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Reservation {
     private String passengerName;
-    private Itinerary itinerary;
+    HashMap<String, src.Itinerary.Itinerary> reservation = new HashMap<String, src.Itinerary.Itinerary>();
 
-    public Reservation(String passengerName, Itinerary itinerary) {
-        this.passengerName = passengerName;
-        this.itinerary = itinerary;
-    }
 }
