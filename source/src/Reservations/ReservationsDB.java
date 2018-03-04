@@ -82,7 +82,7 @@ public class ReservationsDB {
      * @param passengerName - name of passenger
      * @param itinerary - itinerary to be deleted
      */
-    public void deleteReservation(String passengerName, Itinerary itinerary){
+    public void deleteItinerary(String passengerName, Itinerary itinerary){
         try{
             // verify the Passenger & their requested reservation exist
             verifyReservation(passengerName, itinerary);
@@ -114,23 +114,6 @@ public class ReservationsDB {
     public void retriveReservations(String passengerName){
         ArrayList<Itinerary> itineraries = reservationsHashMap.get(passengerName);
         System.out.println(constructMessage(itineraries));
-    }
-
-    /**
-     * Helper method. Constructs printout based on submitted list of Itineraries
-     * Iterates through list and compiles toStrings() into final message.
-     * @param matchingItineraries - submitted ArrayList of itineraries
-     * @return - completed String
-     */
-    private String constructMessage(ArrayList<Itinerary> matchingItineraries){
-        // begin crafting message
-        int numReservations = matchingItineraries.size();
-        String msg = "info," + numReservations + "\n";
-        // print out matching itineraries
-        for(int idx = 0; idx < numReservations; idx++){
-            msg += idx + "," + matchingItineraries.get(idx).toString() + "\n";
-        }
-        return msg;
     }
 
     /**
@@ -167,12 +150,20 @@ public class ReservationsDB {
         System.out.println(constructMessage(matchingItineraries));
     }
 
-
     /**
-     * Helper method. Returns number of reservations tied to a passenger
-     * @return size of reservations arraylist
+     * Helper method. Constructs printout based on submitted list of Itineraries
+     * Iterates through list and compiles toStrings() into final message.
+     * @param matchingItineraries - submitted ArrayList of itineraries
+     * @return - completed String
      */
-    private int getNumReservations(String passengerName){
-        return reservationsHashMap.get(passengerName).size();
+    private String constructMessage(ArrayList<Itinerary> matchingItineraries){
+        // begin crafting message
+        int numReservations = matchingItineraries.size();
+        String msg = "info," + numReservations + "\n";
+        // print out matching itineraries
+        for(int idx = 0; idx < numReservations; idx++){
+            msg += idx + "," + matchingItineraries.get(idx).toString() + "\n";
+        }
+        return msg;
     }
 }
