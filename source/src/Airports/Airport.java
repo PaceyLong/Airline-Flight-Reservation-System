@@ -1,9 +1,6 @@
 package Airports;
 import java.util.ArrayList;
 
-
-
-
 /**
  * @author Joshua Ehling, Ethan Della Posta
  *
