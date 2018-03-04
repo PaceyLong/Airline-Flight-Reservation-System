@@ -77,10 +77,10 @@ public class ReservationsDB {
         currReservations.add(itinerary);
     }
 
-    public void deleteReservation(String passengerName, String origin, String destination){
+    public void deleteReservation(String passengerName, Itinerary itinerary){
         try{
             // verify the Passenger & their requested reservation exist
-            verifyReservation(passengerName, origin, destination);
+            verifyReservation(passengerName, itinerary);
             // delete reservation
             // todo
         } catch (ReservationNotFoundException error){
@@ -92,13 +92,14 @@ public class ReservationsDB {
      * Verifies that the Passenger, as well as their requested reservation, exist.
      * Throws error if either of the two exist
      * @param passengerName - name of passenger
-     * @param origin - 3 letter code for origin airport
-     * @param destination - 3 letter code for destination airport
+     * @param itinerary - itinary to verify
      * @throws ReservationNotFoundException - reservation doesn't exist
      */
-    private void verifyReservation(String passengerName, String origin, String destination) throws ReservationNotFoundException{
+    private void verifyReservation(String passengerName, Itinerary itinerary) throws ReservationNotFoundException{
         // verify Passenger exists within the database
         if(!reservationsHashMap.containsKey(passengerName)) throw new ReservationNotFoundException();
-        // todo
+        // verify Passenger's reservation exists within their current list of reserved itineraries
+        if (!reservationsHashMap.get(passengerName).contains(itinerary)) throw new ReservationNotFoundException();
+
     }
 }
