@@ -69,7 +69,7 @@ public class Itinerary{
      */
     @Override
     public String toString(){
-        return getTotalPrice() + "," + getNumberFlightIn() + "[,"
+        return getTotalPrice() + "," + getNumberFlightIn() + ","
                 + flight.getFlightNumber() + "," + flight.getOriginAirport() + ","
                 + flight.getDepatureTime() + "," + flight.getDestinationAirport()
                 + "," + flight.getArrivalTime();
