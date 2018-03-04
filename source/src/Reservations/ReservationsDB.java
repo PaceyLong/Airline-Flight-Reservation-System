@@ -40,7 +40,7 @@ public class ReservationsDB {
      * @param passengerName key value for hashmap
      * @param itinerary - itinerary being reserved
      */
-    public void makeReservation(String passengerName, Itinerary itinerary){
+    public void reserveItinerary(String passengerName, Itinerary itinerary){
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // append itinerary to Passenger's reservations list. ERROR if not unique
@@ -77,12 +77,17 @@ public class ReservationsDB {
         currReservations.add(itinerary);
     }
 
+    /**
+     * Delete requested itinerary from current list of reserved itineraries
+     * @param passengerName - name of passenger
+     * @param itinerary - itinerary to be deleted
+     */
     public void deleteReservation(String passengerName, Itinerary itinerary){
         try{
             // verify the Passenger & their requested reservation exist
             verifyReservation(passengerName, itinerary);
             // delete reservation
-            // todo
+            reservationsHashMap.get(passengerName).remove(itinerary);
         } catch (ReservationNotFoundException error){
             System.out.println(error.getMessage());
         }
@@ -96,10 +101,78 @@ public class ReservationsDB {
      * @throws ReservationNotFoundException - reservation doesn't exist
      */
     private void verifyReservation(String passengerName, Itinerary itinerary) throws ReservationNotFoundException{
-        // verify Passenger exists within the database
+        // throw error if Passenger doesn't exist within the database
         if(!reservationsHashMap.containsKey(passengerName)) throw new ReservationNotFoundException();
-        // verify Passenger's reservation exists within their current list of reserved itineraries
+        // throw error if Passenger's reservation doesn't exist within their current list of reserved itineraries
         if (!reservationsHashMap.get(passengerName).contains(itinerary)) throw new ReservationNotFoundException();
+    }
 
+    /**
+     * Default printout of all reservations under a given Passenger
+     * @param passengerName - passenger
+     */
+    public void retriveReservations(String passengerName){
+        ArrayList<Itinerary> itineraries = reservationsHashMap.get(passengerName);
+        System.out.println(constructMessage(itineraries));
+    }
+
+    /**
+     * Helper method. Constructs printout based on submitted list of Itineraries
+     * Iterates through list and compiles toStrings() into final message.
+     * @param matchingItineraries - submitted ArrayList of itineraries
+     * @return - completed String
+     */
+    private String constructMessage(ArrayList<Itinerary> matchingItineraries){
+        // begin crafting message
+        int numReservations = matchingItineraries.size();
+        String msg = "info," + numReservations + "\n";
+        // print out matching itineraries
+        for(int idx = 0; idx < numReservations; idx++){
+            msg += idx + "," + matchingItineraries.get(idx).toString() + "\n";
+        }
+        return msg;
+    }
+
+    /**
+     * Overloaded method to catch scenario of provided origin parameter
+     * @param passengerName - passenger
+     * @param origin - origin airport
+     */
+    public void retrieveReservations(String passengerName, String origin){
+        // instantiate list of itineraries that have the given Origin
+        ArrayList<Itinerary> matchingItineraries = new ArrayList<>();
+        // compile list of itineraries that contain the desired value
+        for (Itinerary itinerary : reservationsHashMap.get(passengerName)){
+            if(itinerary.getOrigin().equals(origin)) matchingItineraries.add(itinerary);
+        }
+        System.out.println(constructMessage(matchingItineraries));
+    }
+
+    /**
+     * Overloaded method to catch provided origin and destination parameters
+     * @param passengerName - passenger
+     * @param origin - origin airport
+     * @param destination - destination airport
+     */
+    public void retrieveReservation(String passengerName, String origin, String destination){
+        // instantiate list of itineraries that have given origin and destination
+        ArrayList<Itinerary> matchingItineraries = new ArrayList<>();
+        // compile list of itineraries that contain desired origin and destination values
+        for (Itinerary itinerary : reservationsHashMap.get(passengerName)){
+            if(itinerary.getOrigin().equals(origin) && itinerary.getDestination().equals(destination)){
+                matchingItineraries.add(itinerary);
+            }
+        }
+        // begin crafting message
+        System.out.println(constructMessage(matchingItineraries));
+    }
+
+
+    /**
+     * Helper method. Returns number of reservations tied to a passenger
+     * @return size of reservations arraylist
+     */
+    private int getNumReservations(String passengerName){
+        return reservationsHashMap.get(passengerName).size();
     }
 }
