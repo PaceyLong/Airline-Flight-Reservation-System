@@ -32,7 +32,7 @@ public class AirportsDB {
     /**
      * Setter for HashMap
      */
-    public void setAirportsDBHashMap(HashMap hash) {
+    public void setAirportsDBHashMap(HashMap<String, Airport> hash) {
         airportsHashMap = hash;
     }
 
