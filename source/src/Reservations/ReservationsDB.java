@@ -38,6 +38,28 @@ public class ReservationsDB {
      * @param itinerary - itinerary being reserved
      */
     public void makeReservation(String passengerName, Itinerary itinerary){
-        reservationsHashMap.put(passengerName, itinerary);
+        // Assure passenger exists within DB
+        recordPassenger(passengerName);
+        // append itinerary to Passenger's reservations list. ERROR if not unique
+        appendItinerary(reservationsHashMap.get(passengerName), itinerary);
+    }
+
+    /**
+     * Checks if a passenger exists. If the don't, creates entry within database.
+     * If they do, does nothing.
+     */
+    private void recordPassenger(String passengerName){
+        // if passenger doesn't already exist within DB, add to DB.
+        if(!reservationsHashMap.containsKey(passengerName)){
+            reservationsHashMap.put(passengerName, new ArrayList<Itinerary>());
+        }
+    }
+
+    private void appendItinerary(ArrayList<Itinerary> reservations, Itinerary itinerary) throws Error{
+        // verify unique itinerary. If not, throw an error
+        if(reservations.contains(itinerary)) {
+            throw Error;
+        }
+
     }
 }
