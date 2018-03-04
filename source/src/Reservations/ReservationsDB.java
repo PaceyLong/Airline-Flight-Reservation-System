@@ -50,6 +50,10 @@ public class ReservationsDB {
         }
     }
 
+    public void deleteReservation(){
+        // TODO
+    }
+
     /**
      * Helper method. Checks if a passenger exists. If the don't, creates entry within database.
      * If they do, does nothing.
