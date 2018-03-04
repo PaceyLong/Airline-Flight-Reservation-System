@@ -30,6 +30,13 @@ public class AirportsDB {
     }
 
     /**
+     * Setter for HashMap
+     */
+    public void setAirportsDBHashMap(HashMap<String, Airport> hash) {
+        airportsHashMap = hash;
+    }
+
+    /**
      * Accessor for HashMap
      * @return HashMap
      */

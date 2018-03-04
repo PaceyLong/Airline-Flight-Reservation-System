@@ -1,15 +1,16 @@
 package csv;
 
+import Airports.AirportsDB;
+import TTARouteNetwork.Flight;
 import csv.parseTypes.*;
-import org.json.simple.JSONArray;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /*
-this class is the "context" of the strategy pattern i have implemented here. This class is created in the Main
-and writes json objects to both flights.json and airports.json.
+this class is the "context" of the strategy pattern i have implemented here. This class is instantiated in the Main
+and creates the HashMap objects for both flights and airports
 */
 public class CSVParser {
     private CSVParse nameParse;
@@ -17,46 +18,43 @@ public class CSVParser {
     private CSVParse timeParse;
     private CSVParse weatherParse;
     private CSVParse flightParse;
-    private JSONArray airports;
-    private JSONArray flights;
+    private AirportsDB airports;
+    private HashMap<String, ArrayList<Flight>> flights;
 
 
     public CSVParser(){
-        // all the parse types the parser will use to generate the json objects
+        // all the parse types the parser will use to generate the HashMaps
         this.nameParse = new AirportNameParse();
         this.delayParse = new AirportDelayParse();
         this.timeParse = new AirportTimeParse();
         this.weatherParse = new AirportWeatherParse();
         this.flightParse = new FlightParse();
-        //airports and flights json arrays will be filled with their data in the createJSON function call
-        this.airports = new JSONArray();
-        this.flights = new JSONArray();
+
+        //airports and flights HashMaps will be filled with their data in the createHashes function call
+        this.airports = AirportsDB.getInstance();
+        this.flights = new HashMap<>();
     }
 
-    public void createJSON(){
+    public void createHashes(){
         String csvPath = "./src/csv/";
 
-        //read in all the airport data and write to json file
-        this.airports = this.nameParse.parseCSV(csvPath+"airports.csv", this.airports);
-        this.airports = this.delayParse.parseCSV(csvPath+"delay.csv", this.airports);
-        this.airports = this.timeParse.parseCSV(csvPath+"min_connection_time.csv", this.airports);
-        this.airports = this.weatherParse.parseCSV(csvPath+"weather.csv", this.airports);
-        writeJSONToFile("./src/Airports/airports.json", this.airports);
+        //read in all the airport data and adds to flights HashMap
+        this.airports.setAirportsDBHashMap(this.nameParse.parseCSV(csvPath+"airports.csv", this.airports.getAirportsDBHashMap()));
+        this.airports.setAirportsDBHashMap(this.delayParse.parseCSV(csvPath+"delay.csv", this.airports.getAirportsDBHashMap()));
+        this.airports.setAirportsDBHashMap(this.timeParse.parseCSV(csvPath+"min_connection_time.csv", this.airports.getAirportsDBHashMap()));
+        this.airports.setAirportsDBHashMap(this.weatherParse.parseCSV(csvPath+"weather.csv", this.airports.getAirportsDBHashMap()));
 
-        //read in all the flight data and write to json file
-        this.flights = this.flightParse.parseCSV(csvPath+"route_network.csv", this.flights);
-        writeJSONToFile("./src/TTARouteNetwork/flights.json", this.flights);
+
+        //read in all the flight data and adds to flights HashMap
+        //this.flights = this.flightParse.parseCSV(csvPath+"route_network.csv", this.flights);
 
     }
 
-    public void writeJSONToFile(String path, JSONArray obj){
+    public AirportsDB getAirports() {
+        return airports;
+    }
 
-        try (FileWriter file = new FileWriter(path)) {
-            file.write(obj.toJSONString());
-            System.out.println("Successfully Copied JSON Object to " + path);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+    public HashMap<String, ArrayList<Flight>> getFlights() {
+        return flights;
     }
 }

@@ -1,20 +1,24 @@
 package csv.parseTypes;
+import Airports.Airport;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
     This parse type parses the lines from 'airports.csv' (which contains the name and the code of each airport)
-    and adds them to slots in the corresponding airports json array
+    and adds them to slots in the corresponding airports HashMap
  */
 public class AirportNameParse extends CSVParse {
 
     @Override
-    public JSONArray useCSVLine(String[] strLineArr, JSONArray arr, int i) {
-        JSONObject obj = new JSONObject();
-        obj.put("code", strLineArr[0]);
-        obj.put("name", strLineArr[1]);
-        arr.add(obj);
-        return arr;
+    public HashMap useCSVLine(String[] strLineArr, HashMap hash) {
+        //extract values from string array
+        String name = strLineArr[1];
+        String code = strLineArr[0];
+
+        //create new airport object, add to airport hash
+        Airport airport = new Airport(name, code, new ArrayList<>(), 0, 0);
+        hash.put(code, airport);
+        return hash;
     }
 }

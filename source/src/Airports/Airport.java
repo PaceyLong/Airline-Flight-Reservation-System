@@ -1,9 +1,11 @@
 package Airports;
-
 import java.util.ArrayList;
 
+
+
+
 /**
- * @author Joshua Ehling
+ * @author Joshua Ehling, Ethan Della Posta
  *
  * Airport Object class.
  * Weather: Each time a client requests the current airport information, the system will report the next field pair.
@@ -20,9 +22,9 @@ public class Airport {
     /* attributes */
     private String name;
     private String code;
-    private ArrayList<String> weather;
+    private ArrayList<Weather> weather;
     private int weatherIndex = 0;
-    private String temperature;
+    private int minConnectionTime;
     private int delayTime;
 
     /**
@@ -30,23 +32,23 @@ public class Airport {
      * @param name - name of airport
      * @param code - unique airport code
      * @param weather - weather array
-     * @param temperature - temperature
      * @param delayTime - delay time (integer value)
      */
-    public Airport(String name, String code, ArrayList<String> weather, String temperature, int delayTime){
+    public Airport(String name, String code, ArrayList<Weather> weather, int delayTime, int minConnectionTime){
         this.name = name;
         this.code = code;
         this.weather = weather;
-        this.temperature = temperature;
         this.delayTime = delayTime;
+        this.minConnectionTime = minConnectionTime;
+
     }
 
     /**
      * Get weather using weatherindex. Increment on each request. Reset after reaching size of array
      * @return weather string
      */
-    private String getWeather(){
-        String currWeather = "";
+    private Weather getWeather(){
+        Weather currWeather = null;
         if (weather.size() > 0){ // as long as weather isn't empty
             currWeather = weather.get(weatherIndex);
             weatherIndex = (weatherIndex < weather.size())? weatherIndex + 1 : 0;
@@ -55,11 +57,33 @@ public class Airport {
     }
 
     /**
+     * add new weather object to arraylist
+     */
+    public void addWeather(Weather weather){
+        this.weather.add(weather);
+    }
+
+    /**
+     * Set minimum connection time
+     */
+    public void setMinConnectionTime(int min){
+        this.minConnectionTime = min;
+    }
+
+    /**
+     * Set airport delay
+     */
+    public void setDelayTime(int delayTime){
+        this.delayTime = delayTime;
+    }
+
+    /**
      * toString(): airport name, weather, temperature, delay (minutes)
      * @return printout
      */
     @Override
     public String toString(){
-        return name + "," + getWeather() + "," + temperature + "," + Integer.toString(delayTime);
+        return name + "," + getWeather().getCondition() + "," + Integer.toString(getWeather().getTemp()) + "," + Integer.toString(delayTime);
+
     }
 }
