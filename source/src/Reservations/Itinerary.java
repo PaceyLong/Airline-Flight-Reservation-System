@@ -3,18 +3,24 @@ package Reservations;
 import src.TTARouteNetwork.Flight;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * @author Joshua Ehling (Refactor), Peishi (Original)
+ * Class used to represent Itineraries. Itineraries contain multiple flights.
+ * They summarize the information for a series of flights into the Origin and
+ * final destination.
+ * Also contain price for entire trip.
+ */
 public class Itinerary{
+    /* attributes */
+    private ArrayList<Flight> flightList = new ArrayList<>();
+    private int totalPrice;
 
-    private List<src.TTARouteNetwork.Flight> flightList = new ArrayList<>();
-    private int totalPrice = 0;
-    private int numberFlightIn = 0;
-
-    public Itinerary(int totalPrice, int numberFlightIn, Flight fl) {
-        this.totalPrice = totalPrice;
-        this.numberFlightIn = numberFlightIn;
-    }
+    /**
+     * @author Josh Ehling
+     * default constructor
+     */
+    public Itinerary() { totalPrice = 0; }
 
     /**
      * Calculates total airfare for the Reservations.
@@ -25,7 +31,6 @@ public class Itinerary{
     public void addFlight(src.TTARouteNetwork.Flight fl){
         flightList.add(fl);
         totalPrice += fl.getAirfare();
-        numberFlightIn += 1;
     }
 
     /**
@@ -41,7 +46,7 @@ public class Itinerary{
      * @return
      */
     public int getNumberFlightIn(){
-        return numberFlightIn;
+        return flightList.size();
     }
 
     /**
@@ -71,7 +76,7 @@ public class Itinerary{
         String printout = getTotalPrice() + "," + getNumberFlightIn() + ",";
         for(int idx = 0; idx < flightList.size(); idx++){
             printout += flightList.get(idx).toString();
-            if (idx + 1 != flightList.size()) printout += ",";
+            if (idx + 1 < flightList.size()) printout += ",";
         }
         return printout;
     }
