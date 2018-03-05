@@ -14,7 +14,7 @@ public class ReservationParse extends CSVParse {
 
         //extract data from string array
         String passengerName = strLineArr[0];
-        for(int x=1; x < strLineArr.length; x+=7){
+        for(int x=1; x < strLineArr.length; x+=6){
             String airfare = strLineArr[x];
             String flightNumber = strLineArr[x+1];
             String originAirport = strLineArr[x+2];
