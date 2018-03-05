@@ -27,6 +27,7 @@ public class Main {
         System.out.println("Airport information request: airport,airport;");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Please input a command (Type 'QUIT' to exit: ");
+
         while(true){
             input += scanner.next();
             if(input.trim().contains("QUIT")){
