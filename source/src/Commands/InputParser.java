@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class InputParser {
     private AirportsDB airportsDB = AirportsDB.getInstance();
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
-    private ArrayList<String> parsedInput;
+    private ArrayList<String> parsedInput = new ArrayList<>();
     private Command command;
 
     public InputParser(String input) throws Exception{
@@ -85,8 +85,8 @@ public class InputParser {
     }
 
     /**
-      * Error checking if the request is looking for Flight Information
-      * @throws Exception
+     * Error checking if the request is looking for Flight Information
+     * @throws Exception
      */
     public void infoErrors() throws Exception{
         String origin = parsedInput.get(1);
