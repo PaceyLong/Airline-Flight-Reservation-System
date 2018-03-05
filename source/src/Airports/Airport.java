@@ -68,10 +68,26 @@ public class Airport {
     }
 
     /**
+     * accessor for connection time
+     * @return minConnectionTime
+     */
+    public int getMinConnectionTime(){
+        return this.minConnectionTime;
+    }
+
+    /**
      * Set airport delay
      */
     public void setDelayTime(int delayTime){
         this.delayTime = delayTime;
+    }
+
+    /**
+     * accessor for delay time
+     * @return delayTime
+     */
+    public int getDelayTime(){
+        return this.delayTime;
     }
 
     /**
