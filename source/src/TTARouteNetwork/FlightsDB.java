@@ -1,6 +1,5 @@
 package TTARouteNetwork;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,7 +9,7 @@ import java.util.HashMap;
  */
 public class FlightsDB {
     /* attributes */
-    private HashMap<String, ArrayList<Flight>> flightsHashMap;
+    private HashMap<Integer, Flight> flightsHashMap;
 
     /* Enforce Singleton Pattern */
     private static FlightsDB instance;
@@ -33,15 +32,12 @@ public class FlightsDB {
      * @param flightsKey - origin destination flights key
      * @return ArrayList of Flight objects that share the origin airport
      */
-    public ArrayList getFlight(String flightsKey){
+    public Flight getFlight(int flightsKey){
         return flightsHashMap.get(flightsKey);
     }
 
-    public void setFlightsHashMap(HashMap hash){
-        this.flightsHashMap = hash;
-    }
 
-    public HashMap<String, ArrayList<Flight>> getFlightsHashMap(){
+    public HashMap<Integer, Flight> getFlightsHashMap(){
         return this.flightsHashMap;
     }
 
@@ -50,19 +46,15 @@ public class FlightsDB {
      * @param flightsKey - origin detsination flights key
      * @param flight - Flight object
      */
-      public void addFlight(String flightsKey, Flight flight){
-         ArrayList<Flight> flights = flightsHashMap.get(flightsKey);
-         flights.add(flight);
-         flightsHashMap.put(flightsKey, flights);
+      public void addFlight(int flightsKey, Flight flight){
+         flightsHashMap.put(flightsKey, flight);
       }
 
     /**
      * Mutator method. Removes flight objects from general HashMap
      * @param flightsKey  origin detsination flights key
      */
-     public void removeFlight(String flightsKey, Flight flight){
-         ArrayList<Flight> flights = flightsHashMap.get(flightsKey);
-         flights.remove(flight);
-         flightsHashMap.put(flightsKey, flights);
+     public void removeFlight(int flightsKey, Flight flight){
+         flightsHashMap.put(flightsKey, flight);
       }
 }

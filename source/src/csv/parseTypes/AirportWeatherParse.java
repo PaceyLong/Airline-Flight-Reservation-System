@@ -1,6 +1,7 @@
 package csv.parseTypes;
 
 import Airports.Airport;
+import Airports.AirportsDB;
 import Airports.Weather;
 
 import java.util.HashMap;
@@ -12,10 +13,10 @@ import java.util.HashMap;
 public class AirportWeatherParse extends CSVParse {
 
     @Override
-    public HashMap useCSVLine(String[] strLineArr, HashMap hash) {
+    public void useCSVLine(String[] strLineArr) {
         //extract values from string array
         String code = strLineArr[0];
-        Airport airport = (Airport) hash.get(code);
+        Airport airport = AirportsDB.getInstance().getAirport(code);
 
         //create and add all weather objects to given airport object
         for(int x=1; x < strLineArr.length; x+=2){
@@ -24,9 +25,5 @@ public class AirportWeatherParse extends CSVParse {
             Weather weather = new Weather(temp, condition);
             airport.addWeather(weather);
         }
-        hash.put(code, airport);
-
-
-        return hash;
     }
 }

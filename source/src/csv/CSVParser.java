@@ -6,7 +6,7 @@ import csv.parseTypes.*;
 
 
 /*
-this class is the "context" of the strategy pattern i have implemented here. This class is instantiated in the Main
+this class is the "context" of the strategy pattern I have implemented here. This class is instantiated in the Main
 and creates the HashMap objects for both flights and airports
 */
 public class CSVParser {
@@ -36,14 +36,16 @@ public class CSVParser {
         String csvPath = "./src/csv/";
 
         //read in all the airport data and adds to flights HashMap
-        this.airports.setAirportsDBHashMap(this.nameParse.parseCSV(csvPath+"airports.csv", this.airports.getAirportsDBHashMap()));
-        this.airports.setAirportsDBHashMap(this.delayParse.parseCSV(csvPath+"delay.csv", this.airports.getAirportsDBHashMap()));
-        this.airports.setAirportsDBHashMap(this.timeParse.parseCSV(csvPath+"min_connection_time.csv", this.airports.getAirportsDBHashMap()));
-        this.airports.setAirportsDBHashMap(this.weatherParse.parseCSV(csvPath+"weather.csv", this.airports.getAirportsDBHashMap()));
+        //check if files don't exist
+        this.nameParse.parseCSV(csvPath + "airports.csv");
+        this.delayParse.parseCSV(csvPath + "delay.csv");
+        this.timeParse.parseCSV(csvPath + "min_connection_time.csv");
+        this.weatherParse.parseCSV(csvPath + "weather.csv");
 
 
         //read in all the flight data and adds to flights HashMap
-        this.flights.setFlightsHashMap(this.flightParse.parseCSV(csvPath+"route_network.csv", this.flights.getFlightsHashMap()));
+        this.flightParse.parseCSV(csvPath + "route_network.csv");
+
 
     }
 
@@ -51,7 +53,7 @@ public class CSVParser {
         return airports;
     }
 
-    //should be a FlightsDB object returned eventually
+
     public FlightsDB getFlights() {
         return flights;
     }
