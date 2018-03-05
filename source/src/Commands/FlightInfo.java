@@ -16,8 +16,33 @@ import java.util.ArrayList;
  *              The default sort order, if this field is omitted, is by time of departure.
  */
 public class FlightInfo implements Command{
+    private String origin;
+    private static final int ORIGIN_INDEX = 1;
+    private String destination;
+    private static final int DESTINATION_INDEX = 2;
+    private String connections;
+    private static final int CONNECTIONS_INDEX = 3;
+    private String sortOrder;
+    private static final int SORT_ORDER_INDEX = 4;
+    private static final String DEFAULT_CONNECTION_LIMIT = "2";
+    private static final String DEFAULT_SORT_ORDER = "departure";
+
     @Override
     public void execute(ArrayList<String> input) {
-        // todo
+        origin = input.get(ORIGIN_INDEX);
+        destination = input.get(DESTINATION_INDEX);
+        if(input.size() >= 4) {
+            connections = input.get(CONNECTIONS_INDEX);
+        }else{
+            connections = DEFAULT_CONNECTION_LIMIT;
+        }
+        if(input.size() >= 5) {
+            sortOrder = input.get(SORT_ORDER_INDEX);
+        }else{
+            sortOrder = DEFAULT_SORT_ORDER;
+        }
+
+
     }
+
 }
