@@ -5,11 +5,17 @@ import TTARouteNetwork.FlightsDB;
 import csv.parseTypes.*;
 
 
-/*
-this class is the "context" of the strategy pattern I have implemented here. This class is instantiated in the Main
-and creates the HashMap objects for both flights and airports
+/**
+*   this class is the "context" of the strategy pattern I have implemented here. This class is instantiated in the Main
+*   and creates the HashMap objects for both flights and airports
 */
 public class CSVParser {
+    public static String AIRPORTS_NAME_PATH =  "./src/CSVFiles/airports.csv";
+    public static String AIRPORTS_DELAY_PATH = "./src/CSVFiles/delay.csv";
+    public static String AIRPORTS_TIME_PATH = "./src/CSVFiles/min_connection_time.csv";
+    public static String AIRPORTS_WEATHER_PATH = "./src/CSVFiles/weather.csv";
+    public static String FLIGHTS_PATH = "./src/CSVFiles/route_network.csv";
+
     private CSVParse nameParse;
     private CSVParse delayParse;
     private CSVParse timeParse;
@@ -33,20 +39,17 @@ public class CSVParser {
     }
 
     public void createHashes(){
-        String csvPath = "./src/csv/";
 
         //read in all the airport data and adds to flights HashMap
         //check if files don't exist
-        this.nameParse.parseCSV(csvPath + "airports.csv");
-        this.delayParse.parseCSV(csvPath + "delay.csv");
-        this.timeParse.parseCSV(csvPath + "min_connection_time.csv");
-        this.weatherParse.parseCSV(csvPath + "weather.csv");
+        this.nameParse.parseCSV(AIRPORTS_NAME_PATH);
+        this.delayParse.parseCSV(AIRPORTS_DELAY_PATH);
+        this.timeParse.parseCSV(AIRPORTS_TIME_PATH);
+        this.weatherParse.parseCSV(AIRPORTS_WEATHER_PATH);
 
 
         //read in all the flight data and adds to flights HashMap
-        this.flightParse.parseCSV(csvPath + "route_network.csv");
-
-
+        this.flightParse.parseCSV(FLIGHTS_PATH);
     }
 
     public AirportsDB getAirports() {
