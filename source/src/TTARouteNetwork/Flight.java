@@ -13,17 +13,17 @@ public class Flight {
      *
      * @param originAirport origin airport
      * @param destinationAirport destination airport
-     * @param depatureTime departure time
+     * @param departureTime departure time
      * @param arrivalTime arrival time
      * @param flightNumber flight number
      * @param airfare airfare
      */
     public Flight(String originAirport, String destinationAirport,
-                  String depatureTime, String arrivalTime,
+                  String departureTime, String arrivalTime,
                   int flightNumber, int airfare) {
         this.originAirport = originAirport;
         this.destinationAirport = destinationAirport;
-        this.depatureTime = depatureTime;
+        this.depatureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.flightNumber = flightNumber;
         this.airfare = airfare;
