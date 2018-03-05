@@ -1,5 +1,4 @@
 package Sorting;
-
 import Reservations.Itinerary;
 
 import java.util.Comparator;

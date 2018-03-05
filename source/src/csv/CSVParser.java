@@ -1,11 +1,11 @@
 package csv;
 
 import Airports.AirportsDB;
-import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.Flight;
 import TTARouteNetwork.FlightsDB;
 import csv.parseTypes.*;
+import Reservations.Itinerary;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -108,7 +108,10 @@ public class CSVParser {
                         writer.write(flight.toString() + ",");
                     }
                 }
+                writer.write("\n");
             }
+            writer.close();
+
         }catch(IOException e){
             e.printStackTrace();
         }

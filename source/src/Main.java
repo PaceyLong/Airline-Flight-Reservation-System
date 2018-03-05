@@ -1,8 +1,8 @@
 import Airports.AirportsDB;
-import Commands.InputParser;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.FlightsDB;
 import csv.CSVParser;
+import Commands.InputParser;
 
 import java.util.Scanner;
 
@@ -55,7 +55,6 @@ public class Main {
                     input = "";
                 }catch(Exception e){
                     input = "";
-                    System.out.println(e.getMessage());
                 }
             }
         }

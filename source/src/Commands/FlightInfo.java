@@ -39,7 +39,7 @@ public class FlightInfo implements Command{
     private String sortOrder;
     private Comparator sortOrderComparator;
     private static final int SORT_ORDER_INDEX = 4;
-    private static final String DEFAULT_CONNECTION_LIMIT = "2";
+    private static final int DEFAULT_CONNECTION_LIMIT = 2;
     private static final String DEFAULT_SORT_ORDER = "departure";
 
     @Override
@@ -47,9 +47,13 @@ public class FlightInfo implements Command{
         origin = input.get(ORIGIN_INDEX);
         destination = input.get(DESTINATION_INDEX);
         if(input.size() >= 4) {
-            connections = Integer.parseInt(input.get(CONNECTIONS_INDEX));
+            if(input.get(CONNECTIONS_INDEX).equals("")){
+                connections = DEFAULT_CONNECTION_LIMIT;
+            }else {
+                connections = Integer.parseInt(input.get(CONNECTIONS_INDEX));
+            }
         }else{
-            connections = Integer.parseInt(DEFAULT_CONNECTION_LIMIT);
+            connections = DEFAULT_CONNECTION_LIMIT;
         }
         if(input.size() >= 5) {
             sortOrder = input.get(SORT_ORDER_INDEX);
@@ -70,11 +74,11 @@ public class FlightInfo implements Command{
         if(relevantItineraries.isEmpty()){
             System.out.println("There are no flights/lists of flights that match your request.");
         }else{
+            relevantItineraries.sort(sortOrderComparator);
             for( Itinerary itinerary : relevantItineraries){
                 System.out.println(itinerary.toString());
             }
         }
-
     }
 
     /**

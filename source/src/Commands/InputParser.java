@@ -65,7 +65,8 @@ public class InputParser {
                 }
                 break;
             default:
-                throw new UnknownRequestException();
+                UnknownRequestException e = new UnknownRequestException();
+                System.out.println(e.getMessage());
         }
     }
 
