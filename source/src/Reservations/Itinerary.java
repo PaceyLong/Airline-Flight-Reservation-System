@@ -65,6 +65,13 @@ public class Itinerary{
         return flightList.get(flightList.size()-1).getDestinationAirport();
     }
 
+    public String getDepartureTime(){
+        return flightList.get(0).getDepatureTime();
+    }
+
+    public String getArrivalTime(){
+        return flightList.get(flightList.size() - 1).getArrivalTime();
+    }
     /**
      * @author Joshua Ehling
      * toString(): total price, number of flight in itinerary, flight number, origin, departure time,

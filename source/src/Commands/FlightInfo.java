@@ -42,7 +42,6 @@ public class FlightInfo implements Command{
             sortOrder = DEFAULT_SORT_ORDER;
         }
 
-
     }
 
 }
