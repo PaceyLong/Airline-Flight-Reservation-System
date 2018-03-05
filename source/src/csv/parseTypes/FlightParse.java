@@ -1,7 +1,7 @@
 package csv.parseTypes;
 import TTARouteNetwork.Flight;
+import TTARouteNetwork.FlightsDB;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class FlightParse extends CSVParse {
 
     @Override
-    public HashMap useCSVLine(String[] strLineArr, HashMap hash) {
+    public void useCSVLine(String[] strLineArr) {
 
         //extract data from string array
         String originAirport = strLineArr[0];
@@ -25,20 +25,7 @@ public class FlightParse extends CSVParse {
 
         //create new Flight object with defined values
         Flight flight = new Flight(originAirport, destinationAirport, departureTime, arrivalTime, flightNumber, airfare);
-        String key = originAirport + " to " + destinationAirport;
-        ArrayList<Flight> flights;
-
-
-        if(hash.containsKey(key)){
-            flights =  (ArrayList<Flight>) hash.get(key);
-            flights.add(flight);
-        }
-        else{
-            flights = new ArrayList<>();
-            flights.add(flight);
-        }
-        hash.put(key, flights);
-        return hash;
+        FlightsDB.getInstance().addFlight(flightNumber, flight);
 
     }
 }
