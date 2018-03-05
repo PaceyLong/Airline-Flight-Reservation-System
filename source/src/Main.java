@@ -26,7 +26,7 @@ public class Main {
         System.out.println("Delete reservation request: delete,passenger,origin,destination;");
         System.out.println("Airport information request: airport,airport;");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Please input a command (Type 'QUIT' to exit: ");
+        System.out.println("Please input a command (Type 'QUIT' to exit): ");
 
         while(true){
             input += scanner.next();
@@ -40,7 +40,7 @@ public class Main {
                     parser.executeRequest();
                     input = "";
                 }catch(Exception e){
-
+                    e.toString();
                 }
             }
         }
