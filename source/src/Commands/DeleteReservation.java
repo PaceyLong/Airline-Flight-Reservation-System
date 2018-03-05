@@ -1,5 +1,8 @@
 package Commands;
 
+import Reservations.Itinerary;
+import Reservations.ReservationsDB;
+
 import java.util.ArrayList;
 
 /**
@@ -12,8 +15,16 @@ import java.util.ArrayList;
  *      destination: three-letter code for the reservation's destination airport
  */
 public class DeleteReservation implements Command {
+    /* attributes */
+    private static final int DELETE_KEYWORD = 0;
+    private static final int PASSENGER = 1;
+    private static final int ORIGIN = 2;
+    private static final int DESTINATION = 3;
+
     @Override
     public void execute(ArrayList<String> input) {
-        // todo
+        ReservationsDB reservationsDB = ReservationsDB.getInstance();
+        Itinerary itinerary = reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+        reservationsDB.deleteItinerary(input.get(PASSENGER), itinerary);
     }
 }

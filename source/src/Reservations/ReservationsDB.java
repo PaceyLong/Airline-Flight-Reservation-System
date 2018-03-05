@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * @author Joshua Ehling
- * Enforces Singleton Pattern
+ * Enforces Singleton Patte+rn
  * Database used to map Passenger Name --> Reservations (Itineraries)
  */
 public class ReservationsDB {
@@ -153,8 +153,21 @@ public class ReservationsDB {
      * @param origin - origin airport
      * @param destination - destination airport
      */
-    public void retrieveReservation(String passengerName, String origin, String destination){
+    public void retrieveReservations(String passengerName, String origin, String destination){
         // instantiate list of itineraries that have given origin and destination
+        ArrayList<Itinerary> matchingItineraries = getMatchingItineraries(passengerName, origin, destination);
+        // begin crafting message
+        System.out.println(constructMessage(matchingItineraries));
+    }
+
+    /**
+     * Helper method. Retrieves arraylist of matching itineraries based on input
+     * @param passengerName - passenger name
+     * @param origin - airport origin
+     * @param destination - airport destination
+     * @return ArrayList<Itinerary> of matching itineraries
+     */
+    private ArrayList<Itinerary> getMatchingItineraries(String passengerName, String origin, String destination){
         ArrayList<Itinerary> matchingItineraries = new ArrayList<>();
         // compile list of itineraries that contain desired origin and destination values
         for (Itinerary itinerary : reservationsHashMap.get(passengerName)){
@@ -162,8 +175,19 @@ public class ReservationsDB {
                 matchingItineraries.add(itinerary);
             }
         }
-        // begin crafting message
-        System.out.println(constructMessage(matchingItineraries));
+        return matchingItineraries;
+    }
+
+    /**
+     * Accessor for itinerary from list of reservations that matches given input
+     * @param passengerName - passenger
+     * @param origin - origin airport
+     * @param destination - destination airport
+     * @return
+     */
+    public Itinerary getItinerary(String passengerName, String origin, String destination){
+        // return first item in matching itineraries list (should be only one)
+        return getMatchingItineraries(passengerName, origin, destination).get(0);
     }
 
     /**
