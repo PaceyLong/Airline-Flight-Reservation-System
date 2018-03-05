@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class InputParser {
     private AirportsDB airportsDB = AirportsDB.getInstance();
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
-    private ArrayList<String> parsedInput;
+    private ArrayList<String> parsedInput = new ArrayList<>();
     private Command command;
 
     public InputParser(String input) throws Exception{

@@ -1,8 +1,8 @@
 import Airports.AirportsDB;
 import Commands.InputParser;
-import Errors.UnknownOriginException;
 import TTARouteNetwork.FlightsDB;
 import csv.CSVParser;
+
 import java.util.Scanner;
 
 
@@ -36,7 +36,7 @@ public class Main {
             }
             if(input.trim().endsWith(";")){
                 try{
-                    parser = new InputParser(input.substring(0, input.length() - 2));
+                    parser = new InputParser(input.substring(0, input.length() - 1));
                     parser.executeRequest();
                     input = "";
                 }catch(Exception e){
