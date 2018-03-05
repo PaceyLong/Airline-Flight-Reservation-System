@@ -3,7 +3,6 @@
 
 ## Requirements:
 - Java 8 Installed
-- design-project-team-6.jar at same level as /data folder
 - /CSVFIIes folder contains populated CSV files
     - airports.csv
     - delay.csv
@@ -17,9 +16,9 @@
     replace each CSV path in the CSVParser class with the copied path.
 
 ## Instructions(Windows)
-- move into top-level folder
-- run "start.bat"
+- Move into top-level folder
+- Run "start.bat"
 
 ## Insructions(Mac)
-- in Terminal, move into top-level folder
-- type -jar team6.jar"
+- In Terminal, navigate to the folder that jar file is in
+- Type " java -jar source.jar "
