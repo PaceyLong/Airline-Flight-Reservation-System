@@ -1,6 +1,7 @@
 package csv.parseTypes;
 
 import Airports.Airport;
+import Airports.AirportsDB;
 
 import java.util.HashMap;
 
@@ -12,15 +13,13 @@ import java.util.HashMap;
 public class AirportDelayParse extends CSVParse {
 
     @Override
-    public HashMap useCSVLine(String[] strLineArr, HashMap hash) {
+    public void useCSVLine(String[] strLineArr) {
         //extract values from string array
         String code = strLineArr[0];
         int delay = Integer.parseInt(strLineArr[1]);
 
         //update given airport object with delay
-        Airport airport = (Airport) hash.get(code);
+        Airport airport = AirportsDB.getInstance().getAirport(code);
         airport.setDelayTime(delay);
-        hash.put(code, airport);
-        return hash;
     }
 }

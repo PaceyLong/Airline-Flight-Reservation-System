@@ -13,6 +13,8 @@ public class Main {
         AirportsDB airports = csvp.getAirports();
         FlightsDB flights = csvp.getFlights();
 
+        csvp.getAirports();
+
 
 
     }

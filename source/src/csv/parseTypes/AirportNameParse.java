@@ -1,5 +1,6 @@
 package csv.parseTypes;
 import Airports.Airport;
+import Airports.AirportsDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,14 +12,13 @@ import java.util.HashMap;
 public class AirportNameParse extends CSVParse {
 
     @Override
-    public HashMap useCSVLine(String[] strLineArr, HashMap hash) {
+    public void useCSVLine(String[] strLineArr) {
         //extract values from string array
         String name = strLineArr[1];
         String code = strLineArr[0];
 
         //create new airport object, add to airport hash
         Airport airport = new Airport(name, code, new ArrayList<>(), 0, 0);
-        hash.put(code, airport);
-        return hash;
+        AirportsDB.getInstance().addAirport(code, airport);
     }
 }
