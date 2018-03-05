@@ -2,8 +2,6 @@ package csv.parseTypes;
 import TTARouteNetwork.Flight;
 import TTARouteNetwork.FlightsDB;
 
-import java.util.HashMap;
-
 
 /*
     This parse type parses the lines from 'route_network.csv' (which contains origin airport code, destination airport code,

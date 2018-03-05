@@ -5,6 +5,7 @@ import Errors.ReservationNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * @author Joshua Ehling
@@ -26,6 +27,17 @@ public class ReservationsDB {
     public static ReservationsDB getInstance(){
         if (instance == null) instance = new ReservationsDB();
         return instance;
+    }
+
+    /**
+     * Called by parser to write reservations to reservations.csv
+     */
+    public ArrayList<Itinerary> parserGetReservations(String passengerName){
+        return reservationsHashMap.get(passengerName);
+    }
+
+    public Set<String> parserGetReservationKeySet(){
+        return reservationsHashMap.keySet();
     }
 
     /**

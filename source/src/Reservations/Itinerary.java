@@ -50,6 +50,11 @@ public class Itinerary{
     }
 
     /**
+     * accessor for flightList used in parser
+     */
+     public ArrayList<Flight> getFlights(){ return flightList; };
+
+    /**
      * Returns the 3-letter code representing the origin airport of the first flight in the itinerary.
      * @return
      */
