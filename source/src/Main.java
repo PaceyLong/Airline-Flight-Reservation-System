@@ -39,6 +39,7 @@ public class Main {
                     parser.executeRequest();
                     input = "";
                 }catch(Exception e){
+
                 }
             }
         }
