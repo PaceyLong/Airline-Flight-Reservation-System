@@ -85,8 +85,8 @@ public class InputParser {
     }
 
     /**
-      * Error checking if the request is looking for Flight Information
-      * @throws Exception
+     * Error checking if the request is looking for Flight Information
+     * @throws Exception
      */
     public void infoErrors() throws Exception{
         String origin = parsedInput.get(1);
