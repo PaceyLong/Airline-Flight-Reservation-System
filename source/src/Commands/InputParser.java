@@ -2,7 +2,6 @@ package Commands;
 
 import Airports.AirportsDB;
 import Errors.*;
-import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ import java.util.ArrayList;
  * @author Nick Asermily, nja9798@g.rit.edu
  */
 public class InputParser {
-    private AirportsDB airportsDB;
-    private ReservationsDB reservationsDB;
+    private AirportsDB airportsDB = AirportsDB.getInstance();
+    private ReservationsDB reservationsDB = ReservationsDB.getInstance();
     private ArrayList<String> parsedInput;
     private Command command;
 
