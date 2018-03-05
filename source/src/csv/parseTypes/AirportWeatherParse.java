@@ -4,8 +4,6 @@ import Airports.Airport;
 import Airports.AirportsDB;
 import Airports.Weather;
 
-import java.util.HashMap;
-
 /*
     This parse type parses the lines from 'weather.csv' (which contains the code and a variable number of weather
     fields for each airport) and adds them to slots in the corresponding airports HashMap

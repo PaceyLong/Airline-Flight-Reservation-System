@@ -1,5 +1,6 @@
 import Airports.AirportsDB;
 import Commands.InputParser;
+import Reservations.ReservationsDB;
 import TTARouteNetwork.FlightsDB;
 import csv.CSVParser;
 
@@ -13,6 +14,7 @@ public class Main {
         csvp.createHashes();
         AirportsDB airports = csvp.getAirports();
         FlightsDB flights = csvp.getFlights();
+        ReservationsDB reservations = csvp.getReservations();
         InputParser parser;
         Scanner scanner = new Scanner(System.in);
         String input = "";
@@ -32,6 +34,9 @@ public class Main {
             input += scanner.next();
             if(input.trim().contains("QUIT")){
                 System.out.println("Thank you for using AFRS!");
+
+                //save any reservations upon quitting
+                csvp.writeToCSV();
                 return;
             }
             if(input.trim().endsWith(";")){
@@ -44,6 +49,8 @@ public class Main {
                 }
             }
         }
+
+
     }
 
 }
