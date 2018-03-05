@@ -28,7 +28,7 @@ public class Itinerary{
      * increase number of flight in itinerary.
      * @param fl
      */
-    public void addFlight(TTARouteNetwork.Flight fl){
+    public void addFlight(Flight fl){
         flightList.add(fl);
         totalPrice += fl.getAirfare();
     }
@@ -85,10 +85,10 @@ public class Itinerary{
      */
     @Override
     public String toString(){
-        String printout = getTotalPrice() + "," + getNumberFlightIn() + ",";
+        String printout = getTotalPrice() + "," + getNumberFlightIn() + ",\n\t";
         for(int idx = 0; idx < flightList.size(); idx++){
             printout += flightList.get(idx).toString();
-            if (idx + 1 < flightList.size()) printout += ",";
+            if (idx + 1 < flightList.size()) printout += ",\n\t";
         }
         return printout;
     }

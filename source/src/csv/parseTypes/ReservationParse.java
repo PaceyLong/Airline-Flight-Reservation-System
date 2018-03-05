@@ -1,8 +1,8 @@
 package csv.parseTypes;
 
-import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.Flight;
+import Reservations.Itinerary;
 
 public class ReservationParse extends CSVParse {
 
@@ -21,8 +21,7 @@ public class ReservationParse extends CSVParse {
             String departureTime = strLineArr[x+3];
             String destinationAirport = strLineArr[x+4];
             String arrivalTime = strLineArr[x+5];
-            Flight flight = new Flight(originAirport, destinationAirport, departureTime, arrivalTime,
-                    Integer.parseInt(flightNumber), Integer.parseInt(airfare));
+            Flight flight = new Flight(originAirport, destinationAirport, departureTime, arrivalTime, Integer.parseInt(flightNumber), Integer.parseInt(airfare));
             itinerary.addFlight(flight);
         }
         ReservationsDB.getInstance().reserveItinerary(passengerName, itinerary);

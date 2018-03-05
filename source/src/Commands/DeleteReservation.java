@@ -1,6 +1,6 @@
 package Commands;
-
 import Reservations.Itinerary;
+
 import Reservations.ReservationsDB;
 
 import java.util.ArrayList;
