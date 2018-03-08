@@ -70,7 +70,7 @@ public class FlightInfo implements Command{
             this.sortOrderComparator = new SortByDeparture();
         }
 
-        ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, sortOrderComparator, connections);
+        ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
         if(relevantItineraries.isEmpty()){
             System.out.println("There are no flights/lists of flights that match your request.");
         }else{
@@ -87,12 +87,10 @@ public class FlightInfo implements Command{
      *
      * @param originAirport
      * @param destinationAirport
-     * @param sortBy
      * @param limitConnections
      * @return relItineraries
      */
-    public ArrayList getRelevantItineraries(String originAirport, String destinationAirport,
-                                Comparator sortBy, int limitConnections){
+    public ArrayList getRelevantItineraries(String originAirport, String destinationAirport, int limitConnections){
         ArrayList<Itinerary> relItineraries = new ArrayList<>();
         Collection<Flight> allFlights =  FlightsDB.getInstance().getFlightsHashMap().values();
 
@@ -101,7 +99,7 @@ public class FlightInfo implements Command{
 
         //if number of connections is 0, end here
         if(limitConnections == 0)
-            return returnList(sortBy, relItineraries);
+            return returnList(relItineraries);
 
         //define necessary array lists for flights
         Collection<Flight> middleFlights = new ArrayList<>();
@@ -127,7 +125,7 @@ public class FlightInfo implements Command{
 
         //if number of connections is 1, end here
         if(limitConnections == 1)
-            return returnList(sortBy, relItineraries);
+            return returnList(relItineraries);
 
         relItineraries = addTripleFlights(relItineraries, originFlights, destinationFlights, middleFlights);
 
@@ -155,12 +153,10 @@ public class FlightInfo implements Command{
      *
      * return and sort the list of objects to be printed out in the terminal (end the getRelevantItineraries method)
      *
-     * @param sortBy
      * @param relItineraries
      * @return relItineraries
      */
-    public ArrayList<Itinerary> returnList(Comparator sortBy, ArrayList<Itinerary> relItineraries){
-        relItineraries.sort(sortBy);
+    public ArrayList<Itinerary> returnList(ArrayList<Itinerary> relItineraries){
         return relItineraries;
     }
 
@@ -199,7 +195,7 @@ public class FlightInfo implements Command{
 
         for(Flight oFlight : originFlights){
             for(Flight dFlight : destinationFlights){
-                if(checkConnection(oFlight, dFlight) && checkValidConnection(oFlight, dFlight)){
+                if(checkMiddleFlight(oFlight, dFlight) && checkValidConnection(oFlight, dFlight)){
                     Itinerary itinerary = new Itinerary();
                     itinerary.addFlight(oFlight);
                     itinerary.addFlight(dFlight);
@@ -227,9 +223,9 @@ public class FlightInfo implements Command{
         for( Flight oFlight : originFlights){
             for (Flight dFlight : destinationFlights){
                 //if they don't match up in the middle, try and find a middle man
-                if(!checkConnection(oFlight, dFlight)){
+                if(!checkMiddleFlight(oFlight, dFlight)){
                     for(Flight mFlight : middleFlights){
-                        if(checkConnection(oFlight, mFlight) && checkConnection(mFlight, dFlight)){
+                        if(checkMiddleFlight(oFlight, mFlight) && checkMiddleFlight(mFlight, dFlight)){
                             if(checkValidConnection(oFlight,mFlight) && checkValidConnection(mFlight,dFlight ) &&
                                         checkNotAirportRepeated(oFlight,mFlight,dFlight)){
                                 Itinerary itinerary = new Itinerary();
@@ -272,7 +268,8 @@ public class FlightInfo implements Command{
      * @param originFlight
      * @param destinationFlight
      */
-    public boolean checkConnection(Flight originFlight, Flight destinationFlight ){
+
+    public boolean checkMiddleFlight(Flight originFlight, Flight destinationFlight ){
         String originFlightDestination = originFlight.getDestinationAirport();
         String destinationFlightOrigin = destinationFlight.getOriginAirport();
         return (originFlightDestination.equals(destinationFlightOrigin));
