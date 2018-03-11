@@ -18,12 +18,12 @@ import java.io.IOException;
  *   Author: Ethan Della Posta
 */
 public class CSVParser {
-    public static String AIRPORTS_NAME_PATH =  "CSVFiles/airports.csv";
-    public static String AIRPORTS_DELAY_PATH = "CSVFiles/delay.csv";
-    public static String AIRPORTS_TIME_PATH = "CSVFiles/min_connection_time.csv";
-    public static String AIRPORTS_WEATHER_PATH = "CSVFiles/weather.csv";
-    public static String FLIGHTS_PATH = "CSVFiles/route_network.csv";
-    public static String RESERVATIONS_PATH = "CSVFiles/reservations.csv";
+    public static String AIRPORTS_NAME_PATH =  "./source/src/CSVFiles/airports.csv";
+    public static String AIRPORTS_DELAY_PATH = "./source/src/CSVFiles/delay.csv";
+    public static String AIRPORTS_TIME_PATH = "./source/src/CSVFiles/min_connection_time.csv";
+    public static String AIRPORTS_WEATHER_PATH = "./source/src/CSVFiles/weather.csv";
+    public static String FLIGHTS_PATH = "./source/src/CSVFiles/route_network.csv";
+    public static String RESERVATIONS_PATH = "./source/src/CSVFiles/reservations.csv";
 
     private CSVParse nameParse;
     private CSVParse delayParse;
