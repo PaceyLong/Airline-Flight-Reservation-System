@@ -96,10 +96,9 @@ public class Airport {
      */
     @Override
     public String toString(){
-        String condition = getWeather().getCondition();
-        String temperature = Integer.toString(getWeather().getTemp());
+        Weather weather = getWeather();
         String delayTime = Integer.toString(this.delayTime);
-        return name + "," + condition + "," + temperature + "," + delayTime;
+        return name + "," + weather.getCondition() + "," + weather.getTemp() + "," + delayTime;
 
     }
 }
