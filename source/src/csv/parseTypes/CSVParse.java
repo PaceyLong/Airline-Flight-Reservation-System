@@ -23,7 +23,7 @@ public abstract class CSVParse {
                 //generate new fields or new objects to add to hashmaps
                 useCSVLine(strLineArr);
             }
-
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
