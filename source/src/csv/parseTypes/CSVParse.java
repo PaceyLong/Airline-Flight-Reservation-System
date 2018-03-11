@@ -1,5 +1,6 @@
 package csv.parseTypes;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 
 
@@ -14,7 +15,8 @@ public abstract class CSVParse {
         String line;
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(path));
+            File file = new File(path);
+            BufferedReader br = new BufferedReader(new FileReader(file));
             while ((line = br.readLine()) != null) {
                 String[] strLineArr = line.split(",");
 
