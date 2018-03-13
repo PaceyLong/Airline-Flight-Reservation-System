@@ -85,10 +85,10 @@ public class Itinerary{
      */
     @Override
     public String toString(){
-        String printout = getTotalPrice() + "," + getNumberFlightIn() + ",\n\t";
+        String printout = getTotalPrice() + "," + getNumberFlightIn();
         for(int idx = 0; idx < flightList.size(); idx++){
-            printout += flightList.get(idx).toString();
-            if (idx + 1 < flightList.size()) printout += ",\n\t";
+            printout += "," + flightList.get(idx).toString();
+//            if (idx + 1 < flightList.size()) printout += ",\n\t";
         }
         return printout;
     }
