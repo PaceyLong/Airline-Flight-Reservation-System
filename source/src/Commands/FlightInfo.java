@@ -72,7 +72,7 @@ public class FlightInfo implements Command{
 
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
         if(relevantItineraries.isEmpty()){
-            System.out.println("There are no flights/lists of flights that match your request.");
+            System.out.println("");
         }else{
             relevantItineraries.sort(sortOrderComparator);
             for( Itinerary itinerary : relevantItineraries){
@@ -257,8 +257,8 @@ public class FlightInfo implements Command{
         int delayTime = AirportsDB.getInstance().getAirport(intermediateAirportCode).getDelayTime();
         int minConnectionTime = AirportsDB.getInstance().getAirport(intermediateAirportCode).getMinConnectionTime();
 
-        long layoverTime = Math.abs(destinationFlightDate.getTime() - originFlightDate.getTime()) / (60 * 1000);
-        return  delayTime + layoverTime <= minConnectionTime;
+        long layoverTime = (destinationFlightDate.getTime() - originFlightDate.getTime())/60000;
+        return  layoverTime >= delayTime + minConnectionTime && layoverTime > 0;
     }
 
     /**
@@ -286,7 +286,8 @@ public class FlightInfo implements Command{
         String timeType = String.valueOf(strDate.charAt(strDate.length()-1));
         DateFormat format = new SimpleDateFormat("h:mm a");
         try{
-            return format.parse(strDate.substring(0,strDate.length()-2) + " " + timeType + "m");
+            return format.parse(strDate.substring(0,strDate.length()-1) + " " + timeType + "m");
+
         }catch(ParseException e){
             e.printStackTrace();
         }
