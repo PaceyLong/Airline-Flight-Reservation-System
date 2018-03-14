@@ -1,6 +1,7 @@
 package Reservations;
 
 import Errors.DuplicateReservationException;
+import Errors.PassengerNotFoundException;
 import Errors.ReservationNotFoundException;
 
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class ReservationsDB {
             // delete reservation
             reservationsHashMap.get(passengerName).remove(itinerary);
             System.out.println(SUCCESSFUL_DELETE_MSG);
-        } catch (ReservationNotFoundException error){
+        } catch (Exception error){
             System.out.println(error.getMessage());
         }
     }
@@ -116,9 +117,9 @@ public class ReservationsDB {
      * @param itinerary - itinary to verify
      * @throws ReservationNotFoundException - reservation doesn't exist
      */
-    private void verifyReservation(String passengerName, Itinerary itinerary) throws ReservationNotFoundException{
+    private void verifyReservation(String passengerName, Itinerary itinerary) throws PassengerNotFoundException, ReservationNotFoundException{
         // throw error if Passenger doesn't exist within the database
-        if(!reservationsHashMap.containsKey(passengerName)) throw new ReservationNotFoundException();
+        if(!reservationsHashMap.containsKey(passengerName)) throw new PassengerNotFoundException();
         // throw error if Passenger's reservation doesn't exist within their current list of reserved itineraries
         if (!reservationsHashMap.get(passengerName).contains(itinerary)) throw new ReservationNotFoundException();
     }
