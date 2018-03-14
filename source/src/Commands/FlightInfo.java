@@ -72,12 +72,14 @@ public class FlightInfo implements Command{
         }
 
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
-        if(relevantItineraries.isEmpty()){
-            System.out.println("");
-        }else{
-            relevantItineraries.sort(sortOrderComparator);
-            relItinerariesPrintout(relevantItineraries);
-        }
+        relevantItineraries.sort(sortOrderComparator);
+        relItinerariesPrintout(relevantItineraries);
+//        if(relevantItineraries.isEmpty()){
+//            System.out.println("");
+//        }else{
+//            relevantItineraries.sort(sortOrderComparator);
+//            relItinerariesPrintout(relevantItineraries);
+//        }
     }
 
     /**
