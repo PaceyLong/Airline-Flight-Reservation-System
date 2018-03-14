@@ -14,8 +14,8 @@ import java.util.Set;
  */
 public class ReservationsDB {
     /* attributes */
-    private String successfulDeleteMsg = "delete,successful";
-    private String successfulReservationMsg = "reserve,successful";
+    private static final String SUCCESSFUL_DELETE_MSG = "delete,successful";
+    private static final String SUCCESSFUL_RESERVATION_MSG = "reserve,successful";
 
     /* HashMap to store Passenger Names --> ArrayList of Itineraries */
     private HashMap<String, ArrayList<Itinerary>> reservationsHashMap;
@@ -60,7 +60,7 @@ public class ReservationsDB {
         // append itinerary to Passenger's reservations list. ERROR if not unique
         try{
             appendItinerary(passengerName, itinerary);
-            System.out.println(successfulReservationMsg);
+            System.out.println(SUCCESSFUL_RESERVATION_MSG);
         } catch (DuplicateReservationException error){
             System.out.println(error.getMessage());
         }
@@ -103,7 +103,7 @@ public class ReservationsDB {
             verifyReservation(passengerName, itinerary);
             // delete reservation
             reservationsHashMap.get(passengerName).remove(itinerary);
-            System.out.println(successfulDeleteMsg);
+            System.out.println(SUCCESSFUL_DELETE_MSG);
         } catch (ReservationNotFoundException error){
             System.out.println(error.getMessage());
         }

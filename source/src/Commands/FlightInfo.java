@@ -40,7 +40,7 @@ public class FlightInfo implements Command{
     private Comparator sortOrderComparator;
     private static final int SORT_ORDER_INDEX = 4;
     private static final int DEFAULT_CONNECTION_LIMIT = 2;
-    private static final String DEFAULT_SORT_ORDER = "departure";
+    private static final String DEFAULT_SORT_ORDER = InputParser.DEPARTURE_TIME_SORT_BY;
     private static final String FLIGHTS_REQUEST_KEYWORD = "info";
 
     @Override
@@ -63,9 +63,9 @@ public class FlightInfo implements Command{
         }
 
         //create comparator object based on string passed in
-        if (sortOrder.equals("airfare")){
+        if (sortOrder.equals(InputParser.AIRFARE_SORT_BY)){
             this.sortOrderComparator = new SortByAirfare();
-        }else if(sortOrder.equals("arrival")){
+        }else if(sortOrder.equals(InputParser.ARRIVAL_TIME_SORT_BY)){
             this.sortOrderComparator = new SortByArrival();
         }else{
             this.sortOrderComparator = new SortByDeparture();
