@@ -36,14 +36,14 @@ public class Main {
 
         while(true){
             input += scanner.next();
-            if(input.trim().contains("QUIT")){
+            if(input.trim().toLowerCase().contains("quit")){
                 System.out.println("Thank you for using AFRS!");
 
                 //save any reservations upon quitting
                 csvp.writeToCSV();
                 return;
             }
-            if(input.trim().contains("HELP")){
+            if(input.trim().toLowerCase().contains("help")){
                 help();
                 input = "";
                 continue;

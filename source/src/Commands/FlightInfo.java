@@ -40,7 +40,8 @@ public class FlightInfo implements Command{
     private Comparator sortOrderComparator;
     private static final int SORT_ORDER_INDEX = 4;
     private static final int DEFAULT_CONNECTION_LIMIT = 2;
-    private static final String DEFAULT_SORT_ORDER = "departure";
+    private static final String DEFAULT_SORT_ORDER = InputParser.DEPARTURE_TIME_SORT_BY;
+    private static final String FLIGHTS_REQUEST_KEYWORD = "info";
 
     @Override
     public void execute(ArrayList<String> input) {
@@ -62,23 +63,31 @@ public class FlightInfo implements Command{
         }
 
         //create comparator object based on string passed in
-        if (sortOrder.equals("airfare")){
+        if (sortOrder.equals(InputParser.AIRFARE_SORT_BY)){
             this.sortOrderComparator = new SortByAirfare();
-        }else if(sortOrder.equals("arrival")){
+        }else if(sortOrder.equals(InputParser.ARRIVAL_TIME_SORT_BY)){
             this.sortOrderComparator = new SortByArrival();
         }else{
             this.sortOrderComparator = new SortByDeparture();
         }
 
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
-        if(relevantItineraries.isEmpty()){
-            System.out.println("");
-        }else{
-            relevantItineraries.sort(sortOrderComparator);
-            for( Itinerary itinerary : relevantItineraries){
-                System.out.println(itinerary.toString());
-            }
+        relevantItineraries.sort(sortOrderComparator);
+        relItinerariesPrintout(relevantItineraries);
+    }
+
+    /**
+     * Helper method. Formats relevant itinerary printout for FlightInfo request
+     * Print Format: info,# itineraries<nl>iter idx,
+     * ASSUMPTION: guarantee size > 0 for list of itineraries
+     * @param relevantItineraries - list of relevant itineraries.
+     */
+    private void relItinerariesPrintout(ArrayList<Itinerary> relevantItineraries){
+        String msg = FLIGHTS_REQUEST_KEYWORD + "," + relevantItineraries.size() + "\n";
+        for(int idx = 0; idx < relevantItineraries.size(); idx++){
+            msg += "Itinerary #" + idx + ": " + relevantItineraries.get(idx).toString() + "\n";
         }
+        System.out.println(msg);
     }
 
     /**

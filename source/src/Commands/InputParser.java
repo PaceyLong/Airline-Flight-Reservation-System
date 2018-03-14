@@ -17,6 +17,11 @@ public class InputParser {
     private ArrayList<String> parsedInput = new ArrayList<>();
     private Command command;
 
+    /* Public Static SortBy Keywords */
+    public static final String DEPARTURE_TIME_SORT_BY = "departure";
+    public static final String ARRIVAL_TIME_SORT_BY = "arrival";
+    public static final String AIRFARE_SORT_BY = "airfare";
+
     public InputParser(String input) throws Exception{
         parseInput(input);
     }
@@ -107,7 +112,7 @@ public class InputParser {
             throw new UnknownDestinationException();
         }else if(connections != null && !(connections.equals("0") || connections.equals("1") || connections.equals("2") || connections.equals(""))){
             throw new InvalidConnectionLimitException();
-        }else if(sortOrder != null && !(sortOrder.equals("departure") || sortOrder.equals("arrival") || sortOrder.equals("airfare") || sortOrder.equals(""))){
+        }else if(sortOrder != null && !(sortOrder.equals(DEPARTURE_TIME_SORT_BY) || sortOrder.equals(ARRIVAL_TIME_SORT_BY) || sortOrder.equals(AIRFARE_SORT_BY) || sortOrder.equals(""))){
             throw new InvalidSortOrderException();
         }
     }
