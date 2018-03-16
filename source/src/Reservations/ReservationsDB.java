@@ -70,9 +70,11 @@ public class ReservationsDB {
     public void reserveItinerary(String passengerName, int id){
         // Assure passenger exists within DB
         recordPassenger(passengerName);
+        // Retrieve requested Itinerary
+        Itinerary reservedItinerary = currMatchingItineraries.get(id);
         // append itinerary to Passenger's reservations list. ERROR if not unique
         try{
-            appendItinerary(passengerName, itinerary);
+            appendItinerary(passengerName, reservedItinerary);
             System.out.println(SUCCESSFUL_RESERVATION_MSG);
         } catch (DuplicateReservationException error){
             System.out.println(error.getMessage());
