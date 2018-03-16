@@ -67,7 +67,7 @@ public class ReservationsDB {
      * @param passengerName key value for hashmap
      * @param id - itinerary being reserved
      */
-    public void reserveItinerary(String passengerName, int id){
+    public void reserveItinerary(int id, String passengerName){
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // Retrieve requested Itinerary
