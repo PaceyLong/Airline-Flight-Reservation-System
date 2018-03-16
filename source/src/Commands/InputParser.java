@@ -2,6 +2,7 @@ package Commands;
 
 import Airports.AirportsDB;
 import Errors.*;
+import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 
 import java.util.ArrayList;
@@ -48,7 +49,12 @@ public class InputParser {
                 }
                 break;
             case "reserve":
-                this.setCommand(new ReserveFlight());
+                try{
+                    reserveErrors();
+                    this.setCommand(new ReserveFlight());
+                } catch(InvalidItineraryIdException e){
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "retrieve":
                 try{
@@ -119,11 +125,13 @@ public class InputParser {
 
     /**
      * Error checking if the request is looking to reserve a reservation
+     * Verifies Itinerary ID is within valid range of possible itineraries
+     * Remaining data integrity checks are handled within ReservationsDB
      * @throws Exception
      */
-    public void reserveErrors(){
-        String id = parsedInput.get(1);
-        String passenger = parsedInput.get(2);
+    public void reserveErrors() throws InvalidItineraryIdException{
+        int id = Integer.parseInt(parsedInput.get(1));
+        if(id > ReservationsDB.getInstance().getCurrMatchingItinerariesSize()) throw new InvalidItineraryIdException();
     }
 
     /**

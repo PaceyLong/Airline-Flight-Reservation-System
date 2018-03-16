@@ -34,6 +34,14 @@ public class ReservationsDB {
     }
 
     /**
+     * Accessor for size of recently queried matching itineraries for FlightInfo
+     * @return size of currMatchingItineraries
+     */
+    public int getCurrMatchingItinerariesSize(){
+        return currMatchingItineraries.size();
+    }
+
+    /**
      * Called by parser to write reservations to reservations.csv
      */
     public ArrayList<Itinerary> parserGetReservations(String passengerName){
@@ -57,9 +65,9 @@ public class ReservationsDB {
      * Checks if itinerary is unique (origin, destination) before adding.
      *      If not unique, throws ERROR
      * @param passengerName key value for hashmap
-     * @param itinerary - itinerary being reserved
+     * @param id - itinerary being reserved
      */
-    public void reserveItinerary(String passengerName, Itinerary itinerary){
+    public void reserveItinerary(String passengerName, int id){
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // append itinerary to Passenger's reservations list. ERROR if not unique
