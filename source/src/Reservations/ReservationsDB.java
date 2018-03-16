@@ -18,6 +18,9 @@ public class ReservationsDB {
     private static final String SUCCESSFUL_DELETE_MSG = "delete,successful";
     private static final String SUCCESSFUL_RESERVATION_MSG = "reserve,successful";
 
+    /* Most recent set of matching itineraries from FlightInfo request */
+    private ArrayList<Itinerary> currMatchingItineraries;
+
     /* HashMap to store Passenger Names --> ArrayList of Itineraries */
     private HashMap<String, ArrayList<Itinerary>> reservationsHashMap;
 
@@ -46,6 +49,7 @@ public class ReservationsDB {
      */
     private ReservationsDB(){
         reservationsHashMap = new HashMap<>();
+        currMatchingItineraries = new ArrayList<>();
     }
 
     /**

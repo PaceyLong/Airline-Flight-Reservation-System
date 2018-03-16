@@ -74,6 +74,7 @@ public class FlightInfo implements Command{
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
         relevantItineraries.sort(sortOrderComparator);
         relItinerariesPrintout(relevantItineraries);
+        // TODO add to local itinerary buffer
     }
 
     /**
