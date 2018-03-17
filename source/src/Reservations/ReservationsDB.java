@@ -61,20 +61,35 @@ public class ReservationsDB {
     }
 
     /**
+     * Accessor. Retrieves requested itinerary from currMatchingItineraries
+     * @param id - index in arraylist
+     * @return Itinerary object
+     */
+    public Itinerary getCurrItineraryWithID(int id){
+        return currMatchingItineraries.get(id);
+    }
+
+    /**
+     * Mutator. Used to update most recent list of queried matching itineraries from FlightInfo
+     * @param returnedItineraries - most recent list of matching itineraries
+     */
+    public void setCurrMatchingItineraries(ArrayList<Itinerary> returnedItineraries){
+        currMatchingItineraries = returnedItineraries;
+    }
+
+    /**
      * User reserves a itinerary and adds it to their list of reservations
      * Checks if itinerary is unique (origin, destination) before adding.
      *      If not unique, throws ERROR
      * @param passengerName key value for hashmap
-     * @param id - itinerary being reserved
+     * @param itinerary - itinerary being reserved
      */
-    public void reserveItinerary(int id, String passengerName){
+    public void reserveItinerary(Itinerary itinerary, String passengerName){
         // Assure passenger exists within DB
         recordPassenger(passengerName);
-        // Retrieve requested Itinerary
-        Itinerary reservedItinerary = currMatchingItineraries.get(id);
         // append itinerary to Passenger's reservations list. ERROR if not unique
         try{
-            appendItinerary(passengerName, reservedItinerary);
+            appendItinerary(passengerName, itinerary);
             System.out.println(SUCCESSFUL_RESERVATION_MSG);
         } catch (DuplicateReservationException error){
             System.out.println(error.getMessage());

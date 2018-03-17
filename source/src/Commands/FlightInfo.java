@@ -2,6 +2,7 @@ package Commands;
 
 import Airports.AirportsDB;
 import Reservations.Itinerary;
+import Reservations.ReservationsDB;
 import Sorting.SortByAirfare;
 import Sorting.SortByArrival;
 import Sorting.SortByDeparture;
@@ -73,8 +74,8 @@ public class FlightInfo implements Command{
 
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
         relevantItineraries.sort(sortOrderComparator);
+        ReservationsDB.getInstance().setCurrMatchingItineraries(relevantItineraries);
         relItinerariesPrintout(relevantItineraries);
-        // TODO add to local itinerary buffer
     }
 
     /**

@@ -22,6 +22,7 @@ public class ReserveFlight implements Command{
     public void execute(ArrayList<String> input) {
         int id = Integer.parseInt(input.get(ID));
         String passenger = input.get(PASSENGER);
-        ReservationsDB.getInstance().reserveItinerary(id, passenger);
+        ReservationsDB reservationsDB = ReservationsDB.getInstance();
+        reservationsDB.reserveItinerary(reservationsDB.getCurrItineraryWithID(id), passenger);
     }
 }
