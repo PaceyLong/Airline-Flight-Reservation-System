@@ -140,14 +140,18 @@ public class InputParser {
      */
     public void retrieveErrors() throws Exception{
         String passenger = parsedInput.get(1);
-        String origin = parsedInput.get(2);
-        String destination = parsedInput.get(3);
-
-        if(airportsDB.getAirport(origin) == null){
-            throw new UnknownOriginException();
-        }else if(airportsDB.getAirport(destination) == null){
-            throw new UnknownDestinationException();
+        String origin = "";
+        String destination = "";
+        // if input contains origin argument
+        if(parsedInput.size() >= 3){
+            origin = parsedInput.get(2);
+            if(airportsDB.getAirport(origin) == null) throw new UnknownOriginException();
         }
+        if(parsedInput.size() == 4){
+            destination = parsedInput.get(3);
+            if(airportsDB.getAirport(destination) == null) throw new UnknownDestinationException();
+        }
+        if(parsedInput.size() > 4) throw new UnknownRequestException();
     }
 
     /**

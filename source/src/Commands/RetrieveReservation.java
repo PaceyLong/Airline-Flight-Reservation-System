@@ -1,5 +1,6 @@
 package Commands;
 
+import Errors.UnknownRequestException;
 import Reservations.ReservationsDB;
 
 import java.util.ArrayList;
@@ -28,13 +29,11 @@ public class RetrieveReservation implements Command{
         // grab ReservationsDB singleton instance
         ReservationsDB reservationsDB = ReservationsDB.getInstance();
         if(input.size() == DEFAULT_SIZE){
-            reservationsDB.retriveReservations(input.get(PASSENGER));
+            reservationsDB.retrieveReservations(input.get(PASSENGER));
         } else if(input.size() == PASSENGER_ORIGIN_SIZE){
             reservationsDB.retrieveReservations(input.get(PASSENGER), input.get(ORIGIN));
-        } else if(input.size() == PASSENGER_ORIGIN_DESTINATION_SIZE){
+        } else{ // input.size() == PASSENGER_ORIGIN_DESTINATION_SIZE (4)
             reservationsDB.retrieveReservations(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
-        } else{
-            // todo throw error
         }
     }
 }

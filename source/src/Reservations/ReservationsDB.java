@@ -157,7 +157,7 @@ public class ReservationsDB {
      * Default printout of all reservations under a given Passenger
      * @param passengerName - passenger
      */
-    public void retriveReservations(String passengerName){
+    public void retrieveReservations(String passengerName){
         ArrayList<Itinerary> itineraries = reservationsHashMap.get(passengerName);
         System.out.println(constructMessage(itineraries));
     }

@@ -55,6 +55,7 @@ public class Main {
                     input = "";
                 }catch(Exception e){
                     input = "";
+                    System.out.println(e);
                 }
             }
         }
