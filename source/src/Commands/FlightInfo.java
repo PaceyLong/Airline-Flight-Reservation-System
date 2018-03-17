@@ -87,7 +87,7 @@ public class FlightInfo implements Command{
     private void relItinerariesPrintout(ArrayList<Itinerary> relevantItineraries){
         String msg = FLIGHTS_REQUEST_KEYWORD + "," + relevantItineraries.size() + "\n";
         for(int idx = 0; idx < relevantItineraries.size(); idx++){
-            msg += "Itinerary #" + idx + ": " + relevantItineraries.get(idx).toString() + "\n";
+            msg += "Itinerary #" + (idx + 1) + ": " + relevantItineraries.get(idx).toString() + "\n";
         }
         System.out.println(msg);
     }

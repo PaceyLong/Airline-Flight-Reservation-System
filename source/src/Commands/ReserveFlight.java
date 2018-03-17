@@ -20,7 +20,7 @@ public class ReserveFlight implements Command{
 
     @Override
     public void execute(ArrayList<String> input) {
-        int id = Integer.parseInt(input.get(ID));
+        int id = Integer.parseInt(input.get(ID)) - 1;
         String passenger = input.get(PASSENGER);
         ReservationsDB reservationsDB = ReservationsDB.getInstance();
         reservationsDB.reserveItinerary(reservationsDB.getCurrItineraryWithID(id), passenger);

@@ -131,7 +131,11 @@ public class InputParser {
      */
     public void reserveErrors() throws InvalidItineraryIdException{
         int id = Integer.parseInt(parsedInput.get(1));
-        if(id > ReservationsDB.getInstance().getCurrMatchingItinerariesSize()) throw new InvalidItineraryIdException();
+        int currItinerariesSize = ReservationsDB.getInstance().getCurrMatchingItinerariesSize();
+        if(id <= 0  || id > currItinerariesSize ){
+            // TODO TESTING
+            throw new InvalidItineraryIdException();
+        }
     }
 
     /**
