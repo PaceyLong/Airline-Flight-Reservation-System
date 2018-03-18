@@ -1,5 +1,7 @@
 package Commands;
 
+import Reservations.ReservationsDB;
+
 import java.util.ArrayList;
 
 /**
@@ -18,6 +20,9 @@ public class ReserveFlight implements Command{
 
     @Override
     public void execute(ArrayList<String> input) {
-        // TODO
+        int id = Integer.parseInt(input.get(ID)) - 1;
+        String passenger = input.get(PASSENGER);
+        ReservationsDB reservationsDB = ReservationsDB.getInstance();
+        reservationsDB.reserveItinerary(reservationsDB.getCurrItineraryWithID(id), passenger);
     }
 }

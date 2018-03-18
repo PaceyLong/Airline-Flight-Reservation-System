@@ -18,6 +18,9 @@ public class ReservationsDB {
     private static final String SUCCESSFUL_DELETE_MSG = "delete,successful";
     private static final String SUCCESSFUL_RESERVATION_MSG = "reserve,successful";
 
+    /* Most recent set of matching itineraries from FlightInfo request */
+    private ArrayList<Itinerary> currMatchingItineraries;
+
     /* HashMap to store Passenger Names --> ArrayList of Itineraries */
     private HashMap<String, ArrayList<Itinerary>> reservationsHashMap;
 
@@ -28,6 +31,14 @@ public class ReservationsDB {
     public static ReservationsDB getInstance(){
         if (instance == null) instance = new ReservationsDB();
         return instance;
+    }
+
+    /**
+     * Accessor for size of recently queried matching itineraries for FlightInfo
+     * @return size of currMatchingItineraries
+     */
+    public int getCurrMatchingItinerariesSize(){
+        return currMatchingItineraries.size();
     }
 
     /**
@@ -46,6 +57,24 @@ public class ReservationsDB {
      */
     private ReservationsDB(){
         reservationsHashMap = new HashMap<>();
+        currMatchingItineraries = new ArrayList<>();
+    }
+
+    /**
+     * Accessor. Retrieves requested itinerary from currMatchingItineraries
+     * @param id - index in arraylist
+     * @return Itinerary object
+     */
+    public Itinerary getCurrItineraryWithID(int id){
+        return currMatchingItineraries.get(id);
+    }
+
+    /**
+     * Mutator. Used to update most recent list of queried matching itineraries from FlightInfo
+     * @param returnedItineraries - most recent list of matching itineraries
+     */
+    public void setCurrMatchingItineraries(ArrayList<Itinerary> returnedItineraries){
+        currMatchingItineraries = returnedItineraries;
     }
 
     /**
@@ -55,7 +84,7 @@ public class ReservationsDB {
      * @param passengerName key value for hashmap
      * @param itinerary - itinerary being reserved
      */
-    public void reserveItinerary(String passengerName, Itinerary itinerary){
+    public void reserveItinerary(Itinerary itinerary, String passengerName){
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // append itinerary to Passenger's reservations list. ERROR if not unique
@@ -128,7 +157,7 @@ public class ReservationsDB {
      * Default printout of all reservations under a given Passenger
      * @param passengerName - passenger
      */
-    public void retriveReservations(String passengerName){
+    public void retrieveReservations(String passengerName){
         ArrayList<Itinerary> itineraries = reservationsHashMap.get(passengerName);
         System.out.println(constructMessage(itineraries));
     }

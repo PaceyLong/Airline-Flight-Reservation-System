@@ -24,7 +24,7 @@ public class ReservationParse extends CSVParse {
             Flight flight = new Flight(originAirport, destinationAirport, departureTime, arrivalTime, Integer.parseInt(flightNumber), Integer.parseInt(airfare));
             itinerary.addFlight(flight);
         }
-        ReservationsDB.getInstance().reserveItinerary(passengerName, itinerary);
+        ReservationsDB.getInstance().reserveItinerary(itinerary, passengerName);
 
     }
 }

@@ -2,6 +2,7 @@ package Commands;
 
 import Airports.AirportsDB;
 import Errors.*;
+import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 
 import java.util.ArrayList;
@@ -48,7 +49,12 @@ public class InputParser {
                 }
                 break;
             case "reserve":
-                this.setCommand(new ReserveFlight());
+                try{
+                    reserveErrors();
+                    this.setCommand(new ReserveFlight());
+                } catch(InvalidItineraryIdException e){
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "retrieve":
                 try{
@@ -119,11 +125,17 @@ public class InputParser {
 
     /**
      * Error checking if the request is looking to reserve a reservation
+     * Verifies Itinerary ID is within valid range of possible itineraries
+     * Remaining data integrity checks are handled within ReservationsDB
      * @throws Exception
      */
-    public void reserveErrors(){
-        String id = parsedInput.get(1);
-        String passenger = parsedInput.get(2);
+    public void reserveErrors() throws InvalidItineraryIdException{
+        int id = Integer.parseInt(parsedInput.get(1));
+        int currItinerariesSize = ReservationsDB.getInstance().getCurrMatchingItinerariesSize();
+        if(id <= 0  || id > currItinerariesSize ){
+            // TODO Error fixing
+            throw new InvalidItineraryIdException();
+        }
     }
 
     /**
@@ -132,14 +144,18 @@ public class InputParser {
      */
     public void retrieveErrors() throws Exception{
         String passenger = parsedInput.get(1);
-        String origin = parsedInput.get(2);
-        String destination = parsedInput.get(3);
-
-        if(airportsDB.getAirport(origin) == null){
-            throw new UnknownOriginException();
-        }else if(airportsDB.getAirport(destination) == null){
-            throw new UnknownDestinationException();
+        String origin = "";
+        String destination = "";
+        // if input contains origin argument
+        if(parsedInput.size() >= 3){
+            origin = parsedInput.get(2);
+            if(airportsDB.getAirport(origin) == null) throw new UnknownOriginException();
         }
+        if(parsedInput.size() == 4){
+            destination = parsedInput.get(3);
+            if(airportsDB.getAirport(destination) == null) throw new UnknownDestinationException();
+        }
+        if(parsedInput.size() > 4) throw new UnknownRequestException();
     }
 
     /**
@@ -150,6 +166,7 @@ public class InputParser {
         String passenger = parsedInput.get(1);
         String origin = parsedInput.get(2);
         String destination = parsedInput.get(3);
+        // TODO
     }
 
     /**

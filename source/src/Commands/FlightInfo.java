@@ -2,6 +2,7 @@ package Commands;
 
 import Airports.AirportsDB;
 import Reservations.Itinerary;
+import Reservations.ReservationsDB;
 import Sorting.SortByAirfare;
 import Sorting.SortByArrival;
 import Sorting.SortByDeparture;
@@ -73,6 +74,7 @@ public class FlightInfo implements Command{
 
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
         relevantItineraries.sort(sortOrderComparator);
+        ReservationsDB.getInstance().setCurrMatchingItineraries(relevantItineraries);
         relItinerariesPrintout(relevantItineraries);
     }
 
@@ -85,7 +87,7 @@ public class FlightInfo implements Command{
     private void relItinerariesPrintout(ArrayList<Itinerary> relevantItineraries){
         String msg = FLIGHTS_REQUEST_KEYWORD + "," + relevantItineraries.size() + "\n";
         for(int idx = 0; idx < relevantItineraries.size(); idx++){
-            msg += "Itinerary #" + idx + ": " + relevantItineraries.get(idx).toString() + "\n";
+            msg += "Itinerary #" + (idx + 1) + ": " + relevantItineraries.get(idx).toString() + "\n";
         }
         System.out.println(msg);
     }
