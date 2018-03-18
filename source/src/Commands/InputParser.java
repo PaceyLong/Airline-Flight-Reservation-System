@@ -133,7 +133,7 @@ public class InputParser {
         int id = Integer.parseInt(parsedInput.get(1));
         int currItinerariesSize = ReservationsDB.getInstance().getCurrMatchingItinerariesSize();
         if(id <= 0  || id > currItinerariesSize ){
-            // TODO TESTING
+            // TODO Error fixing
             throw new InvalidItineraryIdException();
         }
     }
