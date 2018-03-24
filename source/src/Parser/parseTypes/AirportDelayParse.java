@@ -1,13 +1,11 @@
-package csv.parseTypes;
+package Parser.parseTypes;
 
 import Airports.Airport;
 import Airports.AirportsDB;
 
-import java.util.HashMap;
-
 
 /*
-    This parse type parses the lines from 'delay.csv' (which contains the code and the delay of each airport)
+    This parse type parses the lines from 'delay.Parser' (which contains the code and the delay of each airport)
     and adds them to slots in the corresponding airports HashMap
  */
 public class AirportDelayParse extends CSVParse {

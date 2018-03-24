@@ -1,12 +1,11 @@
-package csv.parseTypes;
+package Parser.parseTypes;
 import Airports.Airport;
 import Airports.AirportsDB;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /*
-    This parse type parses the lines from 'airports.csv' (which contains the name and the code of each airport)
+    This parse type parses the lines from 'airports.Parser' (which contains the name and the code of each airport)
     and adds them to slots in the corresponding airports HashMap
  */
 public class AirportNameParse extends CSVParse {
