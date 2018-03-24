@@ -45,7 +45,7 @@ public class InputParser {
                     infoErrors();
                     this.setCommand(new FlightInfo());
                 }catch(UnknownOriginException|UnknownDestinationException|InvalidConnectionLimitException|InvalidSortOrderException e) {
-                    System.out.println(e.getMessage());
+                    throw e;
                 }
                 break;
             case "reserve":
@@ -53,7 +53,7 @@ public class InputParser {
                     reserveErrors();
                     this.setCommand(new ReserveFlight());
                 } catch(InvalidItineraryIdException e){
-                    System.out.println(e.getMessage());
+                    throw e;
                 }
                 break;
             case "retrieve":
@@ -61,7 +61,7 @@ public class InputParser {
                     retrieveErrors();
                     this.setCommand(new RetrieveReservation());
                 }catch(UnknownOriginException|UnknownDestinationException e) {
-                    System.out.println(e.getMessage());
+                    throw e;
                 }
                 break;
             case "delete":
@@ -72,12 +72,12 @@ public class InputParser {
                     airportErrors();
                     this.setCommand(new AirportInfo());
                 }catch(UnknownAirportException e) {
-                    System.out.println(e.getMessage());
+                    throw e;
                 }
                 break;
             default:
                 UnknownRequestException e = new UnknownRequestException();
-                System.out.println(e.getMessage());
+                throw e;
         }
     }
 
@@ -136,6 +136,7 @@ public class InputParser {
             // TODO Error fixing
             throw new InvalidItineraryIdException();
         }
+
     }
 
     /**

@@ -31,7 +31,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String input = "";
 
-        System.out.println("*************************************** Welcome to Airline Flight Reservation Server (AFRS)! *************************************");
+        System.out.println("************************************** Welcome to Airline Flight Reservation Server (AFRS)! **************************************");
         help();
 
         while(true){
@@ -55,7 +55,7 @@ public class Main {
                     input = "";
                 }catch(Exception e){
                     input = "";
-                    System.out.println(e);
+                    System.out.println(e.getMessage());
                 }
             }
         }
