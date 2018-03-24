@@ -5,6 +5,7 @@ import csv.CSVParser;
 import Commands.InputParser;
 
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Main {
@@ -30,6 +31,7 @@ public class Main {
         InputParser parser;
         Scanner scanner = new Scanner(System.in);
         String input = "";
+        AtomicInteger id = new AtomicInteger(10000);
 
         System.out.println("************************************** Welcome to Airline Flight Reservation Server (AFRS)! **************************************");
         help();
