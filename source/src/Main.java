@@ -1,7 +1,8 @@
 import Airports.AirportsDB;
+import Parsers.parseTypes.AirportFAAParse;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.FlightsDB;
-import csv.CSVParser;
+import Parsers.CSVParser;
 import Commands.InputParser;
 
 import java.util.Scanner;
@@ -24,6 +25,9 @@ public class Main {
 
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
+        //local data
+        AirportFAAParse afaa = new AirportFAAParse();
+        System.out.println(afaa.getAirport("JFK"));
         AirportsDB airports = csvp.getAirports();
         FlightsDB flights = csvp.getFlights();
         ReservationsDB reservations = csvp.getReservations();
