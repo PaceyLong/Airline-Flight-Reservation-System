@@ -1,4 +1,4 @@
-package csv.parseTypes;
+package Parser.parseTypes;
 
 import Reservations.ReservationsDB;
 import TTARouteNetwork.Flight;

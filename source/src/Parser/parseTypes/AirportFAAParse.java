@@ -1,4 +1,4 @@
-package Parsers.parseTypes;
+package Parser.parseTypes;
 
 import Airports.Airport;
 import Airports.Weather;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class AirportFAAParse {
 
-    public static String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
+    private static String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
 
     public Airport getAirport(String airportCode){
         JSONObject json = getJsonFromApi(airportCode);

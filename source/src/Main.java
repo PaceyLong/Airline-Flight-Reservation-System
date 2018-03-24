@@ -1,8 +1,8 @@
 import Airports.AirportsDB;
-import Parsers.parseTypes.AirportFAAParse;
+import Parser.parseTypes.AirportFAAParse;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.FlightsDB;
-import Parsers.CSVParser;
+import Parser.CSVParser;
 import Commands.InputParser;
 
 import java.util.Scanner;
