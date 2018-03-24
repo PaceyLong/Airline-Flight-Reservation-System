@@ -10,11 +10,14 @@ import java.util.ArrayList;
  */
 public class AirportNameParse extends CSVParse {
 
+    private static final int AIRPORT_CODE = 0;
+    private static final int AIRPORT_NAME = 1;
+
     @Override
     public void useCSVLine(String[] strLineArr) {
         //extract values from string array
-        String name = strLineArr[1];
-        String code = strLineArr[0];
+        String code = strLineArr[AIRPORT_CODE];
+        String name = strLineArr[AIRPORT_NAME];
 
         //create new airport object, add to airport hash
         Airport airport = new Airport(name, code, new ArrayList<>(), 0, 0);

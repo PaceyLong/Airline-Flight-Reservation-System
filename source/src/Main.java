@@ -27,7 +27,7 @@ public class Main {
         csvp.createHashes();
         //local data
         AirportFAAParse afaa = new AirportFAAParse();
-        System.out.println(afaa.getAirport("JFK"));
+        System.out.println(afaa.getAirport("BOS"));
         AirportsDB airports = csvp.getAirports();
         FlightsDB flights = csvp.getFlights();
         ReservationsDB reservations = csvp.getReservations();
