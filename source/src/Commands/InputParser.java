@@ -43,7 +43,7 @@ public class InputParser {
             case "info":
                 try{
                     infoErrors();
-                    this.setCommand(new FlightInfo());
+                    this.setCommand(new FlightInfo(parsedInput));
                 }catch(UnknownOriginException|UnknownDestinationException|InvalidConnectionLimitException|InvalidSortOrderException e) {
                     throw e;
                 }
@@ -51,7 +51,7 @@ public class InputParser {
             case "reserve":
                 try{
                     reserveErrors();
-                    this.setCommand(new ReserveFlight());
+                    this.setCommand(new ReserveFlight(parsedInput));
                 } catch(InvalidItineraryIdException e){
                     throw e;
                 }
@@ -59,18 +59,18 @@ public class InputParser {
             case "retrieve":
                 try{
                     retrieveErrors();
-                    this.setCommand(new RetrieveReservation());
+                    this.setCommand(new RetrieveReservation(parsedInput));
                 }catch(UnknownOriginException|UnknownDestinationException e) {
                     throw e;
                 }
                 break;
             case "delete":
-                this.setCommand(new DeleteReservation());
+                this.setCommand(new DeleteReservation(parsedInput));
                 break;
             case "airport":
                 try{
                     airportErrors();
-                    this.setCommand(new AirportInfo());
+                    this.setCommand(new AirportInfo(parsedInput));
                 }catch(UnknownAirportException e) {
                     throw e;
                 }
@@ -93,7 +93,7 @@ public class InputParser {
      * Tells the request to execute the functionality of its command.
      */
     public void executeRequest(){
-        command.execute(parsedInput);
+        command.execute();
     }
 
     /**
