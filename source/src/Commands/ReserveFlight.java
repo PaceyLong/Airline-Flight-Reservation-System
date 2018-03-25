@@ -1,5 +1,6 @@
 package Commands;
 
+import Reservations.Itinerary;
 import Reservations.ReservationsDB;
 
 import java.util.ArrayList;
@@ -13,16 +14,27 @@ import java.util.ArrayList;
  *          The position number, starting with 1 (0), of the itinerary in the last AFRS response to a Flight Info Query
  *      passenger: name of the passenger making the reservation
  */
-public class ReserveFlight implements Command{
-    /* attributes */
+public class ReserveFlight implements UndoableCommand{
+    /* constants */
     private static final int ID = 1;
     private static final int PASSENGER = 2;
+
+    /* attributes */
+    private ReservationsDB reservationsDB = ReservationsDB.getInstance();
+    private String currPassenger = "";
+    private Itinerary currItinerary;
 
     @Override
     public void execute(ArrayList<String> input) {
         int id = Integer.parseInt(input.get(ID)) - 1;
-        String passenger = input.get(PASSENGER);
-        ReservationsDB reservationsDB = ReservationsDB.getInstance();
-        reservationsDB.reserveItinerary(reservationsDB.getCurrItineraryWithID(id), passenger);
+        currPassenger = input.get(PASSENGER);
+        currItinerary = reservationsDB.getCurrItineraryWithID(id);
+        reservationsDB.reserveItinerary(currItinerary, currPassenger);
+    }
+
+    // delete: Delete reservation request: {delete},passenger,origin,destination;
+    @Override
+    public void undo() {
+        reservationsDB.deleteItinerary(currPassenger, currItinerary);
     }
 }
