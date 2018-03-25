@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *          The position number, starting with 1 (0), of the itinerary in the last AFRS response to a Flight Info Query
  *      passenger: name of the passenger making the reservation
  */
-public class ReserveFlight implements UndoableCommand{
+public class ReserveFlight extends UndoableCommand{
     /* constants */
     private static final int ID = 1;
     private static final int PASSENGER = 2;
@@ -24,8 +24,12 @@ public class ReserveFlight implements UndoableCommand{
     private String currPassenger = "";
     private Itinerary currItinerary;
 
+    public ReserveFlight(ArrayList<String> input){
+        super(input);
+    }
+
     @Override
-    public void execute(ArrayList<String> input) {
+    public void execute() {
         int id = Integer.parseInt(input.get(ID)) - 1;
         currPassenger = input.get(PASSENGER);
         currItinerary = reservationsDB.getCurrItineraryWithID(id);
