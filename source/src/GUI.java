@@ -1,4 +1,5 @@
 import Airports.AirportsDB;
+import Commands.InputParser;
 import Parser.CSVParser;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.FlightsDB;
@@ -16,6 +17,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.Observable;
+import java.util.Scanner;
 
 public class GUI extends Application{
 
@@ -35,6 +37,22 @@ public class GUI extends Application{
     public static void main(String[] args) {
         Application.launch(args);
     }
+
+    public void helper(){
+        String s = "---------------------------------------------------------------------\n" +
+                "Input should follow one of the following formats:\n" +
+                " (Anything in brackets are optional and all commands are ended with semi-colons)\n" +
+                "Flight information request: info,origin,destination[,connections[,sort-order]]\n" +
+                "Make reservation request: reserve,id,passenger\n" +
+                "Retrieve reservations request: retrieve,passenger[,origin[,destination]]\n" +
+                "Delete reservation request: delete,passenger,origin,destination\n" +
+                "Airport information request: airport,airport\n" +
+                "---------------------------------------------------------------------\n" +
+                "Please input a command (Type HELP to see commands again, Type QUIT to exit)\n";
+        input.setText(s);
+        input.setWrapText(true);
+    }
+
 
 
     @Override
@@ -60,13 +78,16 @@ public class GUI extends Application{
 
         BorderPane b = new BorderPane();
 
+        helper();
+
         //Treat the return key the same as pressing submit
         requestTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.ENTER){
                     requestText = requestTextField.getText();
-
+                    connectAFRS();
+                    requestTextField.setText("");
                 }
             }
         });
@@ -78,6 +99,8 @@ public class GUI extends Application{
             @Override
             public void handle(ActionEvent event) {
                 requestText = requestTextField.getText();
+                connectAFRS();
+                requestTextField.setText("");
             }
         });
 
@@ -138,5 +161,34 @@ public class GUI extends Application{
         HBox.setHgrow(region, Priority.ALWAYS);
         hb.getChildren().addAll(newbutton,region,connectionStatus);
         return hb;
+    }
+
+    private void connectAFRS(){
+        CSVParser csvp = new CSVParser();
+        csvp.createHashes();
+
+        InputParser parser;
+
+        if(requestText.trim().toLowerCase().contains("quit")){
+            output.setText("Thank you for using AFRS!");
+
+            //save any reservations upon quitting
+            csvp.writeToCSV();
+            System.exit(0);
+            return;
+        }
+        if(requestText.trim().toLowerCase().contains("help")){
+            requestText = "";
+        }
+        if(requestText.trim().endsWith(";")){
+            try{
+                parser = new InputParser(requestText.substring(0, requestText.length() - 1));
+                parser.executeRequest();
+                requestText = "";
+            }catch(Exception e){
+                requestText = "";
+                output.setText(e.getMessage());
+            }
+        }
     }
 }
