@@ -25,12 +25,7 @@ public class Main {
 
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-        //local data
-        AirportFAAParse afaa = new AirportFAAParse();
-        System.out.println(afaa.getAirport("JFK"));
-        AirportsDB airports = csvp.getAirports();
-        FlightsDB flights = csvp.getFlights();
-        ReservationsDB reservations = csvp.getReservations();
+
         InputParser parser;
         Scanner scanner = new Scanner(System.in);
         String input = "";

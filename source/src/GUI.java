@@ -1,3 +1,7 @@
+import Airports.AirportsDB;
+import Parser.CSVParser;
+import Reservations.ReservationsDB;
+import TTARouteNetwork.FlightsDB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,10 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.util.Observable;
@@ -23,6 +24,7 @@ public class GUI extends Application{
     private TextArea input = new TextArea();
     private TextArea output = new TextArea();
     private Label requestLabel = new Label("Request: ");
+    private Label connectionStatus = new Label("Connection Status: ");
 
     //The TextField where the user will type and enter their commands.
     private TextField requestTextField = new TextField();
@@ -37,6 +39,25 @@ public class GUI extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        CSVParser csvp = new CSVParser();
+        FlightsDB flights = csvp.getFlights();
+        ReservationsDB reservations = csvp.getReservations();
+
+        /* use airports if local airport info has been chosen (this is chosen by default)
+         *
+         * if FAA is chosen get each specific airport by calling:
+         *
+         * AirportFAAParse faaParse = new AirportFAAParse();
+         * Airport airport = faaParse.getAirport(airportCode));
+         * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
+         *
+         */
+        AirportsDB airports = csvp.getAirports();
+
+        //if request text = 'quit' => execute csvp.writeToCSV();
+        // (write reservations to reservationsDB)
+
         BorderPane b = new BorderPane();
 
         //Treat the return key the same as pressing submit
@@ -60,7 +81,7 @@ public class GUI extends Application{
             }
         });
 
-        b.setTop(newbutton);
+        b.setTop(buildTop());
 
         //Event handler to start a new instance of GUI
         newbutton.setOnAction(new EventHandler<ActionEvent>() {
@@ -77,7 +98,7 @@ public class GUI extends Application{
             }
         });
         b.setBottom(buildBottom());
-        Scene scene = new Scene(b, 800,600);
+        Scene scene = new Scene(b, 800,450);
         primaryStage.setTitle("AFRS");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -108,6 +129,14 @@ public class GUI extends Application{
         vbRequest.getChildren().addAll(requestInfo,input);
         vbResponse.getChildren().addAll(responseInfo,output);
         hb.getChildren().addAll(vbRequest,vbResponse);
+        return hb;
+    }
+
+    private HBox buildTop(){
+        HBox hb = new HBox();
+        Region region = new Region();
+        HBox.setHgrow(region, Priority.ALWAYS);
+        hb.getChildren().addAll(newbutton,region,connectionStatus);
         return hb;
     }
 }
