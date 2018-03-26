@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.PrintStream;
 import java.util.Observable;
 import java.util.Scanner;
 
@@ -88,6 +89,7 @@ public class GUI extends Application{
                     requestText = requestTextField.getText();
                     connectAFRS();
                     requestTextField.setText("");
+
                 }
             }
         });
@@ -101,6 +103,7 @@ public class GUI extends Application{
                 requestText = requestTextField.getText();
                 connectAFRS();
                 requestTextField.setText("");
+
             }
         });
 
@@ -112,8 +115,8 @@ public class GUI extends Application{
             public void handle(ActionEvent event) {
                 Stage stage = new Stage();
                 try {
-                    GUI gui = new GUI();
-                    gui.start(stage);
+                    GUI foo = new GUI();
+                    foo.start(stage);
                 }
                 catch(Exception e){
                     
@@ -125,6 +128,17 @@ public class GUI extends Application{
         primaryStage.setTitle("AFRS");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+        System.setOut(new PrintStream(System.out){
+            @Override
+            public void write(byte[] buf, int off, int len){
+                super.write(buf,off,len);
+                String msg = new String (buf,off,len);
+                output.setText(output.getText() + msg);
+            }
+        });
+
     }
 
 
@@ -174,7 +188,7 @@ public class GUI extends Application{
 
             //save any reservations upon quitting
             csvp.writeToCSV();
-            System.exit(0);
+            //System.exit(0);
             return;
         }
         if(requestText.trim().toLowerCase().contains("help")){
