@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 public class AirportFAAParse {
 
-    private static String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
+    private static final String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
 
     public Airport getAirport(String airportCode){
         JSONObject json = getJsonFromApi(airportCode);

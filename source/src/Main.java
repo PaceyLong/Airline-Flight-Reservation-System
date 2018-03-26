@@ -25,7 +25,6 @@ public class Main {
 
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-
         InputParser parser;
         Scanner scanner = new Scanner(System.in);
         String input = "";
