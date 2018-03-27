@@ -2,6 +2,7 @@ package Parser.parseTypes;
 
 import Airports.Airport;
 import Airports.Weather;
+import Airports.WeatherList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * @author Ethan Della Posta
@@ -105,7 +105,7 @@ public class AirportFAAParse {
 
         int delay = getDelay(json);
 
-        ArrayList<Weather> weathers = new ArrayList<>();
+        WeatherList weathers = new WeatherList();
         //is the min connection time going to be zero here?
         Airport airport = new  Airport(name, airportCode, weathers, delay, 0);
         Weather weather = getWeather(json);

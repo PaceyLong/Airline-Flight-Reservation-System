@@ -1,8 +1,7 @@
 package Parser.parseTypes;
 import Airports.Airport;
 import Airports.AirportsDB;
-
-import java.util.ArrayList;
+import Airports.WeatherList;
 
 /*
     This parse type parses the lines from 'airports.Parser' (which contains the name and the code of each airport)
@@ -20,7 +19,7 @@ public class AirportNameParse extends CSVParse {
         String name = strLineArr[AIRPORT_NAME];
 
         //create new airport object, add to airport hash
-        Airport airport = new Airport(name, code, new ArrayList<>(), 0, 0);
+        Airport airport = new Airport(name, code, new WeatherList(), 0, 0);
         AirportsDB.getInstance().addAirport(code, airport);
     }
 }
