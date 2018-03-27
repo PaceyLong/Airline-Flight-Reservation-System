@@ -1,5 +1,7 @@
 package Airports;
 
+import Parser.parseTypes.AirportFAAParse;
+
 import java.util.HashMap;
 
 /**
@@ -10,8 +12,15 @@ import java.util.HashMap;
  * Key: airport code --> Val: Airport object
  */
 public class AirportsDB {
+
+
+    private static final String LOCAL = "local";
+    private static final String FAA = "faa";
+
     /* attributes */
     private HashMap<String, Airport> airportsHashMap;
+    private AirportFAAParse faaParse;
+    private String airportService;
 
     /* Enforce Singleton Pattern */
     private static AirportsDB instance;
@@ -27,6 +36,8 @@ public class AirportsDB {
      */
     private AirportsDB(){
         airportsHashMap = new HashMap<>();
+        faaParse = new AirportFAAParse();
+        this.airportService = LOCAL;
     }
 
     /**
@@ -62,11 +73,33 @@ public class AirportsDB {
     }
 
     /**
+     * toggle airport service
+     */
+    public void switchAirportService(){
+        this.airportService = this.airportService.equals(LOCAL)? FAA : LOCAL;
+    }
+
+    /**
+     * return service (faa or local) being used
+     * @return service
+     */
+    public String getAirportService(){
+        return this.airportService;
+    }
+
+    /**
      * Retrieve an airport from the database using it's airport code
+     * or from faa webservice
      * @param airportCode
      * @return airport object
      */
     public Airport getAirport(String airportCode){
-        return airportsHashMap.get(airportCode);
+        if(airportService.equals(LOCAL)){
+            return airportsHashMap.get(airportCode);
+        }
+
+        //else if(airportService.equals(FAA)){
+        return faaParse.getAirport(airportCode);
+
     }
 }
