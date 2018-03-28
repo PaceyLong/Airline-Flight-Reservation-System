@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class InputParser {
     private AirportsDB airportsDB = AirportsDB.getInstance();
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
-    private ArrayList<String> parsedInput = new ArrayList<>();
+    private ArrayList<String> parsedInput;
 
     // Command Attributes
     private CommandManager commandManager = new CommandManager();
@@ -26,8 +26,8 @@ public class InputParser {
     public static final String ARRIVAL_TIME_SORT_BY = "arrival";
     public static final String AIRFARE_SORT_BY = "airfare";
 
-    public InputParser(String input) throws Exception{
-        parseInput(input);
+    public InputParser() throws Exception{
+//        parseInput(input);
     }
 
     /**
@@ -38,16 +38,26 @@ public class InputParser {
     public void parseInput(String input) throws Exception{
         input = input.replaceAll("\\s","");
         String[] split = input.split(",");
+        parsedInput = new ArrayList<>(); // reset parsedInput for each iteration
+        command = null; // reset command for each iteration
         for(String i : split){
             parsedInput.add(i);
         }
 
         switch(parsedInput.get(0).toLowerCase()){
             case "undo":
-                commandManager.undoCommand();
+                try{
+                    commandManager.undoCommand();
+                } catch(EmptyUndoStackError | UndoCommandFlag error){
+                    throw error;
+                }
                 break;
             case "redo":
-                commandManager.redoCommand();
+                try{
+                    commandManager.redoCommand();
+                } catch (EmptyRedoStackError | RedoCommandFlag error){
+                    throw error;
+                }
                 break;
             case "info":
                 try{

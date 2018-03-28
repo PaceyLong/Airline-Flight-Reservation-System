@@ -23,7 +23,7 @@ public class Main {
 
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-        InputParser parser;
+        InputParser parser = new InputParser();
         Scanner scanner = new Scanner(System.in);
         String input = "";
 
@@ -54,7 +54,7 @@ public class Main {
             }
             if(input.trim().endsWith(";")){
                 try{
-                    parser = new InputParser(input.substring(0, input.length() - 1));
+                    parser.parseInput(input.substring(0, input.length() - 1));
                     parser.executeRequest();
                     input = "";
                 }catch(Exception e){

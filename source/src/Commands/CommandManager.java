@@ -1,5 +1,10 @@
 package Commands;
 
+import Errors.EmptyRedoStackError;
+import Errors.EmptyUndoStackError;
+import Errors.RedoCommandFlag;
+import Errors.UndoCommandFlag;
+
 import java.util.Stack;
 
 /**
@@ -41,29 +46,29 @@ public class CommandManager {
      * Undo most recent Undoable Command
      * Add command to Redo Stack
      */
-    public void undoCommand(){
+    public void undoCommand() throws EmptyUndoStackError, UndoCommandFlag{
         // verify undoStack isn't empty
         if(!undoCommandStack.empty()){
             UndoableCommand cmd = undoCommandStack.pop();
             cmd.undo();
             redoCommandStack.push(cmd);
-        } else{
-            System.out.println("There are no commands to undo");
+            throw new UndoCommandFlag();
         }
+        throw new EmptyUndoStackError();
     }
 
     /**
      * Redo most recent undone Undoable Command
      * Add command to Undo Stack
      */
-    public void redoCommand(){
+    public void redoCommand() throws EmptyRedoStackError, RedoCommandFlag{
         // verify redoStack isn't empty
         if(!redoCommandStack.empty()){
             UndoableCommand cmd = redoCommandStack.pop();
             cmd.execute();
             undoCommandStack.push(cmd);
-        } else{
-            System.out.println("There are no commands to redo");
+            throw new RedoCommandFlag();
         }
+        throw new EmptyRedoStackError();
     }
 }
