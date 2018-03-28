@@ -47,6 +47,8 @@ public class CommandManager {
             UndoableCommand cmd = undoCommandStack.pop();
             cmd.undo();
             redoCommandStack.push(cmd);
+        } else{
+            System.out.println("There are no commands to undo");
         }
     }
 
@@ -60,6 +62,8 @@ public class CommandManager {
             UndoableCommand cmd = redoCommandStack.pop();
             cmd.execute();
             undoCommandStack.push(cmd);
+        } else{
+            System.out.println("There are no commands to redo");
         }
     }
 }

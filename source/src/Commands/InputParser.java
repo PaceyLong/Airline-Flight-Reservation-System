@@ -16,6 +16,9 @@ public class InputParser {
     private AirportsDB airportsDB = AirportsDB.getInstance();
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
     private ArrayList<String> parsedInput = new ArrayList<>();
+
+    // Command Attributes
+    private CommandManager commandManager = new CommandManager();
     private Command command;
 
     /* Public Static SortBy Keywords */
@@ -39,7 +42,13 @@ public class InputParser {
             parsedInput.add(i);
         }
 
-        switch(parsedInput.get(0)){
+        switch(parsedInput.get(0).toLowerCase()){
+            case "undo":
+                commandManager.undoCommand();
+                break;
+            case "redo":
+                commandManager.redoCommand();
+                break;
             case "info":
                 try{
                     infoErrors();
@@ -90,10 +99,10 @@ public class InputParser {
     }
 
     /**
-     * Tells the request to execute the functionality of its command.
+     * Tells the request to execute the functionality of its command through the command manager.
      */
     public void executeRequest(){
-        command.execute();
+        commandManager.executeCommand(command);
     }
 
     /**
