@@ -23,7 +23,7 @@ public class DeleteReservation extends UndoableCommand {
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
 
     /* Attributes */
-    private Itinerary deletedItinerary;
+    private Itinerary deletedItinerary = null;
 
     public DeleteReservation(ArrayList<String> input){
         super(input);
@@ -36,7 +36,10 @@ public class DeleteReservation extends UndoableCommand {
 
     @Override
     public void execute() {
-        deletedItinerary = reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+        // only update deleted itinerary if it's a fresh command (it's currently null)
+        if(deletedItinerary == null){
+            deletedItinerary= reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+        }
         reservationsDB.deleteItinerary(input.get(PASSENGER), deletedItinerary);
     }
 }

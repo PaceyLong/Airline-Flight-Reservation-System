@@ -22,7 +22,7 @@ public class ReserveFlight extends UndoableCommand{
     /* attributes */
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
     private String currPassenger = "";
-    private Itinerary currItinerary;
+    private Itinerary currItinerary = null;
 
     public ReserveFlight(ArrayList<String> input){
         super(input);
@@ -32,7 +32,10 @@ public class ReserveFlight extends UndoableCommand{
     public void execute() {
         int id = Integer.parseInt(input.get(ID)) - 1;
         currPassenger = input.get(PASSENGER);
-        currItinerary = reservationsDB.getCurrItineraryWithID(id);
+        // only update currItinerary on new command obj (set to null)
+        if(currItinerary == null){
+            currItinerary = reservationsDB.getCurrItineraryWithID(id);
+        }
         reservationsDB.reserveItinerary(currItinerary, currPassenger);
     }
 
