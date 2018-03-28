@@ -20,14 +20,18 @@ import java.util.ArrayList;
  * Example response: airport,Orlando,sunny,95,15
  * If the airport is unknown: error,unknown airport
  */
-public class AirportInfo implements Command{
+public class AirportInfo extends Command{
     /* Index location for "airport" keyword */
     private static final int AIRPORT_KEYWORD = 0;
     /* Index location for airport code */
     private static final int AIRPORT_CODE = 1;
 
+    public AirportInfo(ArrayList<String> input){
+        super(input);
+    }
+
     @Override
-    public void execute(ArrayList<String> input) {
+    public void execute() {
         /* Grab Airport from AirportsDB*/
         AirportsDB airportsDB = AirportsDB.getInstance();
         /* Airport Code */

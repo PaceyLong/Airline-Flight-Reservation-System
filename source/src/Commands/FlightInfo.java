@@ -30,7 +30,7 @@ import java.util.Collection;
  *              Sorting will always be from lowest to highest by nature ordering for the field.
  *              The default sort order, if this field is omitted, is by time of departure.
  */
-public class FlightInfo implements Command{
+public class FlightInfo extends Command{
     private String origin;
     private static final int ORIGIN_INDEX = 1;
     private String destination;
@@ -44,8 +44,12 @@ public class FlightInfo implements Command{
     private static final String DEFAULT_SORT_ORDER = InputParser.DEPARTURE_TIME_SORT_BY;
     private static final String FLIGHTS_REQUEST_KEYWORD = "info";
 
+    public FlightInfo(ArrayList<String> input){
+        super(input);
+    }
+
     @Override
-    public void execute(ArrayList<String> input) {
+    public void execute() {
         origin = input.get(ORIGIN_INDEX);
         destination = input.get(DESTINATION_INDEX);
         if(input.size() >= 4) {

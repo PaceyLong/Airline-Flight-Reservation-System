@@ -1,10 +1,10 @@
-package csv;
+package Parser;
 
 import Airports.AirportsDB;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.Flight;
 import TTARouteNetwork.FlightsDB;
-import csv.parseTypes.*;
+import Parser.parseTypes.*;
 import Reservations.Itinerary;
 
 import java.io.BufferedWriter;
@@ -18,12 +18,12 @@ import java.io.IOException;
  *   Author: Ethan Della Posta
 */
 public class CSVParser {
-    public static String AIRPORTS_NAME_PATH =  "./source/src/CSVFiles/airports.csv";
-    public static String AIRPORTS_DELAY_PATH = "./source/src/CSVFiles/delay.csv";
-    public static String AIRPORTS_TIME_PATH = "./source/src/CSVFiles/min_connection_time.csv";
-    public static String AIRPORTS_WEATHER_PATH = "./source/src/CSVFiles/weather.csv";
-    public static String FLIGHTS_PATH = "./source/src/CSVFiles/route_network.csv";
-    public static String RESERVATIONS_PATH = "./source/src/CSVFiles/reservations.csv";
+    private static String AIRPORTS_NAME_PATH =  "./source/src/CSVFiles/airports.csv";
+    private static String AIRPORTS_DELAY_PATH = "./source/src/CSVFiles/delay.csv";
+    private static String AIRPORTS_TIME_PATH = "./source/src/CSVFiles/min_connection_time.csv";
+    private static String AIRPORTS_WEATHER_PATH = "./source/src/CSVFiles/weather.csv";
+    private static String FLIGHTS_PATH = "./source/src/CSVFiles/route_network.csv";
+    private static String RESERVATIONS_PATH = "./source/src/CSVFiles/reservations.csv";
 
     private CSVParse nameParse;
     private CSVParse delayParse;
@@ -95,7 +95,7 @@ public class CSVParser {
 
     /**
      * Singular Purpose
-     * Writes reservations to reservations.csv in the following format:
+     * Writes reservations to reservations.Parser in the following format:
      * Passenger Name, Airfare, Flight Number, Origin Airport, Departure Time, Destination Airport, Arrival Time, ....
      */
     public void writeToCSV(){
@@ -107,8 +107,8 @@ public class CSVParser {
                     for(Flight flight : itinerary.getFlights()){
                         writer.write(flight.toString() + ",");
                     }
+                    writer.write("\n");
                 }
-                writer.write("\n");
             }
             writer.close();
 

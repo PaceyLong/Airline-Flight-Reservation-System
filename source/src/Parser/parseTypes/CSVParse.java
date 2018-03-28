@@ -1,4 +1,4 @@
-package csv.parseTypes;
+package Parser.parseTypes;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,7 +10,7 @@ import java.io.FileReader;
  */
 public abstract class CSVParse {
 
-    //runs through the csv lines and adds json data to objects within the flights or airports json array
+    //runs through the Parser lines and adds json data to objects within the flights or airports json array
     public void parseCSV(String path){
         String line;
 

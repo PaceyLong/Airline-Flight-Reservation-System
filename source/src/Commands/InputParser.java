@@ -15,7 +15,10 @@ import java.util.ArrayList;
 public class InputParser {
     private AirportsDB airportsDB = AirportsDB.getInstance();
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
-    private ArrayList<String> parsedInput = new ArrayList<>();
+    private ArrayList<String> parsedInput;
+
+    // Command Attributes
+    private CommandManager commandManager = new CommandManager();
     private Command command;
 
     /* Public Static SortBy Keywords */
@@ -23,8 +26,8 @@ public class InputParser {
     public static final String ARRIVAL_TIME_SORT_BY = "arrival";
     public static final String AIRFARE_SORT_BY = "airfare";
 
-    public InputParser(String input) throws Exception{
-        parseInput(input);
+    public InputParser() throws Exception{
+//        parseInput(input);
     }
 
     /**
@@ -35,15 +38,31 @@ public class InputParser {
     public void parseInput(String input) throws Exception{
         input = input.replaceAll("\\s","");
         String[] split = input.split(",");
+        parsedInput = new ArrayList<>(); // reset parsedInput for each iteration
+        command = null; // reset command for each iteration
         for(String i : split){
             parsedInput.add(i);
         }
 
-        switch(parsedInput.get(0)){
+        switch(parsedInput.get(0).toLowerCase()){
+            case "undo":
+                try{
+                    commandManager.undoCommand();
+                } catch(EmptyUndoStackError | UndoCommandFlag error){
+                    throw error;
+                }
+                break;
+            case "redo":
+                try{
+                    commandManager.redoCommand();
+                } catch (EmptyRedoStackError | RedoCommandFlag error){
+                    throw error;
+                }
+                break;
             case "info":
                 try{
                     infoErrors();
-                    this.setCommand(new FlightInfo());
+                    this.setCommand(new FlightInfo(parsedInput));
                 }catch(UnknownOriginException|UnknownDestinationException|InvalidConnectionLimitException|InvalidSortOrderException e) {
                     throw e;
                 }
@@ -51,7 +70,7 @@ public class InputParser {
             case "reserve":
                 try{
                     reserveErrors();
-                    this.setCommand(new ReserveFlight());
+                    this.setCommand(new ReserveFlight(parsedInput));
                 } catch(InvalidItineraryIdException e){
                     throw e;
                 }
@@ -59,18 +78,18 @@ public class InputParser {
             case "retrieve":
                 try{
                     retrieveErrors();
-                    this.setCommand(new RetrieveReservation());
+                    this.setCommand(new RetrieveReservation(parsedInput));
                 }catch(UnknownOriginException|UnknownDestinationException e) {
                     throw e;
                 }
                 break;
             case "delete":
-                this.setCommand(new DeleteReservation());
+                this.setCommand(new DeleteReservation(parsedInput));
                 break;
             case "airport":
                 try{
                     airportErrors();
-                    this.setCommand(new AirportInfo());
+                    this.setCommand(new AirportInfo(parsedInput));
                 }catch(UnknownAirportException e) {
                     throw e;
                 }
@@ -90,10 +109,10 @@ public class InputParser {
     }
 
     /**
-     * Tells the request to execute the functionality of its command.
+     * Tells the request to execute the functionality of its command through the command manager.
      */
     public void executeRequest(){
-        command.execute(parsedInput);
+        commandManager.executeCommand(command);
     }
 
     /**
