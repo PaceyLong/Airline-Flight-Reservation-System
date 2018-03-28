@@ -6,6 +6,7 @@ import TTARouteNetwork.FlightsDB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,7 +28,7 @@ public class GUI extends Application{
     private TextArea input = new TextArea();
     private TextArea output = new TextArea();
     private Label requestLabel = new Label("Request: ");
-    private Label connectionStatus = new Label("Connection Status: ");
+    private Label connectionStatus = new Label("Connection Status: Disconnected");
 
     //The TextField where the user will type and enter their commands.
     private TextField requestTextField = new TextField();
@@ -40,21 +41,28 @@ public class GUI extends Application{
     }
 
     public void helper(){
-        String s = "---------------------------------------------------------------------\n" +
-                "Input should follow one of the following formats:\n" +
-                " (Anything in brackets are optional and all commands are ended with semi-colons)\n" +
+        String s = "Input should follow one of the following formats:\n" +
+                "(Anything in brackets are optional and\n" +
+                "all commands are ended with semi-colons)\n" +
+                " \n" +
                 "Flight information request: info,origin,destination[,connections[,sort-order]]\n" +
+                " \n" +
                 "Make reservation request: reserve,id,passenger\n" +
+                " \n" +
                 "Retrieve reservations request: retrieve,passenger[,origin[,destination]]\n" +
+                " \n" +
                 "Delete reservation request: delete,passenger,origin,destination\n" +
+                " \n" +
                 "Airport information request: airport,airport\n" +
+                " \n"+
                 "---------------------------------------------------------------------\n" +
-                "Please input a command (Type HELP to see commands again, Type QUIT to exit)\n";
+                " \n" +
+                "Type HELP to see commands again\n" +
+                "Type switch to use FAA service\n" +
+                "Type QUIT to exit\n";
         input.setText(s);
         input.setWrapText(true);
     }
-
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -78,6 +86,7 @@ public class GUI extends Application{
         // (write reservations to reservationsDB)
 
         BorderPane b = new BorderPane();
+        b.setPadding(new Insets(10,10,10,10));
 
         helper();
 
@@ -119,25 +128,26 @@ public class GUI extends Application{
                     foo.start(stage);
                 }
                 catch(Exception e){
-                    
+
                 }
             }
         });
         b.setBottom(buildBottom());
-        Scene scene = new Scene(b, 800,450);
+        Scene scene = new Scene(b, 950,450);
         primaryStage.setTitle("AFRS");
         primaryStage.setScene(scene);
         primaryStage.show();
 
 
-        System.setOut(new PrintStream(System.out){
-            @Override
-            public void write(byte[] buf, int off, int len){
-                super.write(buf,off,len);
-                String msg = new String (buf,off,len);
-                output.setText(output.getText() + msg);
-            }
-        });
+     System.setOut(new PrintStream(System.out){
+    @Override
+    public void write(byte[] buf, int off, int len){
+    super.write(buf,off,len);
+    String msg = new String (buf,off,len);
+    output.setText(output.getText() + msg);
+    }
+    });
+
 
     }
 
@@ -194,9 +204,14 @@ public class GUI extends Application{
         if(requestText.trim().toLowerCase().contains("help")){
             requestText = "";
         }
+        if(requestText.trim().toLowerCase().contains("switch")) {
+            requestText = "Using FAA service for airport information";
+        }
         if(requestText.trim().endsWith(";")){
             try{
-                parser = new InputParser(requestText.substring(0, requestText.length() - 1));
+
+                //output.setText(parser.executeRequest());
+                parser = new InputParser();
                 parser.executeRequest();
                 requestText = "";
             }catch(Exception e){

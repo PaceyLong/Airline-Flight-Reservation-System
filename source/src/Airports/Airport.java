@@ -1,6 +1,4 @@
 package Airports;
-import java.util.ArrayList;
-
 /**
  * @author Joshua Ehling, Ethan Della Posta
  *
@@ -19,8 +17,7 @@ public class Airport {
     /* attributes */
     private String name;
     private String code;
-    private ArrayList<Weather> weather;
-    private int weatherIndex = 0;
+    private WeatherList weatherList;
     private int minConnectionTime;
     private int delayTime;
 
@@ -28,13 +25,13 @@ public class Airport {
      * Constructor
      * @param name - name of airport
      * @param code - unique airport code
-     * @param weather - weather array
+     * @param weatherList - list of weather objects (WeatherList)
      * @param delayTime - delay time (integer value)
      */
-    public Airport(String name, String code, ArrayList<Weather> weather, int delayTime, int minConnectionTime){
+    public Airport(String name, String code, WeatherList weatherList, int delayTime, int minConnectionTime){
         this.name = name;
         this.code = code;
-        this.weather = weather;
+        this.weatherList = weatherList;
         this.delayTime = delayTime;
         this.minConnectionTime = minConnectionTime;
 
@@ -45,19 +42,14 @@ public class Airport {
      * @return weather string
      */
     private Weather getWeather(){
-        Weather currWeather = null;
-        if (weather.size() > 0){ // as long as weather isn't empty
-            currWeather = weather.get(weatherIndex);
-            weatherIndex = (weatherIndex < weather.size() -1)? weatherIndex + 1 : 0;
-        }
-        return currWeather;
+       return this.weatherList.getCurrWeather();
     }
 
     /**
      * add new weather object to arraylist
      */
     public void addWeather(Weather weather){
-        this.weather.add(weather);
+        this.weatherList.addWeather(weather);
     }
 
     /**

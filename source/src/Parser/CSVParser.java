@@ -107,8 +107,8 @@ public class CSVParser {
                     for(Flight flight : itinerary.getFlights()){
                         writer.write(flight.toString() + ",");
                     }
+                    writer.write("\n");
                 }
-                writer.write("\n");
             }
             writer.close();
 

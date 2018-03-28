@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *          If the request has a destination filter but no origin filter, the origin field will be empty
  *      destination: three-letter code for the destination airport that will filter the retrieved reservations
  */
-public class RetrieveReservation implements Command{
+public class RetrieveReservation extends Command{
     /* attributes */
     private static final int PASSENGER = 1;
     private static final int ORIGIN = 2;
@@ -24,8 +24,12 @@ public class RetrieveReservation implements Command{
     private static final int PASSENGER_ORIGIN_SIZE = 3;
     private static final int PASSENGER_ORIGIN_DESTINATION_SIZE = 4;
 
+    public RetrieveReservation(ArrayList<String> input){
+        super(input);
+    }
+
     @Override
-    public void execute(ArrayList<String> input) {
+    public void execute() {
         // grab ReservationsDB singleton instance
         ReservationsDB reservationsDB = ReservationsDB.getInstance();
         if(input.size() == DEFAULT_SIZE){

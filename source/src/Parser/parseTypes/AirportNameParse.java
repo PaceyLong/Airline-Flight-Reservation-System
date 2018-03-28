@@ -1,8 +1,7 @@
 package Parser.parseTypes;
 import Airports.Airport;
 import Airports.AirportsDB;
-
-import java.util.ArrayList;
+import Airports.WeatherList;
 
 /*
     This parse type parses the lines from 'airports.Parser' (which contains the name and the code of each airport)
@@ -10,14 +9,17 @@ import java.util.ArrayList;
  */
 public class AirportNameParse extends CSVParse {
 
+    private static final int AIRPORT_CODE = 0;
+    private static final int AIRPORT_NAME = 1;
+
     @Override
     public void useCSVLine(String[] strLineArr) {
         //extract values from string array
-        String name = strLineArr[1];
-        String code = strLineArr[0];
+        String code = strLineArr[AIRPORT_CODE];
+        String name = strLineArr[AIRPORT_NAME];
 
         //create new airport object, add to airport hash
-        Airport airport = new Airport(name, code, new ArrayList<>(), 0, 0);
+        Airport airport = new Airport(name, code, new WeatherList(), 0, 0);
         AirportsDB.getInstance().addAirport(code, airport);
     }
 }

@@ -14,17 +14,32 @@ import java.util.ArrayList;
  *      origin: three-letter code for the reservation's origin airport
  *      destination: three-letter code for the reservation's destination airport
  */
-public class DeleteReservation implements Command {
-    /* attributes */
+public class DeleteReservation extends UndoableCommand {
+    /* Constants */
     private static final int DELETE_KEYWORD = 0;
     private static final int PASSENGER = 1;
     private static final int ORIGIN = 2;
     private static final int DESTINATION = 3;
+    private ReservationsDB reservationsDB = ReservationsDB.getInstance();
+
+    /* Attributes */
+    private Itinerary deletedItinerary = null;
+
+    public DeleteReservation(ArrayList<String> input){
+        super(input);
+    }
 
     @Override
-    public void execute(ArrayList<String> input) {
-        ReservationsDB reservationsDB = ReservationsDB.getInstance();
-        Itinerary itinerary = reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
-        reservationsDB.deleteItinerary(input.get(PASSENGER), itinerary);
+    public void undo() {
+        reservationsDB.reserveItinerary(deletedItinerary, input.get(PASSENGER));
+    }
+
+    @Override
+    public void execute() {
+        // only update deleted itinerary if it's a fresh command (it's currently null)
+        if(deletedItinerary == null){
+            deletedItinerary= reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+        }
+        reservationsDB.deleteItinerary(input.get(PASSENGER), deletedItinerary);
     }
 }

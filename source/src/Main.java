@@ -1,14 +1,12 @@
-import Airports.AirportsDB;
-import Parser.parseTypes.AirportFAAParse;
-import Reservations.ReservationsDB;
-import TTARouteNetwork.FlightsDB;
-import Parser.CSVParser;
 import Commands.InputParser;
+import Parser.CSVParser;
 
 import java.util.Scanner;
 
 
 public class Main {
+
+
     public static void help(){
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Input should follow one of the following formats (Anything in brackets are optional and all commands are ended with semi-colons): ");
@@ -18,7 +16,7 @@ public class Main {
         System.out.println("Delete reservation request: delete,passenger,origin,destination;");
         System.out.println("Airport information request: airport,airport;");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Please input a command (Type 'HELP' to see commands again, Type 'QUIT' to exit): ");
+        System.out.println("Please input a command (Type 'HELP' to see commands again, Type 'QUIT' to exit, Type 'SWITCH' to toggle which airport service you are using): ");
     }
 
     public static void main(String[] args) throws Exception{
@@ -28,8 +26,7 @@ public class Main {
     public static void helper(){
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-
-        InputParser parser;
+        InputParser parser = new InputParser();
         Scanner scanner = new Scanner(System.in);
         String input = "";
 
@@ -45,6 +42,14 @@ public class Main {
                 csvp.writeToCSV();
                 return;
             }
+
+            if(input.trim().toLowerCase().contains("switch")){
+                csvp.getAirports().switchAirportService();
+
+                System.out.println("You are now using the " + csvp.getAirports().getAirportService() + " service for airport information.");
+                input = "";
+                continue;
+            }
             if(input.trim().toLowerCase().contains("help")){
                 help();
                 input = "";
@@ -52,7 +57,7 @@ public class Main {
             }
             if(input.trim().endsWith(";")){
                 try{
-                    parser = new InputParser(input.substring(0, input.length() - 1));
+                    parser.parseInput(input.substring(0, input.length() - 1));
                     parser.executeRequest();
                     input = "";
                 }catch(Exception e){

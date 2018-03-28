@@ -8,6 +8,20 @@ import java.util.ArrayList;
  * Receives parsed command string.
  * ASSUMPTION: valid input
  */
-public interface Command {
-    public void execute(ArrayList<String> input);
+public abstract class Command {
+    /* Attributes */
+    protected ArrayList<String> input;
+
+    /**
+     * Constructor
+     * @param input - user input
+     */
+    public Command(ArrayList<String> input){
+        this.input = input;
+    }
+
+    /**
+     * Universal execution method
+     */
+    public abstract void execute();
 }
