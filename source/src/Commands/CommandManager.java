@@ -11,8 +11,8 @@ import java.util.Stack;
  */
 public class CommandManager {
     /* attributes */
-    private Stack<Command> undoCommandStack;
-    private Stack<Command> redoCommandStack;
+    private Stack<UndoableCommand> undoCommandStack;
+    private Stack<UndoableCommand> redoCommandStack;
 
     /**
      * Constructor
@@ -22,15 +22,44 @@ public class CommandManager {
         redoCommandStack = new Stack<>();
     }
 
+    /**
+     * Main execution method. Executes cmd argument
+     * If the executed command is Undoable, add to Undo Stack
+     * @param cmd Command object sent in
+     */
     public void executeCommand(Command cmd){
-        // TODO
+        // execute command
+        cmd.execute();
+        // add to undo stack if UndoableCommand
+        if(cmd instanceof UndoableCommand){
+            // cast cmd to UndoableCommand and push to stack
+            undoCommandStack.push((UndoableCommand) cmd);
+        }
     }
 
+    /**
+     * Undo most recent Undoable Command
+     * Add command to Redo Stack
+     */
     public void undoCommand(){
-        // TODO
+        // verify undoStack isn't empty
+        if(!undoCommandStack.empty()){
+            UndoableCommand cmd = undoCommandStack.pop();
+            cmd.undo();
+            redoCommandStack.push(cmd);
+        }
     }
 
+    /**
+     * Redo most recent undone Undoable Command
+     * Add command to Undo Stack
+     */
     public void redoCommand(){
-        // TODO
+        // verify redoStack isn't empty
+        if(!redoCommandStack.empty()){
+            UndoableCommand cmd = redoCommandStack.pop();
+            cmd.execute();
+            undoCommandStack.push(cmd);
+        }
     }
 }
