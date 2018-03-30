@@ -26,7 +26,7 @@ public class InputParser {
     public static final String ARRIVAL_TIME_SORT_BY = "arrival";
     public static final String AIRFARE_SORT_BY = "airfare";
 
-    public InputParser() throws Exception{
+    public InputParser(){
 //        parseInput(input);
     }
 
