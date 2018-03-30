@@ -36,10 +36,6 @@ public class GUI extends Application{
     //The inputted request text
     private String requestText;
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
-
     public void helper(){
         String s = "Input should follow one of the following formats:\n" +
                 "(Anything in brackets are optional and\n" +
@@ -67,9 +63,9 @@ public class GUI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        CSVParser csvp = new CSVParser();
-        FlightsDB flights = csvp.getFlights();
-        ReservationsDB reservations = csvp.getReservations();
+        //CSVParser csvp = new CSVParser();
+        //FlightsDB flights = csvp.getFlights();
+        //ReservationsDB reservations = csvp.getReservations();
 
         /* use airports if local airport info has been chosen (this is chosen by default)
          *
@@ -80,7 +76,7 @@ public class GUI extends Application{
          * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
          *
          */
-        AirportsDB airports = csvp.getAirports();
+        //AirportsDB airports = csvp.getAirports();
 
         //if request text = 'quit' => execute csvp.writeToCSV();
         // (write reservations to reservationsDB)
@@ -139,6 +135,7 @@ public class GUI extends Application{
         primaryStage.show();
 
 
+        /**
      System.setOut(new PrintStream(System.out){
     @Override
     public void write(byte[] buf, int off, int len){
@@ -146,7 +143,7 @@ public class GUI extends Application{
     String msg = new String (buf,off,len);
     output.setText(output.getText() + msg);
     }
-    });
+    });*/
 
 
     }
@@ -205,14 +202,23 @@ public class GUI extends Application{
             requestText = "";
         }
         if(requestText.trim().toLowerCase().contains("switch")) {
-            requestText = "Using FAA service for airport information";
+            csvp.getAirports().switchAirportService();
+            String status = csvp.getAirports().getAirportService();
+            if(status.equals("local")){
+                connectionStatus.setText("Connection Status: Disconnected");
+            }else if(status.equals("faa")){
+                connectionStatus.setText("Connection Status: Connected");
+            }
+
         }
+
         if(requestText.trim().endsWith(";")){
             try{
-
-                //output.setText(parser.executeRequest());
                 parser = new InputParser();
-                parser.executeRequest();
+                parser.parseInput(requestText.substring(0, requestText.length() - 1));
+                String cmdPrintout = parser.executeRequest();
+                System.out.println(cmdPrintout);
+                output.setText(cmdPrintout);
                 requestText = "";
             }catch(Exception e){
                 requestText = "";
@@ -220,4 +226,5 @@ public class GUI extends Application{
             }
         }
     }
+    public static void main(String[] args){Application.launch(args);}
 }
