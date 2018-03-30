@@ -157,9 +157,9 @@ public class ReservationsDB {
      * Default printout of all reservations under a given Passenger
      * @param passengerName - passenger
      */
-    public void retrieveReservations(String passengerName){
+    public String retrieveReservations(String passengerName){
         ArrayList<Itinerary> itineraries = reservationsHashMap.get(passengerName);
-        System.out.println(constructMessage(itineraries));
+        return constructMessage(itineraries);
     }
 
     /**
@@ -167,14 +167,14 @@ public class ReservationsDB {
      * @param passengerName - passenger
      * @param origin - origin airport
      */
-    public void retrieveReservations(String passengerName, String origin){
+    public String retrieveReservations(String passengerName, String origin){
         // instantiate list of itineraries that have the given Origin
         ArrayList<Itinerary> matchingItineraries = new ArrayList<>();
         // compile list of itineraries that contain the desired value
         for (Itinerary itinerary : reservationsHashMap.get(passengerName)){
             if(itinerary.getOrigin().equals(origin)) matchingItineraries.add(itinerary);
         }
-        System.out.println(constructMessage(matchingItineraries));
+        return constructMessage(matchingItineraries);
     }
 
     /**
@@ -183,11 +183,11 @@ public class ReservationsDB {
      * @param origin - origin airport
      * @param destination - destination airport
      */
-    public void retrieveReservations(String passengerName, String origin, String destination){
+    public String retrieveReservations(String passengerName, String origin, String destination){
         // instantiate list of itineraries that have given origin and destination
         ArrayList<Itinerary> matchingItineraries = getMatchingItineraries(passengerName, origin, destination);
         // begin crafting message
-        System.out.println(constructMessage(matchingItineraries));
+        return constructMessage(matchingItineraries);
     }
 
     /**
