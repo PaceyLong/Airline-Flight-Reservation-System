@@ -60,7 +60,7 @@ public class Main {
             if(input.trim().endsWith(";")){
                 try{
                     parser.parseInput(input.substring(0, input.length() - 1));
-                    parser.executeRequest();
+                    System.out.println(parser.executeRequest());
                     input = "";
                 }catch(Exception e){
                     input = "";
