@@ -29,15 +29,15 @@ public class RetrieveReservation extends Command{
     }
 
     @Override
-    public void execute() {
+    public String execute() {
         // grab ReservationsDB singleton instance
         ReservationsDB reservationsDB = ReservationsDB.getInstance();
         if(input.size() == DEFAULT_SIZE){
-            reservationsDB.retrieveReservations(input.get(PASSENGER));
+            return reservationsDB.retrieveReservations(input.get(PASSENGER));
         } else if(input.size() == PASSENGER_ORIGIN_SIZE){
-            reservationsDB.retrieveReservations(input.get(PASSENGER), input.get(ORIGIN));
+            return reservationsDB.retrieveReservations(input.get(PASSENGER), input.get(ORIGIN));
         } else{ // input.size() == PASSENGER_ORIGIN_DESTINATION_SIZE (4)
-            reservationsDB.retrieveReservations(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+            return reservationsDB.retrieveReservations(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
         }
     }
 }
