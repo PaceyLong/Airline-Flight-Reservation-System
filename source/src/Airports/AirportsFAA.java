@@ -1,8 +1,5 @@
-package Parser.parseTypes;
+package Airports;
 
-import Airports.Airport;
-import Airports.Weather;
-import Airports.WeatherList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,7 +20,7 @@ import java.net.URL;
  * Gets Airport json data from faa api,
  * and returns an Airport object
  */
-public class AirportFAAParse {
+public class AirportsFAA implements Airports{
 
     private static final String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
 

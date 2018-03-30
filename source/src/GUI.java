@@ -75,7 +75,7 @@ public class GUI extends Application{
          *
          * if FAA is chosen get each specific airport by calling:
          *
-         * AirportFAAParse faaParse = new AirportFAAParse();
+         * AirportsFAA faaParse = new AirportsFAA();
          * Airport airport = faaParse.getAirport(airportCode));
          * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
          *

@@ -1,3 +1,6 @@
+import Airports.Airports;
+import Airports.AirportsDB;
+import Airports.AirportsFAA;
 import Commands.InputParser;
 import Parser.CSVParser;
 
@@ -26,7 +29,13 @@ public class Main {
     public static void helper(){
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-        InputParser parser = new InputParser();
+        Airports airportService = AirportsDB.getInstance();
+        InputParser parser = null;
+        try {
+            parser = new InputParser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Scanner scanner = new Scanner(System.in);
         String input = "";
 
@@ -44,9 +53,13 @@ public class Main {
             }
 
             if(input.trim().toLowerCase().contains("switch")){
-                csvp.getAirports().switchAirportService();
-
-                System.out.println("You are now using the " + csvp.getAirports().getAirportService() + " service for airport information.");
+                if(airportService instanceof AirportsDB){
+                    airportService = new AirportsFAA();
+                    System.out.println("You are now using the FAA service for airport information.");
+                }else {
+                    airportService = AirportsDB.getInstance();
+                    System.out.println("You are now using the local service for airport information.");
+                }
                 input = "";
                 continue;
             }
