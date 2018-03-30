@@ -18,8 +18,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.PrintStream;
-import java.util.Observable;
-import java.util.Scanner;
 
 public class GUI extends Application{
 
@@ -71,7 +69,7 @@ public class GUI extends Application{
          *
          * if FAA is chosen get each specific airport by calling:
          *
-         * AirportFAAParse faaParse = new AirportFAAParse();
+         * AirportsDBProxy faaParse = new AirportsDBProxy();
          * Airport airport = faaParse.getAirport(airportCode));
          * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
          *
