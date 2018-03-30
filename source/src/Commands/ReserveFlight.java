@@ -23,13 +23,14 @@ public class ReserveFlight extends UndoableCommand{
     private ReservationsDB reservationsDB = ReservationsDB.getInstance();
     private String currPassenger = "";
     private Itinerary currItinerary = null;
+    private static final String SUCCESSFUL_RESERVATION_MSG = "reserve,successful";
 
     public ReserveFlight(ArrayList<String> input){
         super(input);
     }
 
     @Override
-    public void execute() {
+    public String execute() {
         int id = Integer.parseInt(input.get(ID)) - 1;
         currPassenger = input.get(PASSENGER);
         // only update currItinerary on new command obj (set to null)
@@ -37,6 +38,7 @@ public class ReserveFlight extends UndoableCommand{
             currItinerary = reservationsDB.getCurrItineraryWithID(id);
         }
         reservationsDB.reserveItinerary(currItinerary, currPassenger);
+        return SUCCESSFUL_RESERVATION_MSG; // TODO
     }
 
     // delete: Delete reservation request: {delete},passenger,origin,destination;
