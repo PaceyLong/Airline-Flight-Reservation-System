@@ -1,4 +1,6 @@
+import Airports.AirportInfoService;
 import Airports.AirportsDB;
+import Airports.AirportsDBProxy;
 import Commands.InputParser;
 import Parser.CSVParser;
 import Reservations.ReservationsDB;
@@ -199,12 +201,17 @@ public class GUI extends Application{
         if(requestText.trim().toLowerCase().contains("help")){
             requestText = "";
         }
-        if(requestText.trim().toLowerCase().contains("switch")) {
-            csvp.getAirports().switchAirportService();
-            String status = csvp.getAirports().getAirportService();
+        if(requestText.trim().toLowerCase().contains("server")) {
+
+            //csvp.getAirports().switchAirportService();
+            //String status = csvp.getAirports().getAirportService();
+
+            AirportsDBProxy.getInstance().toggleService();
+            AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
+            String status = airportInfoService.toString();
             if(status.equals("local")){
                 connectionStatus.setText("Connection Status: Disconnected");
-            }else if(status.equals("faa")){
+            }else if(status.equals("FAA")){
                 connectionStatus.setText("Connection Status: Connected");
             }
 
