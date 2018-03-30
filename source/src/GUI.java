@@ -1,10 +1,12 @@
 import Airports.AirportsDB;
+import Commands.InputParser;
 import Parser.CSVParser;
 import Reservations.ReservationsDB;
 import TTARouteNetwork.FlightsDB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,7 +17,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.PrintStream;
 import java.util.Observable;
+import java.util.Scanner;
 
 public class GUI extends Application{
 
@@ -24,7 +28,7 @@ public class GUI extends Application{
     private TextArea input = new TextArea();
     private TextArea output = new TextArea();
     private Label requestLabel = new Label("Request: ");
-    private Label connectionStatus = new Label("Connection Status: ");
+    private Label connectionStatus = new Label("Connection Status: Disconnected");
 
     //The TextField where the user will type and enter their commands.
     private TextField requestTextField = new TextField();
@@ -36,6 +40,29 @@ public class GUI extends Application{
         Application.launch(args);
     }
 
+    public void helper(){
+        String s = "Input should follow one of the following formats:\n" +
+                "(Anything in brackets are optional and\n" +
+                "all commands are ended with semi-colons)\n" +
+                " \n" +
+                "Flight information request: info,origin,destination[,connections[,sort-order]]\n" +
+                " \n" +
+                "Make reservation request: reserve,id,passenger\n" +
+                " \n" +
+                "Retrieve reservations request: retrieve,passenger[,origin[,destination]]\n" +
+                " \n" +
+                "Delete reservation request: delete,passenger,origin,destination\n" +
+                " \n" +
+                "Airport information request: airport,airport\n" +
+                " \n"+
+                "---------------------------------------------------------------------\n" +
+                " \n" +
+                "Type HELP to see commands again\n" +
+                "Type switch to use FAA service\n" +
+                "Type QUIT to exit\n";
+        input.setText(s);
+        input.setWrapText(true);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -59,6 +86,9 @@ public class GUI extends Application{
         // (write reservations to reservationsDB)
 
         BorderPane b = new BorderPane();
+        b.setPadding(new Insets(10,10,10,10));
+
+        helper();
 
         //Treat the return key the same as pressing submit
         requestTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -66,6 +96,8 @@ public class GUI extends Application{
             public void handle(KeyEvent event) {
                 if(event.getCode() == KeyCode.ENTER){
                     requestText = requestTextField.getText();
+                    connectAFRS();
+                    requestTextField.setText("");
 
                 }
             }
@@ -78,6 +110,9 @@ public class GUI extends Application{
             @Override
             public void handle(ActionEvent event) {
                 requestText = requestTextField.getText();
+                connectAFRS();
+                requestTextField.setText("");
+
             }
         });
 
@@ -89,8 +124,8 @@ public class GUI extends Application{
             public void handle(ActionEvent event) {
                 Stage stage = new Stage();
                 try {
-                    GUI gui = new GUI();
-                    gui.start(stage);
+                    GUI foo = new GUI();
+                    foo.start(stage);
                 }
                 catch(Exception e){
 
@@ -98,10 +133,22 @@ public class GUI extends Application{
             }
         });
         b.setBottom(buildBottom());
-        Scene scene = new Scene(b, 800,450);
+        Scene scene = new Scene(b, 950,450);
         primaryStage.setTitle("AFRS");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+     System.setOut(new PrintStream(System.out){
+    @Override
+    public void write(byte[] buf, int off, int len){
+    super.write(buf,off,len);
+    String msg = new String (buf,off,len);
+    output.setText(output.getText() + msg);
+    }
+    });
+
+
     }
 
 
@@ -138,5 +185,39 @@ public class GUI extends Application{
         HBox.setHgrow(region, Priority.ALWAYS);
         hb.getChildren().addAll(newbutton,region,connectionStatus);
         return hb;
+    }
+
+    private void connectAFRS(){
+        CSVParser csvp = new CSVParser();
+        csvp.createHashes();
+
+        InputParser parser;
+
+        if(requestText.trim().toLowerCase().contains("quit")){
+            output.setText("Thank you for using AFRS!");
+
+            //save any reservations upon quitting
+            csvp.writeToCSV();
+            //System.exit(0);
+            return;
+        }
+        if(requestText.trim().toLowerCase().contains("help")){
+            requestText = "";
+        }
+        if(requestText.trim().toLowerCase().contains("switch")) {
+            requestText = "Using FAA service for airport information";
+        }
+        if(requestText.trim().endsWith(";")){
+            try{
+
+                //output.setText(parser.executeRequest());
+                parser = new InputParser();
+                parser.executeRequest();
+                requestText = "";
+            }catch(Exception e){
+                requestText = "";
+                output.setText(e.getMessage());
+            }
+        }
     }
 }

@@ -21,7 +21,10 @@ public class Main {
     }
 
     public static void main(String[] args) throws Exception{
+        helper();
+    }
 
+    public static void helper(){
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
         InputParser parser = new InputParser();
@@ -65,8 +68,6 @@ public class Main {
                 }
             }
         }
-
-
     }
 
 }
