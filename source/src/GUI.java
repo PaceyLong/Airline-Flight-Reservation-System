@@ -1,10 +1,7 @@
 import Airports.AirportInfoService;
-import Airports.AirportsDB;
 import Airports.AirportsDBProxy;
 import Commands.InputParser;
 import Parser.CSVParser;
-import Reservations.ReservationsDB;
-import TTARouteNetwork.FlightsDB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,8 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.io.PrintStream;
 
 public class GUI extends Application{
 
@@ -35,6 +30,7 @@ public class GUI extends Application{
 
     //The inputted request text
     private String requestText;
+    private static CSVParser csvp;
 
     public void helper(){
         String s = "Input should follow one of the following formats:\n" +
@@ -54,7 +50,7 @@ public class GUI extends Application{
                 "---------------------------------------------------------------------\n" +
                 " \n" +
                 "Type HELP to see commands again\n" +
-                "Type switch to use FAA service\n" +
+                "Type SERVER to use FAA service\n" +
                 "Type QUIT to exit\n";
         input.setText(s);
         input.setWrapText(true);
@@ -185,9 +181,6 @@ public class GUI extends Application{
     }
 
     private void connectAFRS(){
-        CSVParser csvp = new CSVParser();
-        csvp.createHashes();
-
         InputParser parser;
 
         if(requestText.trim().toLowerCase().contains("quit")){
@@ -231,5 +224,9 @@ public class GUI extends Application{
             }
         }
     }
-    public static void main(String[] args){Application.launch(args);}
+    public static void main(String[] args){
+        csvp = new CSVParser();
+        csvp.createHashes();
+        Application.launch(args);
+    }
 }

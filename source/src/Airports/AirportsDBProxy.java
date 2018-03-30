@@ -46,17 +46,6 @@ public class AirportsDBProxy implements AirportInfoService {
         return this.airportsDB.getAirport(airportCode);
     }
 
-    public AirportInfoService getService(){
-        if(faaToggled){
-            return this;
-        }
-        return this.airportsDB;
-    }
-
-    public Boolean getToggled() {
-        return faaToggled;
-    }
-
     public void toggleService(){
         faaToggled = !faaToggled;
     }
