@@ -90,7 +90,8 @@ public class ReservationsDB {
         // append itinerary to Passenger's reservations list. ERROR if not unique
         try{
             appendItinerary(passengerName, itinerary);
-            System.out.println(SUCCESSFUL_RESERVATION_MSG);
+            // TODO rework to send up properly
+//            System.out.println(SUCCESSFUL_RESERVATION_MSG);
         } catch (DuplicateReservationException error){
             System.out.println(error.getMessage());
         }
@@ -133,7 +134,7 @@ public class ReservationsDB {
             verifyReservation(passengerName, itinerary);
             // delete reservation
             reservationsHashMap.get(passengerName).remove(itinerary);
-            System.out.println(SUCCESSFUL_DELETE_MSG); // TODO Refactor error handling
+//            System.out.println(SUCCESSFUL_DELETE_MSG); // TODO Refactor error handling
         } catch (Exception error){
             System.out.println(error.getMessage());
         }
