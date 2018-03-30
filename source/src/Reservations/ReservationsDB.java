@@ -133,7 +133,7 @@ public class ReservationsDB {
             verifyReservation(passengerName, itinerary);
             // delete reservation
             reservationsHashMap.get(passengerName).remove(itinerary);
-            System.out.println(SUCCESSFUL_DELETE_MSG);
+            System.out.println(SUCCESSFUL_DELETE_MSG); // TODO Refactor error handling
         } catch (Exception error){
             System.out.println(error.getMessage());
         }
