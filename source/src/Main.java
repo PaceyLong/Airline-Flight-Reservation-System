@@ -1,6 +1,5 @@
 import Airports.AirportInfoService;
-import Airports.AirportsDB;
-import Airports.AirportsFAA;
+import Airports.AirportsDBProxy;
 import Commands.InputParser;
 import Parser.CSVParser;
 
@@ -52,11 +51,8 @@ public class Main {
             }
 
             if(input.trim().toLowerCase().contains("server")){
-                AirportsFAA.getInstance().toggleSwitch();
-                AirportsDB.getInstance().toggleSwitch();
-                AirportInfoService airportInfoService = AirportsDB.getInstance().getToggled()
-                        ?   AirportsDB.getInstance()
-                        :   AirportsFAA.getInstance();
+                AirportsDBProxy.getInstance().toggleService();
+                AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
                 System.out.println("You are now using the " + airportInfoService + " airport information service");
                 input = "";
                 continue;

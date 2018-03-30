@@ -11,7 +11,6 @@ import java.util.HashMap;
  */
 public class AirportsDB implements AirportInfoService {
 
-    private Boolean toggled = true;
 
     /* attributes */
     private HashMap<String, Airport> airportsHashMap;
@@ -30,14 +29,6 @@ public class AirportsDB implements AirportInfoService {
      */
     private AirportsDB(){
         airportsHashMap = new HashMap<>();
-    }
-
-    public Boolean getToggled() {
-        return toggled;
-    }
-
-    public void toggleSwitch(){
-        toggled = !toggled;
     }
 
     /**
@@ -83,8 +74,4 @@ public class AirportsDB implements AirportInfoService {
             return airportsHashMap.get(airportCode);
     }
 
-    @Override
-    public String toString() {
-        return "local";
-    }
 }

@@ -2,8 +2,7 @@ package Commands;
 
 import Airports.Airport;
 import Airports.AirportInfoService;
-import Airports.AirportsDB;
-import Airports.AirportsFAA;
+import Airports.AirportsDBProxy;
 
 import java.util.ArrayList;
 
@@ -35,9 +34,7 @@ public class AirportInfo extends Command{
     @Override
     public String execute() {
         /* Grab Airport from AirportsDB*/
-        AirportInfoService airportInfoService = AirportsDB.getInstance().getToggled()
-                ? AirportsDB.getInstance()
-                : AirportsFAA.getInstance();
+       AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
         /* Airport Code */
         String airportCode = input.get(AIRPORT_CODE);
         Airport airport = airportInfoService.getAirport(airportCode);

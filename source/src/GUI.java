@@ -73,7 +73,7 @@ public class GUI extends Application{
          *
          * if FAA is chosen get each specific airport by calling:
          *
-         * AirportsFAA faaParse = new AirportsFAA();
+         * AirportsDBProxy faaParse = new AirportsDBProxy();
          * Airport airport = faaParse.getAirport(airportCode));
          * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
          *
