@@ -33,7 +33,7 @@ public class ConnectedState implements ClientState{
         }
         if(input.trim().endsWith(";")){
             try{
-                parser = new InputParser(input.substring(0, input.length() - 1));
+                parser.parseInput(input.substring(0, input.length() - 1));
                 parser.executeRequest();
                 input = "";
             }catch(Exception e){
