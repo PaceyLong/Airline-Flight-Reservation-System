@@ -9,8 +9,9 @@ import java.util.HashMap;
  * Hashmap database to store Airport objects
  * Key: airport code --> Val: Airport object
  */
-public class AirportsDB implements Airports{
+public class AirportsDB implements AirportInfoService {
 
+    private Boolean toggled = true;
 
     /* attributes */
     private HashMap<String, Airport> airportsHashMap;
@@ -29,6 +30,14 @@ public class AirportsDB implements Airports{
      */
     private AirportsDB(){
         airportsHashMap = new HashMap<>();
+    }
+
+    public Boolean getToggled() {
+        return toggled;
+    }
+
+    public void toggleSwitch(){
+        toggled = !toggled;
     }
 
     /**
@@ -72,5 +81,10 @@ public class AirportsDB implements Airports{
      */
     public Airport getAirport(String airportCode){
             return airportsHashMap.get(airportCode);
+    }
+
+    @Override
+    public String toString() {
+        return "local";
     }
 }

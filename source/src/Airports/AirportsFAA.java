@@ -20,14 +20,33 @@ import java.net.URL;
  * Gets Airport json data from faa api,
  * and returns an Airport object
  */
-public class AirportsFAA implements Airports{
+public class AirportsFAA implements AirportInfoService {
+
+    private Boolean toggled = false;
 
     private static final String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
+
+    /* Enforce Singleton Pattern */
+    private static AirportsFAA instance;
+
+    /* Singleton Pattern accessor */
+    public static AirportsFAA getInstance() {
+        if(instance == null) instance = new AirportsFAA();
+        return instance;
+    }
 
     public Airport getAirport(String airportCode){
         JSONObject json = getJsonFromApi(airportCode);
         Airport airport = generateAirport(json, airportCode);
         return airport;
+    }
+
+    public Boolean getToggled() {
+        return toggled;
+    }
+
+    public void toggleSwitch(){
+        toggled = !toggled;
     }
 
     /**
@@ -154,6 +173,11 @@ public class AirportsFAA implements Airports{
         condition = condition.substring(2,condition.length()-2);
 
         return new Weather(temp, condition);
+    }
+
+    @Override
+    public String toString() {
+        return "FAA";
     }
 
 }

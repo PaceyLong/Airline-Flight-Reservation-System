@@ -18,8 +18,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.PrintStream;
-import java.util.Observable;
-import java.util.Scanner;
 
 public class GUI extends Application{
 

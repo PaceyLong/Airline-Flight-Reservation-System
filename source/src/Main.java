@@ -1,4 +1,4 @@
-import Airports.Airports;
+import Airports.AirportInfoService;
 import Airports.AirportsDB;
 import Airports.AirportsFAA;
 import Commands.InputParser;
@@ -19,7 +19,7 @@ public class Main {
         System.out.println("Delete reservation request: delete,passenger,origin,destination;");
         System.out.println("Airport information request: airport,airport;");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Please input a command (Type 'HELP' to see commands again, Type 'QUIT' to exit, Type 'SWITCH' to toggle which airport service you are using): ");
+        System.out.println("Please input a command (Type 'HELP' to see commands again, Type 'QUIT' to exit, Type 'SERVER' to toggle which airport service you are using): ");
     }
 
     public static void main(String[] args) throws Exception{
@@ -29,7 +29,6 @@ public class Main {
     public static void helper(){
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-        Airports airportService = AirportsDB.getInstance();
         InputParser parser = null;
         try {
             parser = new InputParser();
@@ -52,14 +51,13 @@ public class Main {
                 return;
             }
 
-            if(input.trim().toLowerCase().contains("switch")){
-                if(airportService instanceof AirportsDB){
-                    airportService = new AirportsFAA();
-                    System.out.println("You are now using the FAA service for airport information.");
-                }else {
-                    airportService = AirportsDB.getInstance();
-                    System.out.println("You are now using the local service for airport information.");
-                }
+            if(input.trim().toLowerCase().contains("server")){
+                AirportsFAA.getInstance().toggleSwitch();
+                AirportsDB.getInstance().toggleSwitch();
+                AirportInfoService airportInfoService = AirportsDB.getInstance().getToggled()
+                        ?   AirportsDB.getInstance()
+                        :   AirportsFAA.getInstance();
+                System.out.println("You are now using the " + airportInfoService + " airport information service");
                 input = "";
                 continue;
             }
