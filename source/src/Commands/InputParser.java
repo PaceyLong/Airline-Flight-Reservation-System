@@ -111,8 +111,8 @@ public class InputParser {
     /**
      * Tells the request to execute the functionality of its command through the command manager.
      */
-    public void executeRequest(){
-        commandManager.executeCommand(command);
+    public String executeRequest(){
+        return commandManager.executeCommand(command);
     }
 
     /**
