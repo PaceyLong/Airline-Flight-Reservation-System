@@ -23,5 +23,5 @@ public abstract class Command {
     /**
      * Universal execution method
      */
-    public abstract void execute();
+    public abstract String execute();
 }

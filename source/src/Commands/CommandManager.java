@@ -32,14 +32,15 @@ public class CommandManager {
      * If the executed command is Undoable, add to Undo Stack
      * @param cmd Command object sent in
      */
-    public void executeCommand(Command cmd){
+    public String executeCommand(Command cmd){
         // execute command
-        cmd.execute();
+        String cmdPrintout = cmd.execute();
         // add to undo stack if UndoableCommand
         if(cmd instanceof UndoableCommand){
             // cast cmd to UndoableCommand and push to stack
             undoCommandStack.push((UndoableCommand) cmd);
         }
+        return cmdPrintout;
     }
 
     /**

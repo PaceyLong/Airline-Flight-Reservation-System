@@ -31,7 +31,7 @@ public class AirportInfo extends Command{
     }
 
     @Override
-    public void execute() {
+    public String execute() {
         /* Grab Airport from AirportsDB*/
         AirportsDB airportsDB = AirportsDB.getInstance();
         /* Airport Code */
@@ -39,5 +39,7 @@ public class AirportInfo extends Command{
         Airport airport = airportsDB.getAirport(airportCode);
         /* terminal print out */
         System.out.println(input.get(AIRPORT_KEYWORD) + "," + airport.toString());
+        /* GUI printout */
+        return input.get(AIRPORT_KEYWORD) + "," + airport.toString();
     }
 }
