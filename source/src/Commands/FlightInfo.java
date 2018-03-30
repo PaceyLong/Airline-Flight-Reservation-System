@@ -49,7 +49,7 @@ public class FlightInfo extends Command{
     }
 
     @Override
-    public void execute() {
+    public String execute() {
         origin = input.get(ORIGIN_INDEX);
         destination = input.get(DESTINATION_INDEX);
         if(input.size() >= 4) {
@@ -79,7 +79,7 @@ public class FlightInfo extends Command{
         ArrayList<Itinerary> relevantItineraries =  getRelevantItineraries(origin, destination, connections);
         relevantItineraries.sort(sortOrderComparator);
         ReservationsDB.getInstance().setCurrMatchingItineraries(relevantItineraries);
-        relItinerariesPrintout(relevantItineraries);
+        return relItinerariesPrintout(relevantItineraries);
     }
 
     /**
@@ -88,12 +88,12 @@ public class FlightInfo extends Command{
      * ASSUMPTION: guarantee size > 0 for list of itineraries
      * @param relevantItineraries - list of relevant itineraries.
      */
-    private void relItinerariesPrintout(ArrayList<Itinerary> relevantItineraries){
+    private String relItinerariesPrintout(ArrayList<Itinerary> relevantItineraries){
         String msg = FLIGHTS_REQUEST_KEYWORD + "," + relevantItineraries.size() + "\n";
         for(int idx = 0; idx < relevantItineraries.size(); idx++){
             msg += "Itinerary #" + (idx + 1) + ": " + relevantItineraries.get(idx).toString() + "\n";
         }
-        System.out.println(msg);
+        return msg;
     }
 
     /**
