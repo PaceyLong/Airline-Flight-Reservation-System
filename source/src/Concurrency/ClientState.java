@@ -9,5 +9,5 @@ public interface ClientState {
 
     public void disconnect(Client c);
 
-    public String inputQuery(Client c, String query);
+    public String inputQuery(Client c, String query) throws Exception;
 }
