@@ -41,9 +41,6 @@ public class GUI extends Application{
     private Client client;
     private AtomicInteger uniqueID = new AtomicInteger(10000);
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
     private static CSVParser csvp;
 
     public void helper(){
@@ -233,12 +230,13 @@ public class GUI extends Application{
         if(requestText.trim().endsWith(";")){
             try{
                 parser = new InputParser();
-                parser.parseInput(requestText.substring(0, requestText.length() - 1));
-                String cmdPrintout = parser.executeRequest();
+                //parser.parseInput());
+                String cmdPrintout = client.inputQuery(requestText.substring(0, requestText.length() - 1);
+                //String cmdPrintout = parser.executeRequest();
                 System.out.println(cmdPrintout);
                 output.setText(cmdPrintout);
                 requestText = "";
-                client.inputQuery(requestText);
+
             }catch(Exception e){
                 output.setText(e.getMessage());
             }

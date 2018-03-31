@@ -26,13 +26,12 @@ public class ConnectedState implements ClientState{
     }
 
     @Override
-    public void inputQuery(Client c, String query) throws Exception{
+    public String inputQuery(Client c, String query) throws Exception{
         if(input.trim().endsWith(";")){
             try{
                 //output.setText(parser.executeRequest());
                 parser = new InputParser();
-                parser.executeRequest();
-                query = "";
+                return parser.executeRequest();
             }catch(Exception e){
                 throw e;
             }

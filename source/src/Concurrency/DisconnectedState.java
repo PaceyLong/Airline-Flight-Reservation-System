@@ -17,7 +17,8 @@ public class DisconnectedState implements ClientState {
     }
 
     @Override
-    public void inputQuery(Client c, String query){
+    public String inputQuery(Client c, String query){
         //Does nothing, not connected yet
+        return "";
     }
 }
