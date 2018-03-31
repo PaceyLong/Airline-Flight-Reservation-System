@@ -25,8 +25,8 @@ public class Client {
         this.state.connect(this);
     }
 
-    public void inputQuery(String s) throws Exception{
-        this.state.inputQuery(this, s);
+    public String inputQuery(String s){
+        return this.state.inputQuery(this, s);
     }
 
     public void setState(ClientState state){
