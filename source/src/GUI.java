@@ -16,6 +16,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.PrintStream;
+import java.util.Observable;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+import Concurrency.Client;
+
 public class GUI extends Application{
 
     private Button newbutton = new Button("New Window");
@@ -30,6 +36,14 @@ public class GUI extends Application{
 
     //The inputted request text
     private String requestText;
+
+    //Concurrency
+    private Client client;
+    private AtomicInteger uniqueID = new AtomicInteger(10000);
+
+    public static void main(String[] args) {
+        Application.launch(args);
+    }
     private static CSVParser csvp;
 
     public void helper(){
@@ -117,6 +131,7 @@ public class GUI extends Application{
                 Stage stage = new Stage();
                 try {
                     GUI foo = new GUI();
+                    foo.setUniqueID(uniqueID);
                     foo.start(stage);
                 }
                 catch(Exception e){
@@ -185,11 +200,16 @@ public class GUI extends Application{
 
         if(requestText.trim().toLowerCase().contains("quit")){
             output.setText("Thank you for using AFRS!");
-
+            client.disconnect();
             //save any reservations upon quitting
             csvp.writeToCSV();
             //System.exit(0);
             return;
+        }
+        if(requestText.trim().toLowerCase().contains("connect")){
+            Client c = new Client(uniqueID.getAndIncrement());
+            this.attachClient(c);
+            c.connect();
         }
         if(requestText.trim().toLowerCase().contains("help")){
             requestText = "";
@@ -218,11 +238,19 @@ public class GUI extends Application{
                 System.out.println(cmdPrintout);
                 output.setText(cmdPrintout);
                 requestText = "";
+                client.inputQuery(requestText);
             }catch(Exception e){
-                requestText = "";
                 output.setText(e.getMessage());
             }
         }
+    }
+
+    private void attachClient(Client c){
+        this.client = c;
+    }
+
+    private void setUniqueID(AtomicInteger i){
+        this.uniqueID = i;
     }
     public static void main(String[] args){
         csvp = new CSVParser();
