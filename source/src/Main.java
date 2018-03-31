@@ -6,9 +6,11 @@ import Parser.CSVParser;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * The main function to start the AFRS
+ * Created by Joshua Ehling, Ethan Della Posta, PeiShi Long
+ */
 public class Main {
-
 
     public static void help(){
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");

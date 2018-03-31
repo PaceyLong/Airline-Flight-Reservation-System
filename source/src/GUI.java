@@ -15,20 +15,26 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.io.PrintStream;
-import java.util.Observable;
-import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 import Concurrency.Client;
 
+/**
+ * The GUI class which handles building GUI elements as well as the GUI's interactions with the system
+ * Created by PeiShi Long on 03/23/2018
+ */
 public class GUI extends Application{
 
+    //New window button
     private Button newbutton = new Button("New Window");
+    //Submit button
     private Button submitbutton = new Button("Submit");
+    //A text area that show the input formats
     private TextArea input = new TextArea();
+    //A text area that show the response info that user request
     private TextArea output = new TextArea();
+    //Request label
     private Label requestLabel = new Label("Request: ");
+    //connection status label
     private Label connectionStatus = new Label("Connection Status: Disconnected");
 
     //The TextField where the user will type and enter their commands.
@@ -43,6 +49,7 @@ public class GUI extends Application{
 
     private static CSVParser csvp;
 
+    //Text for input formats that display in Request Information text area
     public void helper(){
         String s = "Input should follow one of the following formats:\n" +
                 "(Anything in brackets are optional and\n" +
@@ -67,26 +74,14 @@ public class GUI extends Application{
         input.setWrapText(true);
     }
 
+    /**
+     * The start method used by the parent application class
+     * This class initializes the GUI and builds all of its components
+     * @param primaryStage the GUI window
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        //CSVParser csvp = new CSVParser();
-        //FlightsDB flights = csvp.getFlights();
-        //ReservationsDB reservations = csvp.getReservations();
-
-        /* use airports if local airport info has been chosen (this is chosen by default)
-         *
-         * if FAA is chosen get each specific airport by calling:
-         *
-         * AirportsDBProxy faaParse = new AirportsDBProxy();
-         * Airport airport = faaParse.getAirport(airportCode));
-         * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
-         *
-         */
-        //AirportsDB airports = csvp.getAirports();
-
-        //if request text = 'quit' => execute csvp.writeToCSV();
-        // (write reservations to reservationsDB)
 
         BorderPane b = new BorderPane();
         b.setPadding(new Insets(10,10,10,10));
@@ -141,22 +136,12 @@ public class GUI extends Application{
         primaryStage.setTitle("AFRS");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
-        /**
-     System.setOut(new PrintStream(System.out){
-    @Override
-    public void write(byte[] buf, int off, int len){
-    super.write(buf,off,len);
-    String msg = new String (buf,off,len);
-    output.setText(output.getText() + msg);
-    }
-    });*/
-
-
     }
 
-
+    /**
+     * Builds the bottom of the border pane used by the GUI
+     * @return HBox with the request label, along with text field and submit button
+     */
     private HBox buildBottom(){
         HBox hb = new HBox();
         VBox vb = new VBox();
@@ -165,6 +150,10 @@ public class GUI extends Application{
         return hb;
     }
 
+    /**
+     * Build the center of the border pane
+     * @return HBox with the 'Request Information' and 'Respond' label as well as two text boxes
+     */
     private HBox buildCenter(){
         HBox hb = new HBox();
         VBox vbRequest = new VBox();
@@ -184,6 +173,10 @@ public class GUI extends Application{
         return hb;
     }
 
+    /**
+     * Build the top of the BorderPane  with e New window button and connextion status
+     * @return HBox
+     */
     private HBox buildTop(){
         HBox hb = new HBox();
         Region region = new Region();
@@ -192,6 +185,7 @@ public class GUI extends Application{
         return hb;
     }
 
+    //Sends commands to the system and displays the responses in the GUI
     private void connectAFRS(){
         InputParser parser;
 
@@ -269,6 +263,10 @@ public class GUI extends Application{
         this.uniqueID = i;
     }
 
+     * The main function to start the GUI
+     * Create hashes in order to resets all the weather indexes every time
+     * @param args unused
+     */
     public static void main(String[] args){
         csvp = new CSVParser();
         csvp.createHashes();
