@@ -8,11 +8,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Nick Asermily, nja9798@g.rit.edu
  */
 public class Client {
-    private AtomicInteger id;
+    private int id;
     private InputParser inputParser;
     private ClientState state;
 
-    public Client(AtomicInteger id){
+    public Client(int id){
         this.state = new DisconnectedState();
         this.id = id;
     }
@@ -25,19 +25,19 @@ public class Client {
         this.state.connect(this);
     }
 
-    public void inputQuery(String s){
-        this.state.inputQuery(this, s);
+    public String inputQuery(String s){
+        return this.state.inputQuery(this, s);
     }
 
     public void setState(ClientState state){
         this.state = state;
     }
 
-    public AtomicInteger getId(){
+    public int getId(){
         return id;
     }
 
-    public void setId(AtomicInteger id){
+    public void setId(int id){
         this.id = id;
     }
 }

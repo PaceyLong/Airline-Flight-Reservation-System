@@ -1,8 +1,5 @@
-package Parser.parseTypes;
+package Airports;
 
-import Airports.Airport;
-import Airports.Weather;
-import Airports.WeatherList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,14 +20,34 @@ import java.net.URL;
  * Gets Airport json data from faa api,
  * and returns an Airport object
  */
-public class AirportFAAParse {
+public class AirportsDBProxy implements AirportInfoService {
+
+    private Boolean faaToggled = false;
+    private AirportInfoService airportsDB = AirportsDB.getInstance();
 
     private static final String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
 
+    /* Enforce Singleton Pattern */
+    private static AirportsDBProxy instance;
+
+    /* Singleton Pattern accessor */
+    public static AirportsDBProxy getInstance() {
+        if(instance == null) instance = new AirportsDBProxy();
+        return instance;
+    }
+
     public Airport getAirport(String airportCode){
-        JSONObject json = getJsonFromApi(airportCode);
-        Airport airport = generateAirport(json, airportCode);
-        return airport;
+        if(faaToggled) {
+            JSONObject json = getJsonFromApi(airportCode);
+            Airport airport = generateAirport(json, airportCode);
+            return airport;
+        }
+
+        return this.airportsDB.getAirport(airportCode);
+    }
+
+    public void toggleService(){
+        faaToggled = !faaToggled;
     }
 
     /**
@@ -123,15 +140,19 @@ public class AirportFAAParse {
         Object delayObj = json.get("Delay");
         Boolean isDelay = (Boolean) delayObj;
         if(isDelay){
-            JSONObject status = (JSONObject) json.get("Status");
-            if((Boolean) status.get("avgDelay")){
-                return Integer.parseInt(status.get("avgDelay").toString());
+            JSONArray statusArr = (JSONArray) json.get("Status");
+            JSONObject statusObj = (JSONObject) statusArr.get(0);
+            if(statusObj.containsKey("AvgDelay")){
+                String delay = statusObj.get("AvgDelay").toString();
+                return Integer.parseInt(delay.substring(0,delay.indexOf(" ")));
             }
-            else if((Boolean) status.get("minDelay")){
-                return Integer.parseInt(status.get("minDelay").toString());
+            else if(statusObj.containsKey("MinDelay")){
+                String delay = statusObj.get("MinDelay").toString();
+                return Integer.parseInt(delay.substring(0,delay.indexOf(" ")));
             }
-            else if((Boolean) status.get("maxDelay")){
-                return Integer.parseInt(status.get("maxDelay").toString());
+            else if(statusObj.containsKey("MaxDelay")){
+                String delay = statusObj.get("MaxDelay").toString();
+                return Integer.parseInt(delay.substring(0,delay.indexOf(" ")));
             }
         }
 
@@ -153,10 +174,18 @@ public class AirportFAAParse {
         //condition
         JSONArray wArray = (JSONArray) wObj.get("Weather");
         JSONObject firstWeather = (JSONObject) wArray.get(0);
-        String condition = firstWeather.get("Temp").toString();
+        String condition = firstWeather.get("Temp").toString().replace("\\", "");
         condition = condition.substring(2,condition.length()-2);
 
         return new Weather(temp, condition);
+    }
+
+    @Override
+    public String toString() {
+        if(faaToggled){
+            return "FAA";
+        }
+        return "local";
     }
 
 }

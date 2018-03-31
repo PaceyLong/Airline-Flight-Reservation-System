@@ -26,19 +26,14 @@ public class ConnectedState implements ClientState{
     }
 
     @Override
-    public void inputQuery(Client c, String query) {
-        if(input.trim().toLowerCase().contains("help")){
-            help();
-            input = "";
-        }
+    public String inputQuery(Client c, String query) throws Exception{
         if(input.trim().endsWith(";")){
             try{
-                parser.parseInput(input.substring(0, input.length() - 1));
-                parser.executeRequest();
-                input = "";
+                //output.setText(parser.executeRequest());
+                parser = new InputParser();
+                return parser.executeRequest();
             }catch(Exception e){
-                input = "";
-                System.out.println(e.getMessage());
+                throw e;
             }
         }
     }

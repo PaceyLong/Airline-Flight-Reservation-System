@@ -1,3 +1,5 @@
+import Airports.AirportInfoService;
+import Airports.AirportsDBProxy;
 import Commands.InputParser;
 import Parser.CSVParser;
 
@@ -17,7 +19,7 @@ public class Main {
         System.out.println("Delete reservation request: delete,passenger,origin,destination;");
         System.out.println("Airport information request: airport,airport;");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Please input a command (Type 'HELP' to see commands again, Type 'QUIT' to exit, Type 'SWITCH' to toggle which airport service you are using): ");
+        System.out.println("Please input a command (Type 'HELP' to see commands again, Type 'QUIT' to exit, Type 'SERVER' to toggle which airport service you are using): ");
     }
 
     public static void main(String[] args) throws Exception{
@@ -27,7 +29,12 @@ public class Main {
     public static void helper(){
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-        InputParser parser = new InputParser();
+        InputParser parser = null;
+        try {
+            parser = new InputParser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Scanner scanner = new Scanner(System.in);
         String input = "";
         AtomicInteger id = new AtomicInteger(10000);
@@ -45,10 +52,10 @@ public class Main {
                 return;
             }
 
-            if(input.trim().toLowerCase().contains("switch")){
-                csvp.getAirports().switchAirportService();
-
-                System.out.println("You are now using the " + csvp.getAirports().getAirportService() + " service for airport information.");
+            if(input.trim().toLowerCase().contains("server")){
+                AirportsDBProxy.getInstance().toggleService();
+                AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
+                System.out.println("You are now using the " + airportInfoService + " airport information service");
                 input = "";
                 continue;
             }

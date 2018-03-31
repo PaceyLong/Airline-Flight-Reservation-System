@@ -1,8 +1,7 @@
-import Airports.AirportsDB;
+import Airports.AirportInfoService;
+import Airports.AirportsDBProxy;
 import Commands.InputParser;
 import Parser.CSVParser;
-import Reservations.ReservationsDB;
-import TTARouteNetwork.FlightsDB;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,6 +19,8 @@ import javafx.stage.Stage;
 import java.io.PrintStream;
 import java.util.Observable;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+import Concurrency.Client;
 
 public class GUI extends Application{
 
@@ -36,9 +37,11 @@ public class GUI extends Application{
     //The inputted request text
     private String requestText;
 
-    public static void main(String[] args) {
-        Application.launch(args);
-    }
+    //Concurrency
+    private Client client;
+    private AtomicInteger uniqueID = new AtomicInteger(10000);
+
+    private static CSVParser csvp;
 
     public void helper(){
         String s = "Input should follow one of the following formats:\n" +
@@ -58,7 +61,7 @@ public class GUI extends Application{
                 "---------------------------------------------------------------------\n" +
                 " \n" +
                 "Type HELP to see commands again\n" +
-                "Type switch to use FAA service\n" +
+                "Type SERVER to use FAA service\n" +
                 "Type QUIT to exit\n";
         input.setText(s);
         input.setWrapText(true);
@@ -67,20 +70,20 @@ public class GUI extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        CSVParser csvp = new CSVParser();
-        FlightsDB flights = csvp.getFlights();
-        ReservationsDB reservations = csvp.getReservations();
+        //CSVParser csvp = new CSVParser();
+        //FlightsDB flights = csvp.getFlights();
+        //ReservationsDB reservations = csvp.getReservations();
 
         /* use airports if local airport info has been chosen (this is chosen by default)
          *
          * if FAA is chosen get each specific airport by calling:
          *
-         * AirportFAAParse faaParse = new AirportFAAParse();
+         * AirportsDBProxy faaParse = new AirportsDBProxy();
          * Airport airport = faaParse.getAirport(airportCode));
          * where airportCode is any three letter aiport code like "JFK,ORD,BOS"
          *
          */
-        AirportsDB airports = csvp.getAirports();
+        //AirportsDB airports = csvp.getAirports();
 
         //if request text = 'quit' => execute csvp.writeToCSV();
         // (write reservations to reservationsDB)
@@ -125,6 +128,7 @@ public class GUI extends Application{
                 Stage stage = new Stage();
                 try {
                     GUI foo = new GUI();
+                    foo.setUniqueID(uniqueID);
                     foo.start(stage);
                 }
                 catch(Exception e){
@@ -139,6 +143,7 @@ public class GUI extends Application{
         primaryStage.show();
 
 
+        /**
      System.setOut(new PrintStream(System.out){
     @Override
     public void write(byte[] buf, int off, int len){
@@ -146,7 +151,7 @@ public class GUI extends Application{
     String msg = new String (buf,off,len);
     output.setText(output.getText() + msg);
     }
-    });
+    });*/
 
 
     }
@@ -188,36 +193,66 @@ public class GUI extends Application{
     }
 
     private void connectAFRS(){
-        CSVParser csvp = new CSVParser();
-        csvp.createHashes();
-
         InputParser parser;
 
         if(requestText.trim().toLowerCase().contains("quit")){
             output.setText("Thank you for using AFRS!");
-
+            client.disconnect();
             //save any reservations upon quitting
             csvp.writeToCSV();
             //System.exit(0);
             return;
         }
+        if(requestText.trim().toLowerCase().contains("connect")){
+            Client c = new Client(uniqueID.getAndIncrement());
+            this.attachClient(c);
+            c.connect();
+        }
         if(requestText.trim().toLowerCase().contains("help")){
             requestText = "";
         }
-        if(requestText.trim().toLowerCase().contains("switch")) {
-            requestText = "Using FAA service for airport information";
+        if(requestText.trim().toLowerCase().contains("server")) {
+
+            //csvp.getAirports().switchAirportService();
+            //String status = csvp.getAirports().getAirportService();
+
+            AirportsDBProxy.getInstance().toggleService();
+            AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
+            String status = airportInfoService.toString();
+            if(status.equals("local")){
+                connectionStatus.setText("Connection Status: Disconnected");
+            }else if(status.equals("FAA")){
+                connectionStatus.setText("Connection Status: Connected");
+            }
+
         }
+
         if(requestText.trim().endsWith(";")){
             try{
-
-                //output.setText(parser.executeRequest());
                 parser = new InputParser();
-                parser.executeRequest();
+                //parser.parseInput());
+                String cmdPrintout = client.inputQuery(requestText.substring(0, requestText.length() - 1);
+                //String cmdPrintout = parser.executeRequest();
+                System.out.println(cmdPrintout);
+                output.setText(cmdPrintout);
                 requestText = "";
+
             }catch(Exception e){
-                requestText = "";
                 output.setText(e.getMessage());
             }
         }
+    }
+
+    private void attachClient(Client c){
+        this.client = c;
+    }
+
+    private void setUniqueID(AtomicInteger i){
+        this.uniqueID = i;
+    }
+    public static void main(String[] args){
+        csvp = new CSVParser();
+        csvp.createHashes();
+        Application.launch(args);
     }
 }
