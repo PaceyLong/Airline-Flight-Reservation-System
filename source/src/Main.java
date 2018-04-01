@@ -30,12 +30,7 @@ public class Main {
     public static void helper(){
         CSVParser csvp = new CSVParser();
         csvp.createHashes();
-        InputParser parser = null;
-        try {
-            parser = new InputParser();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        InputParser parser = new InputParser();
         Scanner scanner = new Scanner(System.in);
         String input = "";
 

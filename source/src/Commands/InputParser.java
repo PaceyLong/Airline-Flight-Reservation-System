@@ -26,9 +26,7 @@ public class InputParser {
     public static final String ARRIVAL_TIME_SORT_BY = "arrival";
     public static final String AIRFARE_SORT_BY = "airfare";
 
-    public InputParser(){
-//        parseInput(input);
-    }
+    public InputParser(){ }
 
     /**
      * Parses the input by removing all whitespace and splitting by commas. Based on the first word in the input,
@@ -111,7 +109,7 @@ public class InputParser {
     /**
      * Tells the request to execute the functionality of its command through the command manager.
      */
-    public String executeRequest(){
+    public String executeRequest() throws Exception{
         return commandManager.executeCommand(command);
     }
 
