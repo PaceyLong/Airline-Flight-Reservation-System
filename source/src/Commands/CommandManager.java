@@ -47,7 +47,7 @@ public class CommandManager {
      * Undo most recent Undoable Command
      * Add command to Redo Stack
      */
-    public void undoCommand() throws EmptyUndoStackError, UndoCommandFlag{
+    public void undoCommand() throws Exception{
         // verify undoStack isn't empty
         if(!undoCommandStack.empty()){
             UndoableCommand cmd = undoCommandStack.pop();

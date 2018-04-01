@@ -11,5 +11,5 @@ public abstract class UndoableCommand extends Command {
         super(input);
     }
 
-    public abstract void undo();
+    public abstract void undo() throws Exception;
 }

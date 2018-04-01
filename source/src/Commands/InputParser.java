@@ -82,7 +82,12 @@ public class InputParser {
                 }
                 break;
             case "delete":
-                this.setCommand(new DeleteReservation(parsedInput));
+                try{
+                    deleteErrors();
+                    this.setCommand(new DeleteReservation(parsedInput));
+                } catch (Exception e){
+                    throw e;
+                }
                 break;
             case "airport":
                 try{
@@ -178,14 +183,11 @@ public class InputParser {
 
     /**
      * Error checking if the request is looking to delete a reservation
+     * Verify input is correct size
      * @throws Exception
      */
     public void deleteErrors()throws UnknownRequestException{
         if(parsedInput.size() != 4) throw new UnknownRequestException();
-        String passenger = parsedInput.get(1);
-        String origin = parsedInput.get(2);
-        String destination = parsedInput.get(3);
-        // TODO
     }
 
     /**

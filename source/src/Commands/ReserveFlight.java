@@ -30,20 +30,21 @@ public class ReserveFlight extends UndoableCommand{
     }
 
     @Override
-    public String execute() {
+    public String execute() throws Exception{
         int id = Integer.parseInt(input.get(ID)) - 1;
         currPassenger = input.get(PASSENGER);
         // only update currItinerary on new command obj (set to null)
         if(currItinerary == null){
             currItinerary = reservationsDB.getCurrItineraryWithID(id);
         }
-        reservationsDB.reserveItinerary(currItinerary, currPassenger);
-        return SUCCESSFUL_RESERVATION_MSG; // TODO
+        return reservationsDB.reserveItinerary(currItinerary, currPassenger);
     }
 
-    // delete: Delete reservation request: {delete},passenger,origin,destination;
+    /**
+     * delete: Delete reservation request: {delete},passenger,origin,destination;
+     */
     @Override
-    public void undo() {
+    public void undo() throws Exception{
         reservationsDB.deleteItinerary(currPassenger, currItinerary);
     }
 }

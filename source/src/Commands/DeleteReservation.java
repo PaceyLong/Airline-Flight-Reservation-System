@@ -36,7 +36,7 @@ public class DeleteReservation extends UndoableCommand {
     }
 
     @Override
-    public String execute() {
+    public String execute() throws Exception {
         // only update deleted itinerary if it's a fresh command (it's currently null)
         if(deletedItinerary == null){
             deletedItinerary= reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));

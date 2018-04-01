@@ -80,21 +80,16 @@ public class ReservationsDB {
     /**
      * User reserves a itinerary and adds it to their list of reservations
      * Checks if itinerary is unique (origin, destination) before adding.
-     *      If not unique, throws ERROR
+     *      If not unique, throws Error: DuplicateReservationException
      * @param passengerName key value for hashmap
      * @param itinerary - itinerary being reserved
      */
-    public void reserveItinerary(Itinerary itinerary, String passengerName){
+    public String reserveItinerary(Itinerary itinerary, String passengerName) throws Exception{
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // append itinerary to Passenger's reservations list. ERROR if not unique
-        try{
-            appendItinerary(passengerName, itinerary);
-            // TODO rework to send up properly
-//            System.out.println(SUCCESSFUL_RESERVATION_MSG);
-        } catch (DuplicateReservationException error){
-            System.out.println(error.getMessage());
-        }
+        appendItinerary(passengerName, itinerary);
+        return SUCCESSFUL_RESERVATION_MSG;
     }
 
     /**
