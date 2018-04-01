@@ -180,7 +180,8 @@ public class InputParser {
      * Error checking if the request is looking to delete a reservation
      * @throws Exception
      */
-    public void deleteErrors(){
+    public void deleteErrors()throws UnknownRequestException{
+        if(parsedInput.size() != 4) throw new UnknownRequestException();
         String passenger = parsedInput.get(1);
         String origin = parsedInput.get(2);
         String destination = parsedInput.get(3);

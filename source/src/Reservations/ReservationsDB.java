@@ -125,19 +125,18 @@ public class ReservationsDB {
 
     /**
      * Delete requested itinerary from current list of reserved itineraries
+     * Throws PassengerNotFoundException and ReservationNotFoundException
      * @param passengerName - name of passenger
      * @param itinerary - itinerary to be deleted
+     * @return success message
      */
-    public void deleteItinerary(String passengerName, Itinerary itinerary){
-        try{
-            // verify the Passenger & their requested reservation exist
-            verifyReservation(passengerName, itinerary);
-            // delete reservation
-            reservationsHashMap.get(passengerName).remove(itinerary);
-//            System.out.println(SUCCESSFUL_DELETE_MSG); // TODO Refactor error handling
-        } catch (Exception error){
-            System.out.println(error.getMessage());
-        }
+    public String deleteItinerary(String passengerName, Itinerary itinerary) throws Exception{
+        // verify the Passenger & their requested reservation exist.
+        // Throws PassengerNotFound and ReservationNotFound exceptions
+        verifyReservation(passengerName, itinerary);
+        // delete reservation
+        reservationsHashMap.get(passengerName).remove(itinerary);
+        return SUCCESSFUL_DELETE_MSG;
     }
 
     /**
