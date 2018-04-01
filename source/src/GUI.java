@@ -15,6 +15,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import java.util.concurrent.atomic.AtomicInteger;
+import Concurrency.Client;
 
 /**
  * The GUI class which handles building GUI elements as well as the GUI's interactions with the system
@@ -40,6 +42,11 @@ public class GUI extends Application{
 
     //The inputted request text
     private String requestText;
+
+    //Concurrency
+    private Client client;
+    private AtomicInteger uniqueID = new AtomicInteger(10000);
+
     private static CSVParser csvp;
 
     //Text for input formats that display in Request Information text area
@@ -60,9 +67,9 @@ public class GUI extends Application{
                 " \n"+
                 "---------------------------------------------------------------------\n" +
                 " \n" +
-                "Type HELP to see commands again\n" +
+                "Type CONNECT to connect to AFRS\n" +
                 "Type SERVER to use FAA service\n" +
-                "Type QUIT to exit\n";
+                "Type QUIT to disconnect\n";
         input.setText(s);
         input.setWrapText(true);
     }
@@ -116,6 +123,7 @@ public class GUI extends Application{
                 Stage stage = new Stage();
                 try {
                     GUI foo = new GUI();
+                    foo.setUniqueID(uniqueID);
                     foo.start(stage);
                 }
                 catch(Exception e){
@@ -182,48 +190,79 @@ public class GUI extends Application{
         InputParser parser;
 
         if(requestText.trim().toLowerCase().contains("quit")){
-            output.setText("Thank you for using AFRS!");
-
-            //save any reservations upon quitting
-            csvp.writeToCSV();
-            //System.exit(0);
-            return;
+            if(client != null) {
+                output.setText("Thank you for using AFRS!");
+                client.disconnect();
+                client = null;
+                connectionStatus.setText("Connection Status: Disconnected");
+                //save any reservations upon quitting
+                csvp.writeToCSV();
+                //System.exit(0);
+                //return;
+            }else{
+                output.setText("You are not connected. Please connect by typing 'CONNECT'.");
+            }
         }
-        if(requestText.trim().toLowerCase().contains("help")){
-            requestText = "";
+        if(requestText.trim().toLowerCase().contains("connect")){
+            if(client == null) {
+                Client c = new Client(uniqueID.getAndIncrement());
+                this.attachClient(c);
+                c.connect();
+                connectionStatus.setText("Connection Status: Connected");
+                output.setText("Welcome to Airline Flight Reservation Server (AFRS)!");
+            }else{
+                output.setText("You are already connected. Please input a command.");
+            }
         }
+//        if(requestText.trim().toLowerCase().contains("help")){
+//            requestText = "";
+//        }
         if(requestText.trim().toLowerCase().contains("server")) {
 
             //csvp.getAirports().switchAirportService();
             //String status = csvp.getAirports().getAirportService();
-
-            AirportsDBProxy.getInstance().toggleService();
-            AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
-            String status = airportInfoService.toString();
-            if(status.equals("local")){
-                connectionStatus.setText("Connection Status: Disconnected");
-            }else if(status.equals("FAA")){
-                connectionStatus.setText("Connection Status: Connected");
+            if(client != null) {
+                AirportsDBProxy.getInstance().toggleService();
+                AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
+                String status = airportInfoService.toString();
+            }else{
+                output.setText("You are not connected. Please connect by typing 'CONNECT'.");
             }
-
         }
 
         if(requestText.trim().endsWith(";")){
             try{
                 parser = new InputParser();
-                parser.parseInput(requestText.substring(0, requestText.length() - 1));
-                String cmdPrintout = parser.executeRequest();
+                //parser.parseInput());
+                String cmdPrintout = client.inputQuery(requestText.substring(0, requestText.length() - 1));
+                //String cmdPrintout = parser.executeRequest();
                 System.out.println(cmdPrintout);
                 output.setText(cmdPrintout);
                 requestText = "";
+
             }catch(Exception e){
-                requestText = "";
                 output.setText(e.getMessage());
             }
         }
     }
 
     /**
+     * Attaches a single user to this instance of the GUI. This allows for separate users to have separate inputs and outputs.
+     * @param c: Client to be attached
+     */
+    private void attachClient(Client c){
+        this.client = c;
+    }
+
+    /**
+     * Each user has a unique ID. This allows all instances of GUI's to have the reference of the last
+     * uniqueID used so when a new user is created, the uniqueID can be increased by 1.
+     * @param i: The last uniqueID used
+     */
+    private void setUniqueID(AtomicInteger i){
+        this.uniqueID = i;
+    }
+
      * The main function to start the GUI
      * Create hashes in order to resets all the weather indexes every time
      * @param args unused

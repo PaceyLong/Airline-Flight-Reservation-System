@@ -4,6 +4,7 @@ import Commands.InputParser;
 import Parser.CSVParser;
 
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The main function to start the AFRS
@@ -38,6 +39,7 @@ public class Main {
         }
         Scanner scanner = new Scanner(System.in);
         String input = "";
+        AtomicInteger id = new AtomicInteger(10000);
 
         System.out.println("************************************** Welcome to Airline Flight Reservation Server (AFRS)! **************************************");
         help();
