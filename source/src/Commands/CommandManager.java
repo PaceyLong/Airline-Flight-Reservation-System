@@ -32,7 +32,7 @@ public class CommandManager {
      * If the executed command is Undoable, add to Undo Stack
      * @param cmd Command object sent in
      */
-    public String executeCommand(Command cmd){
+    public String executeCommand(Command cmd) throws Exception{
         // execute command
         String cmdPrintout = cmd.execute();
         // add to undo stack if UndoableCommand
@@ -62,7 +62,7 @@ public class CommandManager {
      * Redo most recent undone Undoable Command
      * Add command to Undo Stack
      */
-    public void redoCommand() throws EmptyRedoStackError, RedoCommandFlag{
+    public void redoCommand() throws Exception{
         // verify redoStack isn't empty
         if(!redoCommandStack.empty()){
             UndoableCommand cmd = redoCommandStack.pop();
