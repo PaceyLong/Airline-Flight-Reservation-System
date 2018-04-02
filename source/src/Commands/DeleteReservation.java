@@ -31,7 +31,7 @@ public class DeleteReservation extends UndoableCommand {
     }
 
     @Override
-    public void undo() {
+    public void undo() throws Exception{
         reservationsDB.reserveItinerary(deletedItinerary, input.get(PASSENGER));
     }
 
