@@ -1,6 +1,7 @@
 import Airports.AirportInfoService;
 import Airports.AirportsDBProxy;
 import Commands.InputParser;
+import Concurrency.Client;
 import Parser.CSVParser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -15,8 +16,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
 import java.util.concurrent.atomic.AtomicInteger;
-import Concurrency.Client;
 
 /**
  * The GUI class which handles building GUI elements as well as the GUI's interactions with the system
@@ -225,6 +226,7 @@ public class GUI extends Application{
                 AirportsDBProxy.getInstance().toggleService();
                 AirportInfoService airportInfoService = AirportsDBProxy.getInstance();
                 String status = airportInfoService.toString();
+                output.setText("You are now using the " + status + " service for airport information.");
             }else{
                 output.setText("You are not connected. Please connect by typing 'CONNECT'.");
             }
@@ -263,7 +265,7 @@ public class GUI extends Application{
         this.uniqueID = i;
     }
 
-     * The main function to start the GUI
+     /* The main function to start the GUI
      * Create hashes in order to resets all the weather indexes every time
      * @param args unused
      */

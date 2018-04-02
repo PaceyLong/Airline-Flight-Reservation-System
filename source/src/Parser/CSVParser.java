@@ -36,6 +36,9 @@ public class CSVParser {
     private ReservationsDB reservations;
 
 
+    /**
+     * Defines each parser as a new CSVParse type, and each database singleton object
+     */
     public CSVParser(){
         // all the parse types the parser will use to generate the HashMaps
         this.nameParse = new AirportNameParse();
@@ -51,6 +54,9 @@ public class CSVParser {
         this.reservations = ReservationsDB.getInstance();
     }
 
+    /**
+     * Creates the hashes for each database singleton object by using the various parse types
+     */
     public void createHashes(){
 
         //read in all the airport data and adds to flights HashMap

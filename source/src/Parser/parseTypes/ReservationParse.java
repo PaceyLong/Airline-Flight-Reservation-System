@@ -4,6 +4,9 @@ import Reservations.ReservationsDB;
 import TTARouteNetwork.Flight;
 import Reservations.Itinerary;
 
+/**
+ * Adds each reservation which is present in the reservations csv file and adds it to the reservation hashmap
+ */
 public class ReservationParse extends CSVParse {
 
     private final static int PASSENGER_NAME = 0;

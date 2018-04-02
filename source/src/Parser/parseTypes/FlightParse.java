@@ -3,10 +3,10 @@ import TTARouteNetwork.Flight;
 import TTARouteNetwork.FlightsDB;
 
 
-/*
-    This parse type parses the lines from 'route_network.Parser' (which contains origin airport code, destination airport code,
-    departure time, arrival time, flight number, and airfare for each flight) and adds them to slots in the
-    corresponding flights HashMap
+/**
+ *   This parse type parses the lines from 'route_network.Parser' (which contains origin airport code, destination airport code,
+ *   departure time, arrival time, flight number, and airfare for each flight) and adds them to slots in the
+ *   corresponding flights HashMap
  */
 public class FlightParse extends CSVParse {
 
