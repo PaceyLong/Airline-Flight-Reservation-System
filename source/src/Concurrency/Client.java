@@ -49,6 +49,22 @@ public class Client {
     }
 
     /**
+     * Setter so the client has it's own rendition of the InputParser
+     * @param parser
+     */
+    public void setInputParser(InputParser parser){
+        this.inputParser = parser;
+    }
+
+    /**
+     * Accessor for client's personal InputParser
+     * @return inputParser
+     */
+    public InputParser getInputParser(){
+        return this.inputParser;
+    }
+
+    /**
      * Changes the client's state
      * @param state: State to be changed to
      */

@@ -80,21 +80,16 @@ public class ReservationsDB {
     /**
      * User reserves a itinerary and adds it to their list of reservations
      * Checks if itinerary is unique (origin, destination) before adding.
-     *      If not unique, throws ERROR
+     *      If not unique, throws Error: DuplicateReservationException
      * @param passengerName key value for hashmap
      * @param itinerary - itinerary being reserved
      */
-    public void reserveItinerary(Itinerary itinerary, String passengerName){
+    public String reserveItinerary(Itinerary itinerary, String passengerName) throws Exception{
         // Assure passenger exists within DB
         recordPassenger(passengerName);
         // append itinerary to Passenger's reservations list. ERROR if not unique
-        try{
-            appendItinerary(passengerName, itinerary);
-            // TODO rework to send up properly
-//            System.out.println(SUCCESSFUL_RESERVATION_MSG);
-        } catch (DuplicateReservationException error){
-            System.out.println(error.getMessage());
-        }
+        appendItinerary(passengerName, itinerary);
+        return SUCCESSFUL_RESERVATION_MSG;
     }
 
     /**
@@ -125,19 +120,18 @@ public class ReservationsDB {
 
     /**
      * Delete requested itinerary from current list of reserved itineraries
+     * Throws PassengerNotFoundException and ReservationNotFoundException
      * @param passengerName - name of passenger
      * @param itinerary - itinerary to be deleted
+     * @return success message
      */
-    public void deleteItinerary(String passengerName, Itinerary itinerary){
-        try{
-            // verify the Passenger & their requested reservation exist
-            verifyReservation(passengerName, itinerary);
-            // delete reservation
-            reservationsHashMap.get(passengerName).remove(itinerary);
-//            System.out.println(SUCCESSFUL_DELETE_MSG); // TODO Refactor error handling
-        } catch (Exception error){
-            System.out.println(error.getMessage());
-        }
+    public String deleteItinerary(String passengerName, Itinerary itinerary) throws Exception{
+        // verify the Passenger & their requested reservation exist.
+        // Throws PassengerNotFound and ReservationNotFound exceptions
+        verifyReservation(passengerName, itinerary);
+        // delete reservation
+        reservationsHashMap.get(passengerName).remove(itinerary);
+        return SUCCESSFUL_DELETE_MSG;
     }
 
     /**
@@ -151,7 +145,7 @@ public class ReservationsDB {
         // throw error if Passenger doesn't exist within the database
         if(!reservationsHashMap.containsKey(passengerName)) throw new PassengerNotFoundException();
         // throw error if Passenger's reservation doesn't exist within their current list of reserved itineraries
-        if (!reservationsHashMap.get(passengerName).contains(itinerary)) throw new ReservationNotFoundException();
+        if (!reservationsHashMap.get(passengerName).contains(itinerary) || itinerary == null) throw new ReservationNotFoundException();
     }
 
     /**

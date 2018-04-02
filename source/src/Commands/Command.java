@@ -22,6 +22,7 @@ public abstract class Command {
 
     /**
      * Universal execution method
+     * Throws specified exception if error condition is met
      */
-    public abstract String execute();
+    public abstract String execute() throws Exception;
 }

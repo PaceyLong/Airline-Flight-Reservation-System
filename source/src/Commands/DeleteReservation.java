@@ -1,4 +1,5 @@
 package Commands;
+import Errors.ReservationNotFoundException;
 import Reservations.Itinerary;
 
 import Reservations.ReservationsDB;
@@ -31,16 +32,22 @@ public class DeleteReservation extends UndoableCommand {
     }
 
     @Override
-    public void undo() {
+    public void undo() throws Exception{
         reservationsDB.reserveItinerary(deletedItinerary, input.get(PASSENGER));
     }
 
     @Override
-    public String execute() {
+    public String execute() throws Exception {
         // only update deleted itinerary if it's a fresh command (it's currently null)
         if(deletedItinerary == null){
-            deletedItinerary= reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+            try{
+                deletedItinerary= reservationsDB.getItinerary(input.get(PASSENGER), input.get(ORIGIN), input.get(DESTINATION));
+            } catch (IndexOutOfBoundsException e){
+                // handle error case of fresh command pulling null object
+                deletedItinerary = null;
+            }
         }
+        // delete reservation
         reservationsDB.deleteItinerary(input.get(PASSENGER), deletedItinerary);
         return SUCCESSFUL_DELETE_MSG;
     }

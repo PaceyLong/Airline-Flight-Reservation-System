@@ -26,9 +26,7 @@ public class InputParser {
     public static final String ARRIVAL_TIME_SORT_BY = "arrival";
     public static final String AIRFARE_SORT_BY = "airfare";
 
-    public InputParser(){
-//        parseInput(input);
-    }
+    public InputParser(){ }
 
     /**
      * Parses the input by removing all whitespace and splitting by commas. Based on the first word in the input,
@@ -84,7 +82,12 @@ public class InputParser {
                 }
                 break;
             case "delete":
-                this.setCommand(new DeleteReservation(parsedInput));
+                try{
+                    deleteErrors();
+                    this.setCommand(new DeleteReservation(parsedInput));
+                } catch (Exception e){
+                    throw e;
+                }
                 break;
             case "airport":
                 try{
@@ -111,7 +114,7 @@ public class InputParser {
     /**
      * Tells the request to execute the functionality of its command through the command manager.
      */
-    public String executeRequest(){
+    public String executeRequest() throws Exception{
         return commandManager.executeCommand(command);
     }
 
@@ -180,13 +183,11 @@ public class InputParser {
 
     /**
      * Error checking if the request is looking to delete a reservation
+     * Verify input is correct size
      * @throws Exception
      */
-    public void deleteErrors(){
-        String passenger = parsedInput.get(1);
-        String origin = parsedInput.get(2);
-        String destination = parsedInput.get(3);
-        // TODO
+    public void deleteErrors()throws UnknownRequestException{
+        if(parsedInput.size() != 4) throw new UnknownRequestException();
     }
 
     /**
