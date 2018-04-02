@@ -37,7 +37,7 @@ public class CommandManager {
         String cmdPrintout = cmd.execute();
         // add to undo stack if UndoableCommand
         if(cmd instanceof UndoableCommand){
-            // cast cmd to UndoableCommand and push to stack
+            // cast cmd to UndoableCommand and push to stack if not already there TODO
             undoCommandStack.push((UndoableCommand) cmd);
         }
         return cmdPrintout;
