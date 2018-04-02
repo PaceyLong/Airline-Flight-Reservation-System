@@ -2,10 +2,10 @@ package Parser.parseTypes;
 import Airports.Airport;
 import Airports.AirportsDB;
 
-/*
-    This parse type parses the lines from 'min_connection_time.Parser' (which contains the code and minimum connection time
-    for each airport) and adds them to slots in the corresponding airports HashMap
- */
+/**
+  *  This parse type parses the lines from 'min_connection_time.Parser' (which contains the code and minimum connection time
+  *  for each airport) and adds them to slots in the corresponding airports HashMap
+  */
 public class AirportTimeParse extends CSVParse {
 
     private static final int AIRPORT_CODE = 0;

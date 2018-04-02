@@ -17,14 +17,22 @@ import java.net.URL;
 /**
  * @author Ethan Della Posta
  *
- * Gets Airport json data from faa api,
- * and returns an Airport object
+ *
+ * If faaToggled:
+ *      Gets Airport json data from faa api,
+ *      and returns an Airport object
+ * else if ! faaToggled:
+ *      Uses the AirportsDB object to get airport information
  */
 public class AirportsDBProxy implements AirportInfoService {
 
+    /* Have we specified to use the FAA web service? */
     private Boolean faaToggled = false;
+
+    /* Instance of the singleton AirportsDB to be used by default for airport info */
     private AirportInfoService airportsDB = AirportsDB.getInstance();
 
+    /* Root url for getting airport information through the FAA web service */
     private static final String urlPreface =  "https://soa.smext.faa.gov/asws/api/airport/status/";
 
     /* Enforce Singleton Pattern */
@@ -36,6 +44,13 @@ public class AirportsDBProxy implements AirportInfoService {
         return instance;
     }
 
+    /**
+     *
+     * Depending on faaToggled, get airport information from the specified source
+     *
+     * @param airportCode - 3 letter code
+     * @return Airport object either from FAA or local AirportsDB
+     */
     public Airport getAirport(String airportCode){
         if(faaToggled) {
             JSONObject json = getJsonFromApi(airportCode);
@@ -46,6 +61,9 @@ public class AirportsDBProxy implements AirportInfoService {
         return this.airportsDB.getAirport(airportCode);
     }
 
+    /**
+     * change which service is being used for airport information
+     */
     public void toggleService(){
         faaToggled = !faaToggled;
     }
