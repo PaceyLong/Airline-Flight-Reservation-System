@@ -11,9 +11,11 @@ import java.util.ArrayList;
  * final destination.
  * Also contain price for entire trip.
  */
-public class Itinerary{
-    /* attributes */
-    private ArrayList<Flight> flightList = new ArrayList<>();
+public class Itinerary implements Reservable{
+    /* attributes
+     * NOTE: the reservableList has a recursive nature
+     * */
+    private ArrayList<Reservable> reservableList = new ArrayList<>();
     private int totalPrice;
 
     /**
@@ -29,7 +31,7 @@ public class Itinerary{
      * @param fl
      */
     public void addFlight(Flight fl){
-        flightList.add(fl);
+        reservableList.add(fl);
         totalPrice += fl.getAirfare();
     }
 
@@ -46,20 +48,21 @@ public class Itinerary{
      * @return
      */
     public int getNumberFlightIn(){
-        return flightList.size();
+        return reservableList.size();
     }
 
     /**
      * accessor for flightList used in parser
      */
-     public ArrayList<Flight> getFlights(){ return flightList; };
+     public ArrayList<Reservable> getReservables(){ return reservableList; };
 
     /**
      * Returns the 3-letter code representing the origin airport of the first flight in the itinerary.
      * @return
      */
     public String getOrigin(){
-        return flightList.get(0).getOriginAirport();
+        Flight flight = (Flight)  reservableList.get(0);
+        return flight.getOriginAirport();
     }
 
     /**
@@ -67,15 +70,18 @@ public class Itinerary{
      * @return
      */
     public String getDestination(){
-        return flightList.get(flightList.size()-1).getDestinationAirport();
+        Flight flight = (Flight) reservableList.get(reservableList.size()-1);
+        return flight.getDestinationAirport();
     }
 
     public String getDepartureTime(){
-        return flightList.get(0).getDepatureTime();
+        Flight flight = (Flight) reservableList.get(0);
+        return flight.getDepatureTime();
     }
 
     public String getArrivalTime(){
-        return flightList.get(flightList.size() - 1).getArrivalTime();
+        Flight flight = (Flight) reservableList.get(reservableList.size() - 1);
+        return flight.getArrivalTime();
     }
     /**
      * @author Joshua Ehling
@@ -86,8 +92,8 @@ public class Itinerary{
     @Override
     public String toString(){
         String printout = getTotalPrice() + "," + getNumberFlightIn();
-        for(int idx = 0; idx < flightList.size(); idx++){
-            printout += "," + flightList.get(idx).toString();
+        for(int idx = 0; idx < reservableList.size(); idx++){
+            printout += "," + reservableList.get(idx).toString();
 //            if (idx + 1 < flightList.size()) printout += ",\n\t";
         }
         return printout;

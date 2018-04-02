@@ -1,11 +1,11 @@
 package Parser;
 
 import Airports.AirportsDB;
-import Reservations.ReservationsDB;
-import TTARouteNetwork.Flight;
-import TTARouteNetwork.FlightsDB;
 import Parser.parseTypes.*;
 import Reservations.Itinerary;
+import Reservations.Reservable;
+import Reservations.ReservationsDB;
+import TTARouteNetwork.FlightsDB;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -110,8 +110,8 @@ public class CSVParser {
             for (String passengerName : this.reservations.parserGetReservationKeySet()) {
                 for (Itinerary itinerary : this.reservations.parserGetReservations( passengerName)) {
                     writer.write(passengerName + ",");
-                    for(Flight flight : itinerary.getFlights()){
-                        writer.write(flight.toString() + ",");
+                    for(Reservable flightReservable : itinerary.getReservables()){
+                        writer.write(flightReservable.toString() + ",");
                     }
                     writer.write("\n");
                 }
