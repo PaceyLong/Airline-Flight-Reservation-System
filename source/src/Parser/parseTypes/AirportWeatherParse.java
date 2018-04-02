@@ -4,10 +4,10 @@ import Airports.Airport;
 import Airports.AirportsDB;
 import Airports.Weather;
 
-/*
-    This parse type parses the lines from 'weather.Parser' (which contains the code and a variable number of weather
-    fields for each airport) and adds them to slots in the corresponding airports HashMap
- */
+/**
+  *  This parse type parses the lines from 'weather.Parser' (which contains the code and a variable number of weather
+  *  fields for each airport) and adds them to slots in the corresponding airports HashMap
+  */
 public class AirportWeatherParse extends CSVParse {
 
     private static final int AIRPORT_CODE = 0;

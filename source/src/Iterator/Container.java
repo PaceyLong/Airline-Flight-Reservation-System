@@ -6,5 +6,5 @@ package Iterator;
  * Interface to be implemented by all objects which need Iterators (Flights, Itineraries, Reservations, Weather)
  */
 public interface Container {
-    public Iterator getIterator();
+    Iterator getIterator();
 }
