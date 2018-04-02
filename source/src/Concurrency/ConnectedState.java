@@ -40,7 +40,7 @@ public class ConnectedState implements ClientState{
     public String inputQuery(Client c, String query) throws Exception{
         try{
             //output.setText(parser.executeRequest());
-            parser = new InputParser();
+            parser = c.getInputParser();
             parser.parseInput(query);
             return parser.executeRequest();
         }catch(Exception e){

@@ -2,6 +2,7 @@ import Airports.AirportInfoService;
 import Airports.AirportsDBProxy;
 import Commands.InputParser;
 import Concurrency.Client;
+import Errors.NullClientException;
 import Parser.CSVParser;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -188,8 +189,6 @@ public class GUI extends Application{
 
     //Sends commands to the system and displays the responses in the GUI
     private void connectAFRS(){
-        InputParser parser;
-
         if(requestText.trim().toLowerCase().contains("quit")){
             if(client != null) {
                 output.setText("Thank you for using AFRS!");
@@ -207,6 +206,7 @@ public class GUI extends Application{
         if(requestText.trim().toLowerCase().contains("connect")){
             if(client == null) {
                 Client c = new Client(uniqueID.getAndIncrement());
+                c.setInputParser(new InputParser());
                 this.attachClient(c);
                 c.connect();
                 connectionStatus.setText("Connection Status: Connected");
@@ -234,8 +234,9 @@ public class GUI extends Application{
 
         if(requestText.trim().endsWith(";")){
             try{
-                parser = new InputParser();
-                //parser.parseInput());
+                // verify client is attached (not null). Throw error otherwise
+                verifyClient();
+                // execute method
                 String cmdPrintout = client.inputQuery(requestText.substring(0, requestText.length() - 1));
                 //String cmdPrintout = parser.executeRequest();
                 System.out.println(cmdPrintout);
@@ -246,6 +247,14 @@ public class GUI extends Application{
                 output.setText(e.getMessage());
             }
         }
+    }
+
+    /**
+     * @author Joshua Ehling
+     * Verify client is attached (not null). If not, throw Exception.
+     */
+    private void verifyClient() throws Exception{
+        if(client == null) throw new NullClientException();
     }
 
     /**

@@ -145,7 +145,7 @@ public class ReservationsDB {
         // throw error if Passenger doesn't exist within the database
         if(!reservationsHashMap.containsKey(passengerName)) throw new PassengerNotFoundException();
         // throw error if Passenger's reservation doesn't exist within their current list of reserved itineraries
-        if (!reservationsHashMap.get(passengerName).contains(itinerary)) throw new ReservationNotFoundException();
+        if (!reservationsHashMap.get(passengerName).contains(itinerary) || itinerary == null) throw new ReservationNotFoundException();
     }
 
     /**
