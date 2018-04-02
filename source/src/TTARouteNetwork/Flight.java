@@ -1,6 +1,8 @@
 package TTARouteNetwork;
 
-public class Flight {
+import Reservations.Reservable;
+
+public class Flight implements Reservable{
     private String originAirport;
     private String destinationAirport;
     private String depatureTime;
